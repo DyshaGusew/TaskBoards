@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 
 namespace TaskBoard
 {
+    //
     public partial class MainWindow : Window
     {
         public MainWindow()
