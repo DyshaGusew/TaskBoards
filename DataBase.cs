@@ -8,7 +8,7 @@ using System.IO;
 using System.Data.Common;
 using System.Windows.Documents;
 
-public class DataBase
+public partial class DataBase
 {
     static readonly string pathDataBoards = "../../DataBases\\Boards.csv";
     static readonly string pathDataColumns = "../../DataBases\\Columns.csv";
