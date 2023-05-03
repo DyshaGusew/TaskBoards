@@ -5,8 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskBoard"
         mc:Ignorable="d"
-        Title="TaskBoard" Height="450" Width="800" Icon="/ocr.png">
+        Title="TaskBoard" Height="450" Width="800" Icon="/Other/ocr.png">
     <Grid>
-        
+        <TextBlock x:Name="txtOutput" TextWrapping="Wrap" Text="TextBlock" RenderTransformOrigin="0.508,0.492" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
     </Grid>
 </Window>

@@ -107,7 +107,7 @@ public partial class DataBase
             rd = null;
             NameBase = null;
         }
-
+        
 
 
         StreamWriter TimeBox = new StreamWriter("../../DataBases\\BoxBase.csv");//Временный файл для записи
@@ -212,8 +212,42 @@ public partial class DataBase
                 return outObj;
             }
         }
+        rd.Close();
         Console.WriteLine($"Объект c id {id} не найден");
         return null;
+    }
+
+    //Возвращает ид объекта на который ссылается указанный объект
+    public int GetIdRef(int id, string typeBD)
+    {
+        StreamReader rd;
+        if (typeBD == "boa")
+            rd = new StreamReader(pathDataBoards);
+
+        else if (typeBD == "col")
+            rd = new StreamReader(pathDataColumns);
+
+        else if (typeBD == "car")
+            rd = new StreamReader(pathDataCards);
+
+        else
+            rd = null;
+
+
+        while (!rd.EndOfStream)           //Пока не конец файла проверяю
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+            if (id == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
+            {
+                rd.Close();
+                return Convert.ToInt32(parms[1]);
+            }
+        }
+        rd.Close();
+        Console.WriteLine($"Объект c id {id} не найден");
+        return 0;
     }
 
     //Замена одного объекта на другой с сохранением id
@@ -247,36 +281,8 @@ public partial class DataBase
             Console.WriteLine("Объект неподходящего типа");
     }
 
-    ..
-
-    //добавление id колоны в бд карты
-    public void AssignmentIDColumnCard(int idCard, string idColumnsRef)
-    {
-        //Считываю базу пользователей
-        StreamReader rd = new StreamReader(pathDataCards);
-
-        while (!rd.EndOfStream)           //Пока не конец файла проверяю
-        {
-            string line = rd.ReadLine();
-            string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
-
-            if (idCards == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
-            {
-                
-                StringBuilder AssignmentIDColCard = new StringBuilder(idColumnsRef + ";" + parms[2] + ";" + parms[3] + ";" + parms[4] + ";" + parms[5]);
-
-                AssignmentIDColCard.id = Convert.ToInt32(idCard);
-                
-                rd.Close();
-                DeleteByID(Convert.ToInt32(parms[0]));//удаление прошлой карточки с указаным id
-                AppObject(AssignmentIDColCard);//добавление новой катрочки
-                return;
-            }
-        }
-
-    }
-    //добавление id доски в бд колоны
-    public void AssignmentIDColumnCard(int idColumn, string idBoardRef)
+    //добавление id доски в колонну
+    public void AssignmentIDBoardColumn(int idColumn, int idBoardRef)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
     {
         //Считываю базу пользователей
         StreamReader rd = new StreamReader(pathDataColumns);
@@ -286,19 +292,44 @@ public partial class DataBase
             string line = rd.ReadLine();
             string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
 
-            if (idCards == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
+            if (idColumn == Convert.ToInt32(parms[0]))          //Если ID равен указанному, до добавляю
             {
-
-                StringBuilder AssignmentIDBoarColumn = new StringBuilder(idBoardRef + ";" + parms[2]);
-
-                AssignmentIDBoarColumn.id = Convert.ToInt32(idColumn);
+                //Получаем нужны столбец, создаем новый, новому добавляем ссылаемую доску
+                Column columnNew = (Column)GetObjOfId(idColumn, "col");
+                columnNew.idBoardRef = idBoardRef;
                 rd.Close();
-                DeleteByID(Convert.ToInt32(parms[0]));//удаление прошлой колоны с указаным id
-                AppObject(AssignmentIDBoarColumn);//добавление новой колоны
+                //Меняем старый столбец на новый
+                ReplaceObject(idColumn, columnNew);
                 return;
             }
         }
-
+        
     }
+   
+    //добавление id столбца в карточку
+    public void AssignmentIDColumnCard(int idCard, int idColumnRef)
+    {
+        //Считываю базу пользователей
+        StreamReader rd = new StreamReader(pathDataCards);
 
+        while (!rd.EndOfStream)           //Пока не конец файла проверяю
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+            if (idCard == Convert.ToInt32(parms[0]))          //Если ID равен указанному, до добавляю
+            {
+                //Получаем нужны столбец, создаем новый, новому добавляем ссылаемую доску
+                Card cardNew = (Card)GetObjOfId(idCard, "col");
+                cardNew.idColumnsRef = idColumnRef;
+                rd.Close();
+
+                //Меняем старый столбец на новый
+                ReplaceObject(idCard, cardNew);
+                return;
+            }
+        }
+       
+
+    }   
 }

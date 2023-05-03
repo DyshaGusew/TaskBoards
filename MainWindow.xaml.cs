@@ -35,14 +35,17 @@ namespace TaskBoard
 
             //Добавляю в БД
             DataBase DB = new DataBase();
-            DB.AppObject(card);
-            DB.AppObject(column);
-            DB.AppObject(board);
+            //DB.AppObject(column);
 
             Column column1 = (Column)DB.GetObjOfId(2, "col");
             column1.name = "Name";
-            column1.idBoardRef = 25;
-            DB.ReplaceObject(1, column1);
+            
+            DB.AssignmentIDBoardColumn(column1.id, 45);
+            DB.ReplaceObject(2, column1);
+            Console.WriteLine(DB.GetIdRef(2, "col"));
+
+            //Эту хрень используйте для вывода
+            txtOutput.Text = Convert.ToString(DB.GetIdRef(2, "col"));
         }
     }
 }
