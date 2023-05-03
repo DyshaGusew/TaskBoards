@@ -25,7 +25,7 @@ public class Objeсts
     public int GetMaxIdBoard(string type)
     {
         DataBase dataBase = new DataBase();
-        return dataBase.GetMaxID(type);
+        return dataBase.MaxID(type);
     }
 }
 
@@ -35,6 +35,12 @@ public class Board : Objeсts
     {
         id = GetMaxIdBoard("boa");       
         name = null;
+    }
+
+    public Board(int id, string name)
+    {
+        this.id = id;
+        this.name = name;
     }
 
 }
@@ -52,6 +58,13 @@ public class Column : Objeсts
     public Column(int idBoardRef) : this()
     {
         this.idBoardRef = idBoardRef;
+    }
+
+    public Column(int id, int idBoardRef, string name)
+    {
+        this.idBoardRef = idBoardRef;
+        this.name = name;
+        this.id = id;
     }
 }
 
@@ -74,5 +87,14 @@ public class Card : Objeсts
     public Card(int idColumnsRef):this() 
     {
         this.idColumnsRef = idColumnsRef;
+    }
+
+    public Card(int id, int idColumnsRef, string name, string color, int typeDeskrip, string text) : this(idColumnsRef)
+    {
+        this.name = name;
+        this.id = id;
+        this.color = color;
+        this.typeDeskrip = typeDeskrip;
+        this.text = text;
     }
 }

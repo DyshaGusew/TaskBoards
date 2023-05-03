@@ -78,7 +78,7 @@ public partial class DataBase
     }
 
     //Вычестление максимального id у определенной базы данных
-    public int GetMaxID(string typeBD)
+    public int MaxID(string typeBD)
     {
         //Определяю какую бд считывать
         StreamReader rd;
@@ -114,5 +114,77 @@ public partial class DataBase
         return maxId+1;
     }
 
+    //Возвращаю объект с нужным id из указанной БД
+    public object GetObjOfId(int id, string typeBD)
+    {
+        Object outObj;
+
+        StreamReader rd;
+        if (typeBD == "boa")
+            rd = new StreamReader(pathDataBoards);
+
+        else if (typeBD == "col")
+            rd = new StreamReader(pathDataColumns);
+
+        else if (typeBD == "car")
+            rd = new StreamReader(pathDataCards);
+
+        else
+            rd = null;
+
+
+        while (!rd.EndOfStream)           //Пока не конец файла проверяю
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+            if (id == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
+            {
+                switch (typeBD)
+                {
+                    case "bor":
+                        Board board = new Board(Convert.ToInt32(parms[0]), parms[1]);
+                        outObj = board;
+                        break;
+                    case "col":
+                        Column column = new Column(Convert.ToInt32(parms[0]), Convert.ToInt32(parms[1]), parms[2]);
+                        outObj = column;
+                        break;
+                    case "car":
+                        Card card = new Card(Convert.ToInt32(parms[0]), Convert.ToInt32(parms[1]), parms[2], parms[3], Convert.ToInt32(parms[4]), parms[5]);
+                        outObj = card;
+                        break;
+
+                    default: rd = null; outObj = null; break;
+                }
+                rd.Close();
+                return outObj;
+            }
+        }
+        Console.WriteLine($"Объект c id {id} не найден");
+        return null;
+    }
+
+    //Замена одного столбика на другой
+    public void ReplaceColumns(Column column, Column columnNew)
+    {
+        //УДАЛЕНИЕ СТАРОГО
+        AppObject(columnNew);  //Добавление нового
+    }
+
+    //Замена одной доски на другую
+    public void ReplaceBoard(Board board, Board boardNew)
+    {
+        //УДАЛЕНИЕ СТАРОГО
+        AppObject(boardNew); //Добавление нового
+    }
+
+    //Замена одной карточки на другую
+    public void ReplaceCard(Card card, Card cardNew)
+    {
+        //УДАЛЕНИЕ СТАРОГО
+
+        AppObject(cardNew);  //Добавление нового
+    }
 
 }

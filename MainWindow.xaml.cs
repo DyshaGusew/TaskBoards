@@ -38,6 +38,11 @@ namespace TaskBoard
             DB.AppObject(card);
             DB.AppObject(column);
             DB.AppObject(board);
+
+            Column column1 = (Column)DB.GetObjOfId(2, "col");
+
+            column1.name = "Name";
+            DB.AppObject(column1);
         }
     }
 }
