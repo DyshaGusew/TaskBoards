@@ -246,4 +246,59 @@ public partial class DataBase
         else
             Console.WriteLine("Объект неподходящего типа");
     }
+
+    ..
+
+    //добавление id колоны в бд карты
+    public void AssignmentIDColumnCard(int idCard, string idColumnsRef)
+    {
+        //Считываю базу пользователей
+        StreamReader rd = new StreamReader(pathDataCards);
+
+        while (!rd.EndOfStream)           //Пока не конец файла проверяю
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+            if (idCards == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
+            {
+                
+                StringBuilder AssignmentIDColCard = new StringBuilder(idColumnsRef + ";" + parms[2] + ";" + parms[3] + ";" + parms[4] + ";" + parms[5]);
+
+                AssignmentIDColCard.id = Convert.ToInt32(idCard);
+                
+                rd.Close();
+                DeleteByID(Convert.ToInt32(parms[0]));//удаление прошлой карточки с указаным id
+                AppObject(AssignmentIDColCard);//добавление новой катрочки
+                return;
+            }
+        }
+
+    }
+    //добавление id доски в бд колоны
+    public void AssignmentIDColumnCard(int idColumn, string idBoardRef)
+    {
+        //Считываю базу пользователей
+        StreamReader rd = new StreamReader(pathDataColumns);
+
+        while (!rd.EndOfStream)           //Пока не конец файла проверяю
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+            if (idCards == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
+            {
+
+                StringBuilder AssignmentIDBoarColumn = new StringBuilder(idBoardRef + ";" + parms[2]);
+
+                AssignmentIDBoarColumn.id = Convert.ToInt32(idColumn);
+                rd.Close();
+                DeleteByID(Convert.ToInt32(parms[0]));//удаление прошлой колоны с указаным id
+                AppObject(AssignmentIDBoarColumn);//добавление новой колоны
+                return;
+            }
+        }
+
+    }
+
 }
