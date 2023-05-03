@@ -166,24 +166,26 @@ public partial class DataBase
     }
 
     //Замена одного столбика на другой
-    public void ReplaceColumns(Column column, Column columnNew)
+    public void ReplaceColumns(int colomnId, Column columnNew)
     {
         //УДАЛЕНИЕ СТАРОГО
+        columnNew.id = colomnId;
         AppObject(columnNew);  //Добавление нового
     }
 
     //Замена одной доски на другую
-    public void ReplaceBoard(Board board, Board boardNew)
+    public void ReplaceBoard(int boardId, Board boardNew)
     {
         //УДАЛЕНИЕ СТАРОГО
+        boardNew.id = boardId;
         AppObject(boardNew); //Добавление нового
     }
 
     //Замена одной карточки на другую
-    public void ReplaceCard(Card card, Card cardNew)
+    public void ReplaceCard(int cardId, Card cardNew)
     {
         //УДАЛЕНИЕ СТАРОГО
-
+        cardNew.id = cardId;
         AppObject(cardNew);  //Добавление нового
     }
 

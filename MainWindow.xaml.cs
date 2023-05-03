@@ -40,7 +40,7 @@ namespace TaskBoard
             DB.AppObject(board);
 
             Column column1 = (Column)DB.GetObjOfId(2, "col");
-
+            //Здесь удаление
             column1.name = "Name";
             DB.AppObject(column1);
         }

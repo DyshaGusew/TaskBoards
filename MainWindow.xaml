@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskBoard"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TaskBoard" Height="450" Width="800" Icon="/ocr.png">
     <Grid>
         
     </Grid>
