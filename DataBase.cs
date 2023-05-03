@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Data.Common;
 using System.Windows.Documents;
+using System.Runtime.InteropServices.ComTypes;
 
 public partial class DataBase
 {
@@ -75,6 +76,56 @@ public partial class DataBase
         {
             Console.WriteLine("Данный тип нельзя передать в БД");
         }
+    }
+
+    //Удаление объекта в нужной БД
+    public void DeleteByID(int id, string typeBD)
+    {
+        string NameBase;//Имя базы данных для дальнейшего удобства
+        //Определяем базу данных
+        StreamReader rd;
+        if (typeBD == "boa")
+        {
+            rd = new StreamReader(pathDataBoards);
+            NameBase = "../../DataBases\\Boards.csv";
+        }
+
+        else if (typeBD == "col")
+        {
+            rd = new StreamReader(pathDataColumns);
+            NameBase = "../../DataBases\\Columns.csv";
+        }
+
+        else if (typeBD == "car")
+        {
+            rd = new StreamReader(pathDataCards);
+            NameBase = "../../DataBases\\Cards.csv";
+        }
+        else
+        {
+            Console.WriteLine("Неправильный формат ввода для базы данных");
+            rd = null;
+            NameBase = null;
+        }
+
+
+
+        StreamWriter TimeBox = new StreamWriter("../../DataBases\\BoxBase.csv");//Временный файл для записи
+        //Считываем базу данных
+        while (!rd.EndOfStream)//Листаем до конца
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });
+
+            if (Convert.ToInt32(parms[0]) != id)
+            {
+                TimeBox.WriteLine(line);
+            }
+        }
+        rd.Close();
+        TimeBox.Close();
+        File.Delete(NameBase);//Удаляем оригинал
+        File.Move("../../DataBases\\BoxBase.csv", NameBase);//Переименовываем новый файл без нужного айди
     }
 
     //Вычестление максимального id у определенной базы данных
@@ -165,28 +216,34 @@ public partial class DataBase
         return null;
     }
 
-    //Замена одного столбика на другой
-    public void ReplaceColumns(int colomnId, Column columnNew)
+    //Замена одного объекта на другой с сохранением id
+    public void ReplaceObject(int objectId, object objectNew)
     {
-        //УДАЛЕНИЕ СТАРОГО
-        columnNew.id = colomnId;
-        AppObject(columnNew);  //Добавление нового
-    }
+        if (objectNew is Board)
+        {
+            Board board = (Board)objectNew;
+            board.id = objectId;
+            DeleteByID(objectId, "boa");
+            AppObject(board);
+        }
 
-    //Замена одной доски на другую
-    public void ReplaceBoard(int boardId, Board boardNew)
-    {
-        //УДАЛЕНИЕ СТАРОГО
-        boardNew.id = boardId;
-        AppObject(boardNew); //Добавление нового
-    }
+        else if (objectNew is Column)
+        {
+            Column column = (Column)objectNew;
+            column.id = objectId;
+            DeleteByID(objectId, "col");
+            AppObject(column);
+        } 
 
-    //Замена одной карточки на другую
-    public void ReplaceCard(int cardId, Card cardNew)
-    {
-        //УДАЛЕНИЕ СТАРОГО
-        cardNew.id = cardId;
-        AppObject(cardNew);  //Добавление нового
-    }
+        else if (objectNew is Card)
+        {
+            Card card = (Card)objectNew;
+            card.id = objectId;
+            DeleteByID(objectId, "car");
+            AppObject(card);
+        }
 
+        else
+            Console.WriteLine("Объект неподходящего типа");
+    }
 }
