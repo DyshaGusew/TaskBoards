@@ -18,34 +18,27 @@ namespace TaskBoard
     //
     public partial class MainWindow : Window
     {
+        DataBase DB;
         public MainWindow()
         {
+            DB = new DataBase();
             InitializeComponent();
 
-            //Создаю объекты и задаю им значение
-            Card card = new Card(10);
-            card.color = "green";
-            card.text = "dsfsdfdddddddddddddddddddddd";
 
-            Board board = new Board();
-            board.name = "Доска номер 1";
-
-            Column column = new Column();
-            column.idBoardRef = 1;
-
-            //Добавляю в БД
-            DataBase DB = new DataBase();
-            //DB.AppObject(column);
-
-            Column column1 = (Column)DB.GetObjOfId(2, "col");
+            Column column1 = DB.Column.GetObjOfId(1);
             column1.name = "Name";
+            DB.Column.ReplaceObject(1, column1);
+
+            DB.Column.AssignmentIDBoard(column1.id, 48);
+
+            Board board= new Board();
+            board.name = "gggg";
+            DB.Board.AppObject(board);
             
-            DB.AssignmentIDBoardColumn(column1.id, 45);
-            DB.ReplaceObject(2, column1);
-            Console.WriteLine(DB.GetIdRef(2, "col"));
+           // Console.WriteLine(DB.GetIdRef(2, "col"));
 
             //Эту хрень используйте для вывода
-            txtOutput.Text = Convert.ToString(DB.GetIdRef(2, "col"));
+            txtOutput.Text = Convert.ToString(DB.Column.GetIdRef(2));
         }
     }
 }

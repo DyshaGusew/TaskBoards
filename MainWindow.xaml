@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskBoard"
         mc:Ignorable="d"
-        Title="TaskBoard" Height="450" Width="800" Icon="/Other/ocr.png">
-    <Grid>
-        <TextBlock x:Name="txtOutput" TextWrapping="Wrap" Text="TextBlock" RenderTransformOrigin="0.508,0.492" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+        Title="TaskBoard" Icon="/Other/ocr.png" WindowStyle="ThreeDBorderWindow" Width="1920" Height="1064" Left="-10" Top="0">
+    <Grid x:Name="MainPlane" Background="#FF5DE9E9">
+        <TextBlock x:Name="txtOutput" TextWrapping="Wrap" Text="TextBlock" RenderTransformOrigin="0.508,0.492" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
 
     </Grid>
 </Window>

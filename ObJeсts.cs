@@ -22,10 +22,20 @@ public class Objeсts
     }
 
     //Функция используемая для определения подходящего id в определенной базе данных
-    public int GetMaxIdBoard(string type)
+    public int GetMaxIdBoard(string text)
     {
         DataBase dataBase = new DataBase();
-        return dataBase.MaxID(type);
+        if(text == "boa")
+            return dataBase.Board.MaxID();
+
+        else if(text == "col")
+            return dataBase.Column.MaxID();
+
+        else if (text == "car")
+            return dataBase.Card.MaxID();
+
+        else 
+            return 0; 
     }
 }
 
