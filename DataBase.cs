@@ -9,6 +9,7 @@ using System.Data.Common;
 using System.Windows.Documents;
 using System.Runtime.InteropServices.ComTypes;
 using static System.Net.Mime.MediaTypeNames;
+using static DataBase;
 
 public partial class DataBase
 {
@@ -31,7 +32,7 @@ public partial class DataBase
                 name = board.name;
 
             StringBuilder scv = new StringBuilder();
-            scv.AppendLine(board.id + ";" + name);
+            scv.AppendLine($"{board.id};{name};{board.stateActive}");
             File.AppendAllText(pathDataBoards, scv.ToString());
         }
 
@@ -97,7 +98,7 @@ public partial class DataBase
 
                 if (id == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
                 {
-                    Board board = new Board(Convert.ToInt32(parms[0]), parms[1]);
+                    Board board = new Board(Convert.ToInt32(parms[0]), parms[1], Convert.ToInt32(parms[2]));
                     rd.Close();
                     return board;
                 }   
@@ -107,27 +108,6 @@ public partial class DataBase
             return null;
         }
 
-        //Возвращает ид объекта на который ссылается указанный объект
-        public int GetIdRef(int id)
-        {
-            StreamReader rd = new StreamReader(pathDataBoards);
-
-            while (!rd.EndOfStream)           //Пока не конец файла проверяю
-            {
-                string line = rd.ReadLine();
-                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
-
-                if (id == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
-                {
-                    rd.Close();
-                    return Convert.ToInt32(parms[1]);
-                }
-            }
-            rd.Close();
-            Console.WriteLine($"Объект c id {id} не найден");
-            return 0;
-        }
-
         //Замена одного объекта на другой с сохранением id
         public void ReplaceObject(int objectId, Board objectNew)
         {
@@ -135,6 +115,47 @@ public partial class DataBase
             board.id = objectId; //id сохраняю
             DeleteByID(objectId);
             AppObject(board);
+        }
+
+        //Поучение массива всех досок
+        public List<Board> GetListBoards()
+        {
+            List<Board> boards = new List<Board>();
+
+            StreamReader rd = new StreamReader(pathDataBoards);
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                Board board = new Board(Convert.ToInt32(parms[0]), parms[1], Convert.ToInt32(parms[2]));
+                boards.Add(board);
+            }
+            rd.Close();
+            return (boards);
+        }
+
+        //Активирую указанную доску
+        public void ActivsBoard(int id)
+        {
+            Board board = GetObjOfId(id);
+
+            List<Board> boards = GetListBoards();
+
+            //Убираю активное состояние у другой и ставлю указанной
+            foreach(Board board_ in boards)
+            {
+                if(board_.stateActive == 1)
+                {
+                    board_.stateActive = 0;
+                    ReplaceObject(board_.id, board_);
+                }
+            }
+            board.stateActive = 1;
+
+            //Заменяю старую(временную) доску на новую
+            ReplaceObject(id, board);
         }
     }
 
@@ -153,7 +174,7 @@ public partial class DataBase
                 name = column.name;
 
             StringBuilder scv = new StringBuilder();
-            scv.AppendLine(column.id + ";" + column.idBoardRef + ";" + name);
+            scv.AppendLine($"{column.id};{column.idBoardRef};{name}");
             File.AppendAllText(pathDataColumns, scv.ToString());
         }
 
@@ -259,6 +280,25 @@ public partial class DataBase
             AppObject(column);
         }
 
+        //Поучение массива всех столбцов
+        public List<Column> GetListСolumns()
+        {
+            List<Column> columns = new List<Column>();
+
+            StreamReader rd = new StreamReader(pathDataColumns);
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                Column column = new Column(Convert.ToInt32(parms[0]), Convert.ToInt32(parms[1]), parms[2]);
+                columns.Add(column);
+            }
+            rd.Close();
+            return (columns);
+        }
+
         //добавление id доски в колонну
         public void AssignmentIDBoard(int idColumn, int idBoardRef)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
         {
@@ -281,7 +321,6 @@ public partial class DataBase
                     return;
                 }
             }
-
         }
     }
 
@@ -292,15 +331,20 @@ public partial class DataBase
         //Добавля. доску в базу данных
         public void AppObject(Card card)
         {
-            //Проверка на наличие имени доски
-            string name;
+            //Проверка на наличие имени и текста карточи
+            string name, text;
             if (card.name == null)
                 name = "null";
             else
                 name = card.name;
 
+            if (card.text == null)
+                text = "null";
+            else
+                text = card.text;
+
             StringBuilder scv = new StringBuilder();
-            scv.AppendLine(card.id + ";" + card.idColumnsRef + ";" + name + ";" + card.color + ";" + card.typeDeskrip + ";" + name);
+            scv.AppendLine($"{card.id};{card.idColumnsRef};{name};{card.color};{card.typeDeskrip};{text}");
             File.AppendAllText(pathDataCards, scv.ToString());  
         }
 
@@ -406,6 +450,25 @@ public partial class DataBase
             AppObject(card);
         }
 
+        //Получение массива карточек
+        public List<Card> GetListСards()
+        {
+            List<Card> cards = new List<Card>();
+
+            StreamReader rd = new StreamReader(pathDataCards);
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                Card card = new Card(Convert.ToInt32(parms[0]), Convert.ToInt32(parms[1]), parms[2]);
+                cards.Add(card);
+            }
+            rd.Close();
+            return (cards);
+        }
+
         //Добавление колонный в карточку
         public void AssignmentIDColumn(int idCard, int idColumnRef)
         {
@@ -433,4 +496,6 @@ public partial class DataBase
 
         }
     }
+
+    
 }

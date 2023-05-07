@@ -15,30 +15,33 @@ using System.Windows.Shapes;
 
 namespace TaskBoard
 {
-    //
+    
     public partial class MainWindow : Window
     {
-        DataBase DB;
+        
         public MainWindow()
         {
-           
+
             InitializeComponent();
 
-
+            DataBase DB = new DataBase();
             Column column1 = DB.Column.GetObjOfId(1);
             column1.name = "Name";
             DB.Column.ReplaceObject(1, column1);
 
             DB.Column.AssignmentIDBoard(column1.id, 48);
 
-            Board board= new Board();
+            Board board = new Board();
             board.name = "gggg";
+            board.stateActive = 1;
             DB.Board.AppObject(board);
+            DB.Board.ActivsBoard(3);
+            DB.Board.ActivsBoard(4);
             
-           // Console.WriteLine(DB.GetIdRef(2, "col"));
+            // Console.WriteLine(DB.GetIdRef(2, "col"));
 
             //Эту хрень используйте для вывода
-            txtOutput.Text = Convert.ToString(DB.Column.GetIdRef(2));
+            txtOutput.Text = Convert.ToString(DB.Board.GetObjOfId(4).stateActive);
         }
     }
 }

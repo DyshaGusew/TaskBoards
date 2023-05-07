@@ -20,35 +20,22 @@ public class Objeсts
     {
         this.id = id;
     }
-
-    //Функция используемая для определения подходящего id в определенной базе данных
-    public int GetMaxIdBoard(string text)
-    {
-        DataBase dataBase = new DataBase();
-        if(text == "boa")
-            return dataBase.Board.MaxID();
-
-        else if(text == "col")
-            return dataBase.Column.MaxID();
-
-        else if (text == "car")
-            return dataBase.Card.MaxID();
-
-        else 
-            return 0; 
-    }
 }
 
 public class Board : Objeсts
 {
+    //Является ли указанная доска текущей
+    public int stateActive = 0;
     public Board()
     {
-        id = GetMaxIdBoard("boa");       
+        id = new DataBase().Board.MaxID();
         name = null;
+        stateActive = 0;
     }
 
-    public Board(int id, string name)
+    public Board(int id, string name, int stateActive)
     {
+        this.stateActive = stateActive;
         this.id = id;
         this.name = name;
     }
@@ -60,7 +47,7 @@ public class Column : Objeсts
     public int idBoardRef;
     public Column()
     {
-        id = GetMaxIdBoard("col"); ;
+        id = new DataBase().Column.MaxID();
         idBoardRef = 0;
         name = null;
     }
@@ -86,7 +73,7 @@ public class Card : Objeсts
     public string text;
     public Card()
     {
-        id = GetMaxIdBoard("car"); ;
+        id = new DataBase().Card.MaxID();
         idColumnsRef = 0;
         name = null;
         color = "white";

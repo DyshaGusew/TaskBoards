@@ -9,9 +9,20 @@ using System.Threading.Tasks;
 
 internal class Logic
 {
-    //public int GetMaxId(string type)
-   // {
-     //   return 2;
-    //}
+    DataBase DB = new DataBase();
+    public Board GetCurrentBoard()
+    {
+        List<Board> boards = DB.Board.GetListBoards();
+        foreach (Board board in boards) 
+        { 
+          if(board.stateActive != 0) 
+            { 
+                return board;
+            }
+        }
+        Console.WriteLine("ошибка, нет активной доски");
+        return null;
+        
+    }
 }
 
