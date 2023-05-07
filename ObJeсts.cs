@@ -101,3 +101,19 @@ public class Card : Objeсts
         this.text = text;
     }
 }
+
+public class Person
+{
+    //по умолчанию стоит, что человек не админ
+    public int id = 0;
+    public string login;
+    public string password;
+    public int stateActivePerson = 0;
+    public Person(string login, string password, int stateActivePerson)
+    {
+        this.login = login;
+        this.password = password;
+        this.stateActivePerson = stateActivePerson;
+    }
+    
+}
