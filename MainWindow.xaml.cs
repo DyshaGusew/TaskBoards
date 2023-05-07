@@ -21,7 +21,7 @@ namespace TaskBoard
         DataBase DB;
         public MainWindow()
         {
-            DB = new DataBase();
+           
             InitializeComponent();
 
 
