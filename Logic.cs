@@ -36,8 +36,11 @@ public class Logic
         {
             string line = rd.ReadLine();
             string[] parms = line.Split(new char[] { ';' });
-            Arr[i] = Convert.ToInt32(parms[1]);
-            i++;
+            if (id == Convert.ToInt32(parms[1]))
+            {
+                Arr[i] = Convert.ToInt32(parms[1]);
+                i++;
+            }
         }
         rd.Close();
         return Arr;
@@ -46,13 +49,7 @@ public class Logic
     public static int[] GetIdCardInColomns(int id)
     {
         StreamReader rd = new StreamReader("../../DataBases\\Cards.csv");
-        //int t = 0;
-        //while (!rd.EndOfStream)//Листаем до конца, считываем массив до конца
-        //{
-        //    t++;
-        //}
         int[] Arr = Array.Empty<int>();
-        //int[] Arr = new int[t];
         //счеткик
         int i = 0;
         //Считываем базу данных
@@ -60,12 +57,13 @@ public class Logic
         {
             string line = rd.ReadLine();
             string[] parms = line.Split(new char[] { ';' });
-            Arr[i] = Convert.ToInt32(parms[1]);
-            i++;
+            if (id == Convert.ToInt32(parms[1]))
+            {
+                Arr[i] = Convert.ToInt32(parms[1]);
+                i++;
+            }
         }
         rd.Close();
         return Arr;
     }
-
 }
-
