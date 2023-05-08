@@ -1,5 +1,4 @@
 ﻿<Window x:Class="TaskBoard.MainWindow"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -11,7 +10,7 @@
         <TextBlock x:Name="txtOutput" TextWrapping="Wrap" Text="TextBlock" RenderTransformOrigin="0.508,0.492" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
         <Grid Background="#FF287EA1" VerticalAlignment="Top" Height="60">
             <TextBlock x:Name="BoardNamePanel" Text="Доска номер 1" VerticalAlignment="Center" FontSize="36" HorizontalAlignment="Center" Foreground="#FFD9C98B"/>
-            <Button HorizontalAlignment="Right" Content="Войти" Style="{StaticResource MaterialDesignFlatButton}" FontSize="24" Padding="16,0,16,0" VerticalAlignment="Center" Margin="0,0,30,0"/>
+            <Button HorizontalAlignment="Right" Content="Войти" FontSize="24" Padding="16,0,16,0" VerticalAlignment="Center" Margin="0,0,30,0"/>
         </Grid>
 
     </Grid>
