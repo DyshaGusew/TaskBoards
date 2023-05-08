@@ -11,6 +11,8 @@ using System.Threading.Tasks;
 public class Logic
 {
     DataBase DB = new DataBase();
+
+    //Проверка на текущую доску
     public Board GetCurrentBoard()
     {
         List<Board> boards = DB.Board.GetListBoards();
@@ -24,6 +26,7 @@ public class Logic
         Console.WriteLine("ошибка, нет активной доски");
         return null;
     }
+
     //ID of the columns contained in the boards - Айди столбцов содержащихся в досках
     public static int[] GetIdColumsInBoard(int id)
     {
