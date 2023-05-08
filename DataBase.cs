@@ -462,7 +462,7 @@ public partial class DataBase
                 string line = rd.ReadLine();
                 string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
 
-                Card card = new Card(Convert.ToInt32(parms[0]), Convert.ToInt32(parms[1]), parms[2]);
+                Card card = new Card(Convert.ToInt32(parms[0]), Convert.ToInt32(parms[1]), parms[2], parms[3], Convert.ToInt32(parms[4]), parms[5]);
                 cards.Add(card);
             }
             rd.Close();
@@ -495,7 +495,5 @@ public partial class DataBase
 
 
         }
-    }
-
-    
+    }  
 }
