@@ -33,7 +33,7 @@ namespace TaskBoard
             DB.Column.AssignmentIDBoard(6, 866);
 
             var Col = new DrawColumn();
-            MainPlane.Children.Add(Col.Ret());
+            MainPlane.Children.Add(Col.Draw());
 
             //Border btn1 = new Border();
             //btn1.Background = Brushes.Blue;

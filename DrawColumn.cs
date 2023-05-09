@@ -11,7 +11,7 @@ namespace TaskBoard
 {
     public class DrawColumn
     {
-        public Border Ret()
+        public Border Draw()
         {
             int a = 480; // Ширина
             int b = 640; // Высота досок
