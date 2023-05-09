@@ -23,7 +23,6 @@ namespace TaskBoard
         
         public MainWindow()
         {
-
             InitializeComponent();
 
             DataBase DB = new DataBase();
@@ -32,34 +31,19 @@ namespace TaskBoard
             DB.Column.AppObject(new Column(15));
             DB.Column.AssignmentIDBoard(6, 866);
 
-            var Col = new DrawColumn();
-            MainPlane.Children.Add(Col.Draw());
-
-            //Border btn1 = new Border();
-            //btn1.Background = Brushes.Blue;
-            //btn1.BorderBrush = Brushes.Black;
-            //btn1.CornerRadius = new CornerRadius(25);
-            //btn1.Width = a;
-            //btn1.Height = b;
-            //btn1.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
-            //btn1.Margin = new Thickness(0, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            //btn1.HorizontalAlignment = HorizontalAlignment.Center;
-            //btn1.VerticalAlignment = VerticalAlignment.Top;
-            //MainPlane.Children.Add(btn1);
-
-            //Border btn2 = new Border();
-            //btn2.Background = Brushes.Blue;
-            //btn2.BorderBrush = Brushes.Black;
-            //btn2.CornerRadius = new CornerRadius(25);
-            //btn2.Width = a;
-            //btn2.Height = b;
-            //btn2.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
-            //btn2.Margin = new Thickness(0, 100, 20, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            //btn2.HorizontalAlignment = HorizontalAlignment.Right;
-            //btn2.VerticalAlignment = VerticalAlignment.Top;
-            //MainPlane.Children.Add(btn2);
+            //Пока косячно, надо переделать свои старые функции
+            Border[] borders = new Border[3];
+            borders = DrawColumn.Draw(1);
+            MainPlane.Children.Add(borders[0]);
+            //MainPlane.Children.Add(borders[1]);
+            //MainPlane.Children.Add(borders[2]);
+            //DisplayAllColomn();
 
 
+            //void DisplayAllColomn()
+            //{
+
+            //}
         }
     }
 }
