@@ -159,10 +159,15 @@ public partial class DataBase
         List<Objeсts> objeсts = new List<Objeсts>();
 
         StreamReader rd = new StreamReader(path);
-
+        int count = 0;
         while (!rd.EndOfStream)           //Пока не конец файла проверяю
         {
             string line = rd.ReadLine();
+            if (!line.Contains(";"))
+            {
+                rd.Close();
+                return null;
+            }
             string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
             if (GetObjOfId(Convert.ToInt32(parms[0]), path) is Board)
             {
@@ -179,8 +184,13 @@ public partial class DataBase
                 Card card = (Card)GetObjOfId(Convert.ToInt32(parms[0]), pathDataCards);
                 objeсts.Add(card);
             }
+            count ++;
         }
         rd.Close();
+        if (count == 0)
+        {
+            return null;
+        }
         return (objeсts);
     }
 
@@ -221,6 +231,10 @@ public partial class DataBase
         public List<Board> GetListBoards()
         {
             List <Objeсts> objeсts = DataBase.GetListObjects(pathDataBoards);
+            if(DataBase.GetListObjects(pathDataBoards) == null)
+            {
+                return null;
+            }
             List<Board> boards  = new List<Board>();
             foreach(Objeсts board_ in objeсts)
             {
@@ -316,6 +330,10 @@ public partial class DataBase
         {
             List<Objeсts> objeсts = DataBase.GetListObjects(pathDataColumns);
             List<Column> column = new List<Column>();
+            if (DataBase.GetListObjects(pathDataColumns) == null)
+            {
+                return null;
+            }
             foreach (Objeсts column_ in objeсts)
             {
                 column.Add((Column)column_);
@@ -409,6 +427,11 @@ public partial class DataBase
         {
             List<Card> cards = new List<Card>();
             List<Objeсts> objeсts = DataBase.GetListObjects(pathDataCards);
+
+            if (DataBase.GetListObjects(pathDataCards) == null)
+            {
+                return null;
+            }
 
             foreach (Objeсts card_ in objeсts)
             {

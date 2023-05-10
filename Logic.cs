@@ -26,61 +26,58 @@ public class Logic : ILogic
     //Получение имени доски при создании
     public static string GetBoardNullName() 
     {
+        if(DataBase.Board.GetListBoards() == null)
+        {
+            return "Доска номер 1";
+        }
         string text = "Доска номер " + (DataBase.Board.GetListBoards().Count()+1).ToString();
         return text; 
     }
 
     //Поправить косяк со считыванием элементов
     //ID of the columns contained in the boards - Айди столбцов содержащихся в досках
-    public int[] GetIdColumsInBoard(int id)
+    public List<int> GetIdColumsInBoard(int id)
     {
-        StreamReader rd = new StreamReader("../../DataBases\\Columns.csv");
-        int[] Arr = Array.Empty<int>();
+        
+        List<int> Arr = new List<int>();
         //счеткик
-        int i = 0;
-        //Считываем базу данных
-        while (!rd.EndOfStream)//Листаем до конца
+        int count = 0;
+        foreach(Column column in DataBase.Column.GetListСolumns())
         {
-            string line = rd.ReadLine();
-            string[] parms = line.Split(new char[] { ';' });
-            if (id == Convert.ToInt32(parms[1]))
+            if(column.idBoardRef == id)
             {
-                Arr[i] = Convert.ToInt32(parms[1]);
-                i++;
-            }
-            else if(Convert.ToInt32(parms[1]) == 0)
-            {
-                Arr[i] = 0;
-                i++;
+                Arr.Add(column.id);
+                count++;
             }
         }
-        rd.Close();
-        return Arr;
+
+        if(count != 0)
+        {
+            return Arr;
+        }
+        return null;
     }
     //ID of the cards contained in the columns - Айди карточек содержащихся в столбцах
-    public int[] GetIdCardInColomns(int id)
+    public List<int> GetIdCardInColomns(int id)
     {
-        StreamReader rd = new StreamReader("../../DataBases\\Cards.csv");
-        int[] Arr = Array.Empty<int>();
+
+        List<int> Arr = new List<int>();
         //счеткик
-        int i = 0;
+        int count = 0;
         //Считываем базу данных
-        while (!rd.EndOfStream)//Листаем до конца
+        foreach (Card card in DataBase.Card.GetListСards())
         {
-            string line = rd.ReadLine();
-            string[] parms = line.Split(new char[] { ';' });
-            if (id == Convert.ToInt32(parms[1]))
+            if (card.idColumnsRef == id)
             {
-                Arr[i] = Convert.ToInt32(parms[1]);
-                i++;
-            }
-            else if (Convert.ToInt32(parms[1]) == 0)
-            {
-                Arr[i] = 0;
-                i++;
+                Arr.Add(card.id);
+                count++;
             }
         }
-        rd.Close();
-        return Arr;
+
+        if (count != 0)
+        {
+            return Arr;
+        }
+        return null;
     }
 }

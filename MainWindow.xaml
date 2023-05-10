@@ -6,37 +6,22 @@
         xmlns:local="clr-namespace:TaskBoard"
         mc:Ignorable="d"
         Title="TaskBoard" Icon="/Other/ocr.png" WindowStyle="ThreeDBorderWindow" Width="1920" Height="1064" Left="-10" Top="0">
-    <Grid x:Name="MainPlane" Background="#FF5DE9E9">
+    <Grid x:Name="MainPlane" Background="#FF4AB4B4">
+        
         <Grid x:Name="BoardNamePanel" Background="#FF287EA1" VerticalAlignment="Top" Height="60">
+            <TextBox x:Name="BoardText" Text="" TextChanged="BoardText_TextChanget" VerticalAlignment="Center" FontSize="36" HorizontalAlignment="Left" Foreground="Black" Background="#FF2B7D9E" BorderBrush="#00ABADB3" Grid.Column="1" Margin="609,0,0,0"/>
 
-            <TextBox x:Name="BoardText" Text="" TextChanged="BoardText_TextChanget" VerticalAlignment="Center" FontSize="36" HorizontalAlignment="Center" Foreground="Black" Background="#FF2B7D9E" BorderBrush="#00ABADB3"/>
-
-            <Button x:Name="ButtonAddColumn" Content="Добавить столбец" VerticalAlignment="Center" FontSize="24" HorizontalAlignment="Right" Background="#FFEEEEEE" Margin="0,0,50,0" BorderBrush="#FF1A1A1A" Padding="5,0,5,0" Grid.IsSharedSizeScope="True"/>
+            <Button x:Name="ButtonAddColumn" Content="Добавить столбец" VerticalAlignment="Center" FontSize="24" HorizontalAlignment="Left" Background="#FFEEEEEE" Margin="1310,0,0,0" BorderBrush="#FF1A1A1A" Padding="5,0,5,0" Grid.IsSharedSizeScope="True" Grid.Column="1"/>
             <TextBlock HorizontalAlignment="Left" Margin="35,0,0,0" TextWrapping="Wrap" Text="Меню" Width="107" FontSize="25" Background="#FFEDEDED" VerticalAlignment="Center" Padding="5,0,0,0" Height="40"/>
             <ComboBox HorizontalAlignment="Left" Text="Обзор" Margin="115,10,0,10" Width="27" BorderBrush="Red" Foreground="Black" FontSize="13" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.516">
                 <Button x:Name="ButtonAddBoard" Click="ButtonAddBoard_Click" Content="Добавить новую доску" HorizontalAlignment="Center" Width="160" Height="40"/>
-                <Button x:Name="ButtonDeleteBoard" Content="Удалить эту доску" HorizontalAlignment="Center" Width="160" Height="40"/>
-                <Button x:Name="ButtonOpenBoards" Content="Открыть доску" HorizontalAlignment="Center" Width="160" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Button x:Name="ButtonDeleteBoard" Click="ButtonDeleteBoard_Click" Content="Удалить эту доску" HorizontalAlignment="Center" Width="160" Height="40"/>
+                <Button x:Name="ButtonOpenBoards" Click="ButtonOpenBoards_Click" Content="Выбрать доску" HorizontalAlignment="Center" Width="160" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
             </ComboBox>
-
         </Grid>
-        <Grid x:Name ="PlaneColumn" Background="Beige" Margin="0,60,0,0">
-            <Grid.RowDefinitions>
-                <RowDefinition/>
-                <RowDefinition/>
-                <RowDefinition/>
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
 
+        
 
-
-
-        </Grid>
     </Grid>
 
 </Window>

@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 interface ILogic
 {
-    int[] GetIdColumsInBoard(int id);
+    List<int> GetIdColumsInBoard(int id);
 
 
 
-    int[] GetIdCardInColomns(int id);
+    List<int> GetIdCardInColomns(int id);
 }
