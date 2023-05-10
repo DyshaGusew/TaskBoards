@@ -19,9 +19,9 @@ public partial class DataBase
     static readonly string pathDataColumns = "../../DataBases\\Columns.csv";
     static readonly string pathDataCards = "../../DataBases\\Cards.csv";
 
-    public BoardsBD Board = new BoardsBD();
-    public ColumnsBD Column= new ColumnsBD();
-    public CardsBD Card = new CardsBD();
+    public static BoardsBD Board = new BoardsBD();
+    public static ColumnsBD Column = new ColumnsBD();
+    public static CardsBD Card = new CardsBD();
 
 
     public static void AppObject(Objeсts object_, string path)

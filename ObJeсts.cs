@@ -28,8 +28,14 @@ public class Board : Objeсts
     public int stateActive = 0;
     public Board()
     {
-        id = new DataBase().Board.MaxID();
+        id = DataBase.Board.MaxID();
         name = null;
+        stateActive = 0;
+    }
+    public Board(string name)
+    {
+        id = DataBase.Board.MaxID();
+        this.name = name;
         stateActive = 0;
     }
 
@@ -47,7 +53,7 @@ public class Column : Objeсts
     public int idBoardRef;
     public Column()
     {
-        id = new DataBase().Column.MaxID();
+        id = DataBase.Column.MaxID();
         idBoardRef = 0;
         name = null;
     }
@@ -73,7 +79,7 @@ public class Card : Objeсts
     public string text;
     public Card()
     {
-        id = new DataBase().Card.MaxID();
+        id = DataBase.Card.MaxID();
         idColumnsRef = 0;
         name = null;
         color = "white";

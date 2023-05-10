@@ -9,8 +9,7 @@ interface ILogic
 {
     int[] GetIdColumsInBoard(int id);
 
-    Board GetCurrentBoard();
+
 
     int[] GetIdCardInColomns(int id);
 }
-

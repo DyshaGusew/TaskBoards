@@ -4,18 +4,14 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
-
+using System.Windows;
 
 public class Logic : ILogic
 {
-    DataBase DB = new DataBase();
-
     //Проверка на текущую доску
-    public Board GetCurrentBoard()
+    public static Board GetCurrentBoard()
     {
-        List<Board> boards = DB.Board.GetListBoards();
+        List<Board> boards = DataBase.Board.GetListBoards();
         foreach (Board board in boards) 
         { 
           if(board.stateActive != 0) 
@@ -26,6 +22,14 @@ public class Logic : ILogic
         Console.WriteLine("ошибка, нет активной доски");
         return null;
     }
+
+    //Получение имени доски при создании
+    public static string GetBoardNullName() 
+    {
+        string text = "Доска номер " + (DataBase.Board.GetListBoards().Count()+1).ToString();
+        return text; 
+    }
+
     //Поправить косяк со считыванием элементов
     //ID of the columns contained in the boards - Айди столбцов содержащихся в досках
     public int[] GetIdColumsInBoard(int id)
