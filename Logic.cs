@@ -26,7 +26,7 @@ public class Logic : ILogic
         Console.WriteLine("ошибка, нет активной доски");
         return null;
     }
-
+    //Поправить косяк со считыванием элементов
     //ID of the columns contained in the boards - Айди столбцов содержащихся в досках
     public int[] GetIdColumsInBoard(int id)
     {

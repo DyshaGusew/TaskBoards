@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="TaskBoard" Icon="/Other/ocr.png" WindowStyle="ThreeDBorderWindow" Width="1920" Height="1064" Left="-10" Top="0">
     <Grid x:Name="MainPlane" Background="#FF5DE9E9">
-        <TextBlock x:Name="txtOutput" TextWrapping="Wrap" Text="TextBlock" RenderTransformOrigin="0.508,0.492" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="25"/>
         <Grid Background="#FF287EA1" VerticalAlignment="Top" Height="60">
             <TextBlock x:Name="BoardNamePanel" Text="Доска номер 1" VerticalAlignment="Center" FontSize="36" HorizontalAlignment="Center" Foreground="#FFD9C98B"/>
             <Button HorizontalAlignment="Right" Content="Войти" FontSize="24" Padding="16,0,16,0" VerticalAlignment="Center" Margin="0,0,30,0"/>

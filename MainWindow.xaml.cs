@@ -23,21 +23,23 @@ namespace TaskBoard
         
         public MainWindow()
         {
-
             InitializeComponent();
 
             DataBase DB = new DataBase();
 
+            //Пока косячно, надо переделать свои старые функции
+            Border[] borders = new Border[3];
+            borders = DrawColumn.Draw(1);
+            MainPlane.Children.Add(borders[0]);
+            //MainPlane.Children.Add(borders[1]);
+            //MainPlane.Children.Add(borders[2]);
+            //DisplayAllColomn();
 
 
+            //void DisplayAllColomn()
+            //{
 
-            
-
-            
-            // Console.WriteLine(DB.GetIdRef(2, "col"));
-
-            //Эту хрень используйте для вывода
-            
+            //}
         }
 
     }
