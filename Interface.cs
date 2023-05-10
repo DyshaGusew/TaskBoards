@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TaskBoard
+
+interface ILogic
 {
-    internal class Interface
-    {
-    }
+    int[] GetIdColumsInBoard(int id);
+
+    Board GetCurrentBoard();
+
+    int[] GetIdCardInColomns(int id);
 }
+

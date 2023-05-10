@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 
 
-public class Logic
+public class Logic : ILogic
 {
     DataBase DB = new DataBase();
 
@@ -28,7 +28,7 @@ public class Logic
     }
 
     //ID of the columns contained in the boards - Айди столбцов содержащихся в досках
-    public static int[] GetIdColumsInBoard(int id)
+    public int[] GetIdColumsInBoard(int id)
     {
         StreamReader rd = new StreamReader("../../DataBases\\Columns.csv");
         int[] Arr = Array.Empty<int>();
@@ -44,12 +44,17 @@ public class Logic
                 Arr[i] = Convert.ToInt32(parms[1]);
                 i++;
             }
+            else if(Convert.ToInt32(parms[1]) == 0)
+            {
+                Arr[i] = 0;
+                i++;
+            }
         }
         rd.Close();
         return Arr;
     }
     //ID of the cards contained in the columns - Айди карточек содержащихся в столбцах
-    public static int[] GetIdCardInColomns(int id)
+    public int[] GetIdCardInColomns(int id)
     {
         StreamReader rd = new StreamReader("../../DataBases\\Cards.csv");
         int[] Arr = Array.Empty<int>();
@@ -63,6 +68,11 @@ public class Logic
             if (id == Convert.ToInt32(parms[1]))
             {
                 Arr[i] = Convert.ToInt32(parms[1]);
+                i++;
+            }
+            else if (Convert.ToInt32(parms[1]) == 0)
+            {
+                Arr[i] = 0;
                 i++;
             }
         }

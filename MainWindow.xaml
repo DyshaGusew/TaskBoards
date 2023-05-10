@@ -12,6 +12,22 @@
             <TextBlock x:Name="BoardNamePanel" Text="Доска номер 1" VerticalAlignment="Center" FontSize="36" HorizontalAlignment="Center" Foreground="#FFD9C98B"/>
             <Button HorizontalAlignment="Right" Content="Войти" FontSize="24" Padding="16,0,16,0" VerticalAlignment="Center" Margin="0,0,30,0"/>
         </Grid>
+        <Grid x:Name ="PlaneColumn" Background="Beige" Margin="0,60,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Row="0" Grid.Column="0" Text="228" FontSize="20"/>
+
+
+        </Grid>
 
     </Grid>
 </Window>

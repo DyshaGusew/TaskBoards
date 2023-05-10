@@ -250,6 +250,7 @@ public partial class DataBase
             //Заменяю старую(временную) доску на новую
             ReplaceObject(id, board);
         }
+
     }
 
     public class ColumnsBD
@@ -257,6 +258,11 @@ public partial class DataBase
         //Добавля. доску в базу данных
         public void AppObject(Column column)
         {
+            //Условие нужно при нажатии
+            //if( new Logic().GetIdColumsInBoard(new Logic().GetCurrentBoard().id).Length >= 9)
+           // {
+                //Делать так нельзя, тк больше 9 запрещено
+            //}
             DataBase.AppObject(column, pathDataColumns);
         }
 

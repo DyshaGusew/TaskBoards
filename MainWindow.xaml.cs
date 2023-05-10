@@ -27,13 +27,8 @@ namespace TaskBoard
             InitializeComponent();
 
             DataBase DB = new DataBase();
-            DB.Board.AppObject(new Board());
-            DB.Card.MaxID();
-            DB.Column.AppObject(new Column(15));
-            DB.Column.AssignmentIDBoard(6, 866);
 
 
-                BoardNamePanel.Text = Convert.ToString(DB.Board.GetObjOfId(board.id).id);
 
 
             
@@ -44,5 +39,6 @@ namespace TaskBoard
             //Эту хрень используйте для вывода
             
         }
+
     }
 }
