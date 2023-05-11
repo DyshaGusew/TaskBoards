@@ -14,13 +14,14 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
-namespace TaskBoard
+ namespace TaskBoard
 {
     
     public partial class MainWindow : Window
     {
-        
         public MainWindow()
         {
             if(DataBase.Board.GetListBoards() == null)
@@ -29,8 +30,11 @@ namespace TaskBoard
                 board.stateActive = 1;
                 DataBase.Board.AppObject(board);
             }
+            DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[0].id);
             InitializeComponent();
+            
             DraftBoard();
+            
 
            
             
@@ -113,40 +117,132 @@ namespace TaskBoard
             //Удаляю доску
             DataBase.Board.DeleteByID(idBoard);
 
-            //Получаю все столбцы этой доски
-            
+            //Получаю все столбцы этой доски      
             if(new Logic().GetIdColumsInBoard(idBoard) != null)
             {
                 List<int> IdColumns = new Logic().GetIdColumsInBoard(idBoard);
-                foreach (int iColumn in IdColumns)
+                if(DataBase.Column.GetListСolumns() != null)
                 {
-                    //Получаю все айди карточки в столбце
-                    if (new Logic().GetIdCardInColomns(iColumn) != null)
+                    foreach (int iColumn in IdColumns)
                     {
-                        List<int> IdCards = new Logic().GetIdCardInColomns(iColumn);
-                        foreach (int iCard in IdCards)
+                        //Получаю все айди карточки в столбце
+                        if (new Logic().GetIdCardInColomns(iColumn) != null)
                         {
-                            //Удаляю каждую карточку столбца
-                            DataBase.Card.DeleteByID(iCard);
+                            List<int> IdCards = new Logic().GetIdCardInColomns(iColumn);
+                            foreach (int iCard in IdCards)
+                            {
+                                //Удаляю каждую карточку столбца
+                                DataBase.Card.DeleteByID(iCard);
+                            }
                         }
+                        //Удаляю сам столбец
+                        DataBase.Column.DeleteByID(iColumn);
                     }
-                    //Удаляю сам столбец
-                    DataBase.Column.DeleteByID(iColumn);
                 }
+                
             }
            
             //Делаю активной другую доску, рисую активнцю доску
-            DataBase.Board.ActivsBoard(idBoard-1);
+            DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[0].id);
             DraftBoard();
+
+
         }
 
-        private void ButtonOpenBoards_Click(object sender, RoutedEventArgs e)
+        //Открытие списка досок
+        public void ButtonOpenBoards_Click(object sender, RoutedEventArgs e)
         {
             List<Board> boards = DataBase.Board.GetListBoards().ToList();
-            foreach (Board board1 in boards)
+            List<Button> buttons = new List<Button>();
+            List<Border> bords = new List<Border>();
+            int flag = 0;
+            
+            foreach (UIElement element in MainPlane.Children)
             {
-
+                if (element is Button)
+                {
+                    if (((Button)element).Name.ToString().Contains("Mini"))
+                    {
+                        buttons.Add((Button)element);
+                        flag = 1;
+                    }
+                    
+                }
             }
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Border)
+                {
+                    if (((Border)element).Name.ToString().Contains("BordList"))
+                    {
+                        bords.Add((Border)element);
+
+                    }
+
+                }
+            }
+
+            //Удаление
+            foreach (Border border in bords)
+            {
+                MainPlane.Children.Remove(border);
+            }
+
+            foreach (Button but in buttons)
+            {
+                MainPlane.Children.Remove(but);
+            }
+
+            
+            if (flag == 0)
+            {
+                MainPlane.Children.Add(DrawPlane.FonButtonBoard());
+                int step = 0;
+               // MainPlane.Children.Add(DrawPlane.FonButtonBoard());
+                foreach (Board board1 in boards)
+                {
+                    MainPlane.Children.Add(DrawPlane.ButtonBoard(step, board1));
+                    step += 70;
+                }
+            }
+        }
+
+        public void DeleteList()
+        {
+            List<Button> buttons = new List<Button>();
+            List<Border> bords = new List<Border>();
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Button)
+                {
+                    if (((Button)element).Name.ToString().Contains("Mini"))
+                    {
+                        buttons.Add((Button)element);
+                    }
+
+                }
+            }
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Border)
+                {
+                    if (((Border)element).Name.ToString().Contains("BordList"))
+                    {
+                        bords.Add((Border)element);
+
+                    }
+
+                }
+            }
+            foreach (Border border in bords)
+            {
+                MainPlane.Children.Remove(border);
+            }
+            foreach (Button but in buttons)
+            {
+                MainPlane.Children.Remove(but);
+            }
+            DraftBoard();
         }
     }
 }

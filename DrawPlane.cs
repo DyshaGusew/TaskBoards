@@ -5,10 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
-public class DrawPlane
+using System.Windows.Media;
+using TaskBoard;
+
+public class DrawPlane 
 {
+    // ((MainWindow)System.Windows.Application.Current.MainWindow).DeleteList(); //Самая важнач строчка кода, позволяет обращаться к основному окну
     private static Border Border()
     {
         int a = 480; // Ширина
@@ -108,6 +111,57 @@ public class DrawPlane
         return btn;
     }
 
+
+    public static Button ButtonBoard(int step, Board board)
+    {
+        int a = 250; // Ширина
+        int b = 50; // Высота досок
+
+        Button btn = new Button();
+
+        
+        btn.Background = Brushes.Aquamarine;
+        btn.BorderBrush = Brushes.Black;
+        btn.Width = a;
+        btn.Height = b;
+        btn.Name = "Mini" + board.name.Replace(" ", "");
+        btn.Content = board.name;
+        HorizontalAlignment horizontalAlignment = HorizontalAlignment.Left;
+        btn.Margin = new Thickness(0, step + 150, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+
+        btn.HorizontalAlignment = HorizontalAlignment.Center;
+        btn.VerticalAlignment = VerticalAlignment.Top;
+
+        btn.Click += Click1;
+        btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        
+        
+        void Click1(object sender, RoutedEventArgs e)
+        {
+            DataBase.Board.ActivsBoard(board.id);
+            ((MainWindow)System.Windows.Application.Current.MainWindow).DeleteList();
+        }
+            
+        return btn;
+    }
+
+    public static Border FonButtonBoard()
+    {
+        Border border = new Border();
+
+        border.Background = Brushes.White;
+        border.BorderBrush = Brushes.Black;
+        border.Width = 300;
+        border.Height = DataBase.Board.GetListBoards().Count * 50 + (DataBase.Board.GetListBoards().Count-1) * 20 + 100;
+        border.Name = "BordList";
+        border.Margin = new Thickness(0, 100, 0, 0);
+        border.HorizontalAlignment = HorizontalAlignment.Center;
+        border.VerticalAlignment = VerticalAlignment.Top;
+        border.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        
+
+        return border;
+    }
 
 
 }

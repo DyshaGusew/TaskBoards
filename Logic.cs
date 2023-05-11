@@ -42,14 +42,18 @@ public class Logic : ILogic
         List<int> Arr = new List<int>();
         //счеткик
         int count = 0;
-        foreach(Column column in DataBase.Column.GetListСolumns())
+        if(DataBase.Column.GetListСolumns() != null)
         {
-            if(column.idBoardRef == id)
+            foreach (Column column in DataBase.Column.GetListСolumns())
             {
-                Arr.Add(column.id);
-                count++;
+                if (column.idBoardRef == id)
+                {
+                    Arr.Add(column.id);
+                    count++;
+                }
             }
         }
+        
 
         if(count != 0)
         {

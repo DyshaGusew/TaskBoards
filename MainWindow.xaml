@@ -13,7 +13,7 @@
 
             <Button x:Name="ButtonAddColumn" Content="Добавить столбец" VerticalAlignment="Center" FontSize="24" HorizontalAlignment="Left" Background="#FFEEEEEE" Margin="1310,0,0,0" BorderBrush="#FF1A1A1A" Padding="5,0,5,0" Grid.IsSharedSizeScope="True" Grid.Column="1"/>
             <TextBlock HorizontalAlignment="Left" Margin="35,0,0,0" TextWrapping="Wrap" Text="Меню" Width="107" FontSize="25" Background="#FFEDEDED" VerticalAlignment="Center" Padding="5,0,0,0" Height="40"/>
-            <ComboBox HorizontalAlignment="Left" Text="Обзор" Margin="115,10,0,10" Width="27" BorderBrush="Red" Foreground="Black" FontSize="13" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.516">
+            <ComboBox x:Name="ComboButton" HorizontalAlignment="Left" Text="Обзор" Margin="115,10,0,10" Width="27" BorderBrush="Red" Foreground="Black" FontSize="13" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" RenderTransformOrigin="0.5,0.516">
                 <Button x:Name="ButtonAddBoard" Click="ButtonAddBoard_Click" Content="Добавить новую доску" HorizontalAlignment="Center" Width="160" Height="40"/>
                 <Button x:Name="ButtonDeleteBoard" Click="ButtonDeleteBoard_Click" Content="Удалить эту доску" HorizontalAlignment="Center" Width="160" Height="40"/>
                 <Button x:Name="ButtonOpenBoards" Click="ButtonOpenBoards_Click" Content="Выбрать доску" HorizontalAlignment="Center" Width="160" Height="40" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
