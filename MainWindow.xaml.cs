@@ -143,7 +143,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
             }
            
             //Делаю активной другую доску, рисую активнцю доску
-            DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[0].id);
+            DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[DataBase.Board.GetListBoards().Count-1].id);
             DraftBoard();
 
 
