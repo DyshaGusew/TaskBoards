@@ -18,10 +18,12 @@ public partial class DataBase
     static readonly string pathDataBoards = "../../DataBases\\Boards.csv";
     static readonly string pathDataColumns = "../../DataBases\\Columns.csv";
     static readonly string pathDataCards = "../../DataBases\\Cards.csv";
+    
 
     public static BoardsBD Board = new BoardsBD();
     public static ColumnsBD Column = new ColumnsBD();
     public static CardsBD Card = new CardsBD();
+    public static PersonsBD Person = new PersonsBD();
 
 
     public static void AppObject(Objeсts object_, string path)
@@ -465,5 +467,167 @@ public partial class DataBase
             }
             rd.Close();
         }
-    }  
+    }
+
+    public class PersonsBD
+    {
+        static readonly string pathDataPersons = "../../DataBases\\PersonBase.csv"; 
+
+        //Создает и добавляет в бд пользователя
+        public void CreatePerson(string login, string password, string PassportSeries, string PassportNumber, string PhoneNumber, bool admin = false)
+        {
+            Person newPerson = new Person(login, password, PassportSeries, PhoneNumber, PhoneNumber, admin);
+            newPerson.id = idBoxMax;
+            //Проверка на наличие такого же пользователя
+            switch (CheckPersonRegistration(newPerson))
+            {
+                case 1:
+                    Console.WriteLine($"Невозможно создать, пользователь с ID {idBoxMax} уже существует");
+                    break;
+
+                case 2:
+                    Console.WriteLine($"Невозможно создать, пользователь с логином {login} уже существует");
+                    break;
+
+
+                default:   //Добавляет если нет ошибок
+                    StringBuilder scv = new StringBuilder();
+                    scv.AppendLine(newPerson.id + ";" + newPerson.login + ";" + newPerson.password + ";" + newPerson.PassportSeries + ";" + newPerson.PassportNumber + ";" + newPerson.PhoneNumber + ";" + newPerson.admin + ";" + newPerson.idRentedСar);
+                    File.AppendAllText(pathDataPerson, scv.ToString());
+                    break;
+            }
+            idBoxMax++;
+        }
+
+        public void AppPerson(Person person)
+        {
+            //Проверка на наличие имени доски
+            string login;
+            if (person.login == null)
+                login = "null";
+            else
+                login = person.login;
+
+            StringBuilder scv = new StringBuilder();
+            scv.AppendLine($"{person.id};{login};{person.password};{person.stateActivePerson}");
+            File.AppendAllText(pathDataPersons, scv.ToString());
+        }
+
+        //Удаляю объект по id
+        public void DeletePersonByID(int id)
+        {
+            StreamReader rd = new StreamReader(pathDataPersons);
+            StreamWriter TimeBox = new StreamWriter("../../DataBases\\BoxBase.csv");//Временный файл для записи
+                                                                                    //Считываем базу данных
+            while (!rd.EndOfStream)//Листаем до конца
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });
+
+                if (Convert.ToInt32(parms[0]) != id)
+                {
+                    TimeBox.WriteLine(line);
+                }
+            }
+            rd.Close();
+            TimeBox.Close();
+            File.Delete(pathDataPersons);//Удаляем оригинал
+            File.Move("../../DataBases\\BoxBase.csv", pathDataPersons);//Переименовываем новый файл без нужного айди
+        }
+
+        //Вычестление максимального id у определенной базы данных
+        public int PersonMaxID()
+        {
+            //Определяю какую бд считывать
+            StreamReader rd = new StreamReader(pathDataPersons);
+
+            //Сам алгоритм нахождения максимального id
+            int maxId = 0;
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+
+                if (Convert.ToInt32(parms[0]) > maxId)          //Если ID равен указанному, то возвращаю пользователя
+                {
+                    maxId = Convert.ToInt32(parms[0]);
+                }
+            }
+            rd.Close();
+            return maxId + 1;
+        }
+
+        //Возвращаю объект с нужным id из указанной БД
+        public Person GetPersonOfId(int id)
+        {
+            StreamReader rd = new StreamReader(pathDataPersons);
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                if (id == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
+                {
+                    Person person = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]));
+                    rd.Close();
+                    return person;
+                }
+            }
+            rd.Close();
+            Console.WriteLine($"Объект c id {id} не найден");
+            return null;
+        }
+
+        //Замена одного объекта на другой с сохранением id
+        public void ReplaceObject(int personId, Person personNew)
+        {
+            Person person = personNew;
+            person.id = personId; //id сохраняю
+            DeletePersonByID(personId);
+            AppPerson(person);
+        }
+
+        //Поучение массива всех досок
+        public List<Person> GetListPersons()
+        {
+            List<Person> persons = new List<Person>();
+
+            StreamReader rd = new StreamReader(pathDataPersons);
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                Person person = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]));
+                persons.Add(person);
+            }
+            rd.Close();
+            return (persons);
+        }
+
+        //Активирую указанную доску
+        public void ActivsPerson(int id)
+        {
+            Person person = GetPersonOfId(id);
+
+            List<Person> persons = GetListPersons();
+
+            //Убираю активное состояние у другой и ставлю указанной
+            foreach (Person person_ in persons)
+            {
+                if (person_.stateActive == 1)
+                {
+                    person_.stateActive = 0;
+                    ReplaceObject(board_.id, board_);
+                }
+            }
+            board.stateActive = 1;
+
+            //Заменяю старую(временную) доску на новую
+            ReplaceObject(id, board);
+        }
+    }
 }

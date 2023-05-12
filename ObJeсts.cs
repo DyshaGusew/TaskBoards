@@ -110,7 +110,7 @@ public class Person
     public int stateActivePerson = 0;
     public Person()
     {
-        id = new DataBase().Person.MaxID();
+        id = DataBase.Person.PersonMaxID();
         stateActivePerson = 0;
     }
     public Person(int id, string login, string password, int stateActivePerson)
