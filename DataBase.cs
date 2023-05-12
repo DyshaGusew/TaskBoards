@@ -535,7 +535,7 @@ public partial class DataBase
         //Вычестление максимального id у  базы данных пользователя
         public int PersonMaxID()
         {
-            //Определяю какую бд считывать
+            
             StreamReader rd = new StreamReader(pathDataPersons);
 
             //Сам алгоритм нахождения максимального id
