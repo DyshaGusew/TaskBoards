@@ -474,25 +474,27 @@ public partial class DataBase
         static readonly string pathDataPersons = "../../DataBases\\PersonBase.csv"; 
         
         // создает нового пользователя и добавляет его в бд
-         public void CreatePerson(int id,string login, string password, int stateActivePerson)
+         public int CreatePerson(int id,string login, string password, int stateActivePerson)
         {
             Person newPerson = new Person(id, login, password, stateActivePerson);
-            
+
             //Проверка на наличие такого же пользователя
+            int result;
             switch (CheckPersonRegistration(newPerson))
             {
-                case 1:
-                    Console.WriteLine($"Невозможно создать, пользователь с логином {login} уже существует");
+                case 2:
+                    result = 1;
                     break;
 
                 default:   //Добавляет если нет ошибок
                     Person person = new Person();
                     StringBuilder scv = new StringBuilder();
-                    scv.AppendLine($"{person.id};{login};{person.password};{person.stateActivePerson}");
+                    scv.AppendLine($"{person.id};{login};{password};{person.stateActivePerson}");
                     File.AppendAllText(pathDataPersons, scv.ToString());
+                    result = 0;
                     break;
             }
-          
+            return result;
         }
 
         //добавляет сущестыующего пользователя в бд

@@ -1,0 +1,19 @@
+﻿<Window x:Class="TaskBoard.AuthWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskBoard"
+        mc:Ignorable="d"
+        Title="TaskBoard - Авторизация" Icon="/Other/ocr.png" WindowStyle="ThreeDBorderWindow" Width="1920" Height="1064" Left="-10" Top="0">
+    <Grid x:Name="AuthPlane" Background="#FF4AB4B4">
+        <Button Content="Назад" Padding="15 5" Margin="15" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Back" />
+        <StackPanel Width="900" HorizontalAlignment="Center" VerticalAlignment="Center">
+            <TextBlock Text="Логин" Margin="0 0 0 10" FontSize="40" />
+            <TextBox x:Name="Login" Padding="15 5" Margin="0 0 0 25" FontSize="40" />
+            <TextBlock Text="Пароль" Margin="0 0 0 10" FontSize="40" />
+            <PasswordBox x:Name="Password" Padding="15 5" Margin="0 0 0 25" FontSize="40" />
+            <Button Content="Войти" Padding="0 20"  FontSize="40" Click="Auth" />
+        </StackPanel>
+    </Grid>
+</Window>
