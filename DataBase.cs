@@ -474,29 +474,23 @@ public partial class DataBase
         static readonly string pathDataPersons = "../../DataBases\\PersonBase.csv"; 
 
         //Создает и добавляет в бд пользователя
-        public void CreatePerson(string login, string password, string PassportSeries, string PassportNumber, string PhoneNumber, bool admin = false)
+        public void CreatePerson(Person person)
         {
-            Person newPerson = new Person(login, password, PassportSeries, PhoneNumber, PhoneNumber, admin);
-            newPerson.id = idBoxMax;
+            Person newPerson = new Person();
+            int ID = PersonMaxID;
             //Проверка на наличие такого же пользователя
-            switch (CheckPersonRegistration(newPerson))
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
             {
-                case 1:
-                    Console.WriteLine($"Невозможно создать, пользователь с ID {idBoxMax} уже существует");
-                    break;
-
-                case 2:
-                    Console.WriteLine($"Невозможно создать, пользователь с логином {login} уже существует");
-                    break;
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
 
 
-                default:   //Добавляет если нет ошибок
-                    StringBuilder scv = new StringBuilder();
-                    scv.AppendLine(newPerson.id + ";" + newPerson.login + ";" + newPerson.password + ";" + newPerson.PassportSeries + ";" + newPerson.PassportNumber + ";" + newPerson.PhoneNumber + ";" + newPerson.admin + ";" + newPerson.idRentedСar);
-                    File.AppendAllText(pathDataPerson, scv.ToString());
-                    break;
+                if (Convert.ToInt32(parms[0]) > maxId)          //Если ID равен указанному, то возвращаю пользователя
+                {
+                    maxId = Convert.ToInt32(parms[0]);
+                }
             }
-            idBoxMax++;
+
         }
 
         public void AppPerson(Person person)
@@ -581,7 +575,7 @@ public partial class DataBase
         }
 
         //Замена одного объекта на другой с сохранением id
-        public void ReplaceObject(int personId, Person personNew)
+        public void ReplacePerson(int personId, Person personNew)
         {
             Person person = personNew;
             person.id = personId; //id сохраняю
@@ -618,16 +612,16 @@ public partial class DataBase
             //Убираю активное состояние у другой и ставлю указанной
             foreach (Person person_ in persons)
             {
-                if (person_.stateActive == 1)
+                if (person_.stateActivePerson == 1)
                 {
-                    person_.stateActive = 0;
-                    ReplaceObject(board_.id, board_);
+                    person_.stateActivePerson = 0;
+                    ReplacePerson(person_.id, person_);
                 }
             }
-            board.stateActive = 1;
+            person.stateActivePerson = 1;
 
             //Заменяю старую(временную) доску на новую
-            ReplaceObject(id, board);
+            ReplacePerson(id, person);
         }
     }
 }
