@@ -472,27 +472,30 @@ public partial class DataBase
     public class PersonsBD
     {
         static readonly string pathDataPersons = "../../DataBases\\PersonBase.csv"; 
-
-        //Создает и добавляет в бд пользователя
-        public void CreatePerson(Person person)
+        
+        // создает нового пользователя и добавляет его в бд
+         public void CreatePerson(int id,string login, string password, int stateActivePerson)
         {
-            Person newPerson = new Person();
-            int ID = PersonMaxID;
+            Person newPerson = new Person(id, login, password, stateActivePerson);
+            
             //Проверка на наличие такого же пользователя
-            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            switch (CheckPersonRegistration(newPerson))
             {
-                string line = rd.ReadLine();
-                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+                case 1:
+                    Console.WriteLine($"Невозможно создать, пользователь с логином {login} уже существует");
+                    break;
 
-
-                if (Convert.ToInt32(parms[0]) > maxId)          //Если ID равен указанному, то возвращаю пользователя
-                {
-                    maxId = Convert.ToInt32(parms[0]);
-                }
+                default:   //Добавляет если нет ошибок
+                    Person person = new Person();
+                    StringBuilder scv = new StringBuilder();
+                    scv.AppendLine($"{person.id};{login};{person.password};{person.stateActivePerson}");
+                    File.AppendAllText(pathDataPersons, scv.ToString());
+                    break;
             }
-
+          
         }
 
+        //добавляет сущестыующего пользователя в бд
         public void AppPerson(Person person)
         {
             //Проверка на наличие имени доски
@@ -507,7 +510,7 @@ public partial class DataBase
             File.AppendAllText(pathDataPersons, scv.ToString());
         }
 
-        //Удаляю объект по id
+        //Удаляю пользователя по id
         public void DeletePersonByID(int id)
         {
             StreamReader rd = new StreamReader(pathDataPersons);
@@ -529,7 +532,7 @@ public partial class DataBase
             File.Move("../../DataBases\\BoxBase.csv", pathDataPersons);//Переименовываем новый файл без нужного айди
         }
 
-        //Вычестление максимального id у определенной базы данных
+        //Вычестление максимального id у  базы данных пользователя
         public int PersonMaxID()
         {
             //Определяю какую бд считывать
@@ -552,7 +555,7 @@ public partial class DataBase
             return maxId + 1;
         }
 
-        //Возвращаю объект с нужным id из указанной БД
+        //Возвращаю пользователя с нужным id 
         public Person GetPersonOfId(int id)
         {
             StreamReader rd = new StreamReader(pathDataPersons);
@@ -574,7 +577,7 @@ public partial class DataBase
             return null;
         }
 
-        //Замена одного объекта на другой с сохранением id
+        //Замена одного пользователяя на другого с сохранением id
         public void ReplacePerson(int personId, Person personNew)
         {
             Person person = personNew;
@@ -583,7 +586,7 @@ public partial class DataBase
             AppPerson(person);
         }
 
-        //Поучение массива всех досок
+        //Поучение массива всех пользователей
         public List<Person> GetListPersons()
         {
             List<Person> persons = new List<Person>();
@@ -602,7 +605,7 @@ public partial class DataBase
             return (persons);
         }
 
-        //Активирую указанную доску
+        //Активирую указанного пользователя
         public void ActivsPerson(int id)
         {
             Person person = GetPersonOfId(id);
@@ -622,6 +625,105 @@ public partial class DataBase
 
             //Заменяю старую(временную) доску на новую
             ReplacePerson(id, person);
+        }
+
+        //Проверка на присутствие пользователя со схожими характеристиками
+        public int CheckPersonRegistration(Person person)
+        {
+            //Проверяю на наличие одинаковых свойств
+            StreamReader rd = new StreamReader(pathDataPersons);
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                if (person.id == Convert.ToInt32(parms[0]))          //Если ID есть в бд, то возвращаю предупреждение
+                {
+                    
+                    rd.Close();
+                    return 1;
+                }
+
+                if (person.login == parms[1])          //Если логин есть в бд, то возвращаю предупреждение
+                {
+                    
+                    rd.Close();
+                    return 2;
+                }
+            }
+            //Если нет одинаковых свойств, то возвращаю ноль
+            rd.Close();
+            return 0;
+        }
+
+        //Проверка на присутствие пользователя с указанным логином и паролем
+        public Person CheckPersonLogon(string login, string password)
+        {
+            //Проверяю на наличие одинаковых свойств
+            StreamReader rd = new StreamReader(pathDataPersons);
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                if (login == parms[1] && password == parms[2])          //Если пароль и логин совпадает, то возвращаю пользователя с такими параметрами
+                {
+                    Person personTrue = GetPersonOfId(Convert.ToInt32(parms[0]));
+                    rd.Close();
+                    return personTrue;
+                }
+            }
+            //Иначе ебашу null
+            rd.Close();
+            return null;
+        }
+
+
+        //------Функции замены параметров пользователя
+        //Замена логина
+        public void ReplaceLoginPerson(int id, string newLogin)
+        {
+            //Считываю базу пользователей
+            StreamReader rd = new StreamReader(pathDataPersons);
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                if (id == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
+                {
+                    
+                    Person ReplaceLoginPerson = new Person(Convert.ToInt32(parms[0]), newLogin, parms[2], Convert.ToInt32(parms[3]));
+
+                    ReplacePerson(id, ReplaceLoginPerson);
+                    return;
+                }
+            }
+
+        }
+
+        //замена пароля
+        public void ReplacePasswordPerson(int id, string newPass)
+        {
+            //Считываю базу пользователей
+            StreamReader rd = new StreamReader(pathDataPersons);
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                if (id == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
+                {
+                    Person ReplacePassPerson = new Person(Convert.ToInt32(parms[0]), parms[1], newPass, Convert.ToInt32(parms[3]));
+                    
+                    rd.Close();
+                    ReplacePerson(id, ReplacePassPerson);
+                    return;
+                }
+            }
+
         }
     }
 }
