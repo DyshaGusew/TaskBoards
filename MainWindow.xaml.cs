@@ -102,6 +102,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
             DataBase.Board.AppObject(board);
             DataBase.Board.ActivsBoard(board.id);
 
+            DeleteList();
             DraftBoard();
         }
 
@@ -138,111 +139,71 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
                         //Удаляю сам столбец
                         DataBase.Column.DeleteByID(iColumn);
                     }
-                }
-                
+                }    
             }
-           
+
             //Делаю активной другую доску, рисую активнцю доску
             DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[DataBase.Board.GetListBoards().Count-1].id);
+            DeleteList();
             DraftBoard();
-
-
         }
 
-        //Открытие списка досок
+        //Открытие списка досок и закрытие
         public void ButtonOpenBoards_Click(object sender, RoutedEventArgs e)
         {
-            List<Board> boards = DataBase.Board.GetListBoards().ToList();
-            List<Button> buttons = new List<Button>();
-            List<Border> bords = new List<Border>();
-            int flag = 0;
-            
+            int flag = 1;
+
             foreach (UIElement element in MainPlane.Children)
             {
-                if (element is Button)
+                if (element is ScrollViewer)
                 {
-                    if (((Button)element).Name.ToString().Contains("Mini"))
+                    if (((ScrollViewer)element).Name.ToString().Contains("BordList"))
                     {
-                        buttons.Add((Button)element);
-                        flag = 1;
+                        flag = 0; break;
                     }
-                    
                 }
             }
-            foreach (UIElement element in MainPlane.Children)
-            {
-                if (element is Border)
-                {
-                    if (((Border)element).Name.ToString().Contains("BordList"))
-                    {
-                        bords.Add((Border)element);
+          
 
-                    }
-
-                }
-            }
-
-            //Удаление
-            foreach (Border border in bords)
-            {
-                MainPlane.Children.Remove(border);
-            }
-
-            foreach (Button but in buttons)
-            {
-                MainPlane.Children.Remove(but);
-            }
-
-            
-            if (flag == 0)
+            //Создание кнопок и фона
+            if (flag == 1)
             {
                 MainPlane.Children.Add(DrawPlane.FonButtonBoard());
-                int step = 0;
-               // MainPlane.Children.Add(DrawPlane.FonButtonBoard());
-                foreach (Board board1 in boards)
+            }
+            //Иначе удаление
+            else
+            {
+                foreach (UIElement element in MainPlane.Children)
                 {
-                    MainPlane.Children.Add(DrawPlane.ButtonBoard(step, board1));
-                    step += 70;
+                    if (element is ScrollViewer)
+                    {
+                        if (((ScrollViewer)element).Name.ToString().Contains("BordList"))
+                        {
+                            MainPlane.Children.Remove((ScrollViewer)element);
+                            break;
+                        }
+                    }
                 }
             }
         }
 
+        //Удаление открывающегося списка
         public void DeleteList()
         {
-            List<Button> buttons = new List<Button>();
-            List<Border> bords = new List<Border>();
             foreach (UIElement element in MainPlane.Children)
             {
-                if (element is Button)
+                if (element is ScrollViewer)
                 {
-                    if (((Button)element).Name.ToString().Contains("Mini"))
+                    if (((ScrollViewer)element).Name.ToString().Contains("BordList"))
                     {
-                        buttons.Add((Button)element);
-                    }
+                        MainPlane.Children.Remove((ScrollViewer)element);
 
+                        DraftBoard();
+                        return;
+                    }
                 }
             }
-            foreach (UIElement element in MainPlane.Children)
-            {
-                if (element is Border)
-                {
-                    if (((Border)element).Name.ToString().Contains("BordList"))
-                    {
-                        bords.Add((Border)element);
 
-                    }
-
-                }
-            }
-            foreach (Border border in bords)
-            {
-                MainPlane.Children.Remove(border);
-            }
-            foreach (Button but in buttons)
-            {
-                MainPlane.Children.Remove(but);
-            }
-            DraftBoard();
         }
     }
 }

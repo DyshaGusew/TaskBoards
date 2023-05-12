@@ -15,7 +15,7 @@
             <PasswordBox x:Name="Password1" Padding="15 5" Margin="0 0 0 25" FontSize="40" />
             <TextBlock Text="Повторите пароль" Margin="0 0 0 10" FontSize="40" />
             <PasswordBox x:Name="Password2" Padding="15 5" Margin="0 0 0 55" FontSize="40" />
-            <Button Content="Войти" Padding="0 20"  FontSize="40" Click="Reg" />
+            <Button Content="Зарегистрироваться" Padding="0 20"  FontSize="40" Click="Reg" />
         </StackPanel>
     </Grid>
 </Window>

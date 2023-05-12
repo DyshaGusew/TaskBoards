@@ -8,6 +8,7 @@ using System.Windows.Controls;
 
 using System.Windows.Media;
 using TaskBoard;
+using static DataBase;
 
 public class DrawPlane 
 {
@@ -111,23 +112,18 @@ public class DrawPlane
         return btn;
     }
 
-
+    //Создание кнопок для списка досок
     public static Button ButtonBoard(int step, Board board)
     {
-        int a = 250; // Ширина
-        int b = 50; // Высота досок
-
         Button btn = new Button();
 
-        
         btn.Background = Brushes.Aquamarine;
         btn.BorderBrush = Brushes.Black;
-        btn.Width = a;
-        btn.Height = b;
+        btn.Width = 250;
+        btn.Height = 50;
         btn.Name = "Mini" + board.name.Replace(" ", "");
         btn.Content = board.name;
-        HorizontalAlignment horizontalAlignment = HorizontalAlignment.Left;
-        btn.Margin = new Thickness(0, step + 150, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+        btn.Margin = new Thickness(0, step+50, 0, 0); //Расположение каждый раз разное
 
         btn.HorizontalAlignment = HorizontalAlignment.Center;
         btn.VerticalAlignment = VerticalAlignment.Top;
@@ -135,7 +131,7 @@ public class DrawPlane
         btn.Click += Click1;
         btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
         
-        
+        //Функция клика для этих кнопок
         void Click1(object sender, RoutedEventArgs e)
         {
             DataBase.Board.ActivsBoard(board.id);
@@ -145,22 +141,60 @@ public class DrawPlane
         return btn;
     }
 
-    public static Border FonButtonBoard()
+    //Объект задней стенки для списка досок
+    public static ScrollViewer FonButtonBoard()
     {
         Border border = new Border();
+        Grid grid = new Grid();
+        ScrollViewer scrollViewer = new ScrollViewer();
 
-        border.Background = Brushes.White;
+        grid.Background = Brushes.White;
         border.BorderBrush = Brushes.Black;
-        border.Width = 300;
+        grid.Width = 300;
+
         border.Height = DataBase.Board.GetListBoards().Count * 50 + (DataBase.Board.GetListBoards().Count-1) * 20 + 100;
-        border.Name = "BordList";
-        border.Margin = new Thickness(0, 100, 0, 0);
-        border.HorizontalAlignment = HorizontalAlignment.Center;
+        scrollViewer.Name = "BordList";
+        grid.Margin = new Thickness(0, 100, 0, 100);
+        grid.HorizontalAlignment = HorizontalAlignment.Center;
+        grid.VerticalAlignment = VerticalAlignment.Top;
         border.VerticalAlignment = VerticalAlignment.Top;
         border.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
-        
 
-        return border;
+        grid.Children.Add(border);
+
+        List<Board> boards = DataBase.Board.GetListBoards().ToList();
+        int step = 0;
+        foreach (Board board1 in boards)
+        {
+            grid.Children.Add(ButtonBoard(step, board1));
+            step += 70;
+        }
+
+        grid.Children.Add(ButtonClose());
+        scrollViewer.Content = grid;
+        return scrollViewer;
+    }
+
+    public static Button ButtonClose()
+    {
+        Button btn = new Button();
+        btn.Width = 80;
+        btn.Height = 40;
+        btn.Background = Brushes.IndianRed;
+        btn.BorderBrush = Brushes.Black;
+        btn.Content = "Закрыть";
+        btn.Click += Click1;
+        btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        btn.HorizontalAlignment = HorizontalAlignment.Right;
+        btn.VerticalAlignment = VerticalAlignment.Top;
+
+        //Функция клика для этих кнопок
+        void Click1(object sender, RoutedEventArgs e)
+        {
+            ((MainWindow)System.Windows.Application.Current.MainWindow).DeleteList();
+        }
+
+        return btn;
     }
 
 
