@@ -104,16 +104,21 @@ public class Card : Objeсts
 
 public class Person
 {
-    //по умолчанию стоит, что человек не админ
-    public int id = 0;
+    public int id=0;
     public string login;
     public string password;
     public int stateActivePerson = 0;
-    public Person(string login, string password, int stateActivePerson)
+    public Person()
+    {
+        id = new DataBase().Person.MaxID();
+        stateActivePerson = 0;
+    }
+    public Person(int id, string login, string password, int stateActivePerson)
     {
         this.login = login;
         this.password = password;
         this.stateActivePerson = stateActivePerson;
+        this.id = id;
     }
     
 }
