@@ -33,22 +33,21 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
             DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[0].id);
             InitializeComponent();
             
-            DraftBoard();
-            
+            //DraftBoard();
 
-           
-            
-            
+
+
+
+
             //BoardList.DisplayMemberPath = "name";
 
             // DataBase DB = new DataBase();
 
             //Пока косячно, надо переделать свои старые функции
-            Border[] borders = new Border[3];
-            borders = DrawPlane.DrawBorder(3);
-            MainPlane.Children.Add(borders[0]);
-            MainPlane.Children.Add(borders[1]);
-            MainPlane.Children.Add(borders[2]);
+            int IDboard = 2;
+            Logic l = new Logic();
+            int a = l.GetIdColumsInBoard(IDboard).Count();
+            DraftColumns(a);
 
 
             //DisplayAllColomn();
@@ -67,12 +66,39 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
         public void DraftBoard()
         {
             BoardText.Text = Logic.GetCurrentBoard().name.ToString();
-            DraftColumns();
+            //DraftColumns();
         }
-        public void DraftColumns()
-        {
-            //Отрисовка всех столбцов и карточек
-            DraftCards();
+        //отрисовывает определенное количество карточек
+        public void DraftColumns(int All)
+        { 
+            if (All == 0)
+            {
+                //Ничего
+            }
+        
+            if (All == 1)
+            {
+                Border[] borders = new Border[All];
+                borders = DrawPlane.DrawBorder(All);
+                MainPlane.Children.Add(borders[All-1]);
+            }
+            if (All == 2)
+            {
+                Border[] borders = new Border[All];
+                borders = DrawPlane.DrawBorder(All);
+                MainPlane.Children.Add(borders[All-1]);
+                MainPlane.Children.Add(borders[All-2]);
+            }
+            if(All>=3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
+            {
+                Border[] borders = new Border[All];
+                borders = DrawPlane.DrawBorder(All);
+                MainPlane.Children.Add(borders[All - 1]);
+                MainPlane.Children.Add(borders[All - 2]);
+                MainPlane.Children.Add(borders[All - 3]);
+            }
+
+            //DraftCards();
         }
         public void DraftCards()
         {
