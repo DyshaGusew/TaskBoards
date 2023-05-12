@@ -17,14 +17,14 @@ using System.Windows.Shapes;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
- namespace TaskBoard
+namespace TaskBoard
 {
-    
+
     public partial class MainWindow : Window
     {
         public MainWindow()
         {
-            if(DataBase.Board.GetListBoards() == null)
+            if (DataBase.Board.GetListBoards() == null)
             {
                 Board board = new Board(Logic.GetBoardNullName());
                 board.stateActive = 1;
@@ -32,19 +32,12 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
             }
             DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[0].id);
             InitializeComponent();
-            
+
             //DraftBoard();
 
 
 
-
-
-            //BoardList.DisplayMemberPath = "name";
-
-            // DataBase DB = new DataBase();
-
-            //Пока косячно, надо переделать свои старые функции
-            int IDboard = 2;
+            int IDboard = 1;
             Logic l = new Logic();
             int a = l.GetIdColumsInBoard(IDboard).Count();
             DraftColumns(a);
@@ -69,33 +62,51 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
             //DraftColumns();
         }
         //отрисовывает определенное количество карточек
-        public void DraftColumns(int All)
-        { 
+        public void DraftColumns(int All, string[] str, int Browsing = 0)
+        {
             if (All == 0)
             {
                 //Ничего
             }
-        
+
             if (All == 1)
             {
                 Border[] borders = new Border[All];
                 borders = DrawPlane.DrawBorder(All);
+                MainPlane.Children.Add(borders[All - 1]);
+                //Выводим рамочку, куда поместим название 
+                borders = DrawPlane.DrawBorderBlox(All);
                 MainPlane.Children.Add(borders[All-1]);
+
             }
             if (All == 2)
             {
                 Border[] borders = new Border[All];
                 borders = DrawPlane.DrawBorder(All);
-                MainPlane.Children.Add(borders[All-1]);
-                MainPlane.Children.Add(borders[All-2]);
+                MainPlane.Children.Add(borders[All - 1]);
+                MainPlane.Children.Add(borders[All - 2]);
+                //Выводи рамочку
+                borders = DrawPlane.DrawBorderBlox(All);
+                MainPlane.Children.Add(borders[All - 1]);
+                MainPlane.Children.Add(borders[All - 2]);
+
+                //borders = DrawPlane.DrawBorderName(All, str);
+                //MainPlane.Children.Add(borders[All - 1]);
+                //MainPlane.Children.Add(borders[All - 2]);
             }
-            if(All>=3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
+            if (All >= 3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
             {
                 Border[] borders = new Border[All];
                 borders = DrawPlane.DrawBorder(All);
                 MainPlane.Children.Add(borders[All - 1]);
                 MainPlane.Children.Add(borders[All - 2]);
                 MainPlane.Children.Add(borders[All - 3]);
+                //Вывод рамочки
+                borders = DrawPlane.DrawBorderBlox(All);
+                MainPlane.Children.Add(borders[All - 1]);
+                MainPlane.Children.Add(borders[All - 2]);
+                MainPlane.Children.Add(borders[All - 3]);
+
             }
 
             //DraftCards();
@@ -124,7 +135,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
         private void ButtonAddBoard_Click(object sender, RoutedEventArgs e)
         {
             Board board = new Board(Logic.GetBoardNullName());
-            
+
             DataBase.Board.AppObject(board);
             DataBase.Board.ActivsBoard(board.id);
 
@@ -135,9 +146,9 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
         //Удаление доски со всеми ее элементами
         private void ButtonDeleteBoard_Click(object sender, RoutedEventArgs e)
         {
-            if(DataBase.Board.GetListBoards().Count() == 1)
+            if (DataBase.Board.GetListBoards().Count() == 1)
             {
-               MessageBox.Show("Нельзя удалить единственную доску");
+                MessageBox.Show("Нельзя удалить единственную доску");
                 return;
             }
             int idBoard = Logic.GetCurrentBoard().id;
@@ -145,10 +156,10 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
             DataBase.Board.DeleteByID(idBoard);
 
             //Получаю все столбцы этой доски      
-            if(new Logic().GetIdColumsInBoard(idBoard) != null)
+            if (new Logic().GetIdColumsInBoard(idBoard) != null)
             {
                 List<int> IdColumns = new Logic().GetIdColumsInBoard(idBoard);
-                if(DataBase.Column.GetListСolumns() != null)
+                if (DataBase.Column.GetListСolumns() != null)
                 {
                     foreach (int iColumn in IdColumns)
                     {
@@ -165,10 +176,13 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
                         //Удаляю сам столбец
                         DataBase.Column.DeleteByID(iColumn);
                     }
+                }
+
                 }    
             }
 
             //Делаю активной другую доску, рисую активнцю доску
+            DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[DataBase.Board.GetListBoards().Count - 1].id);
             DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[DataBase.Board.GetListBoards().Count-1].id);
             DeleteList();
             DraftBoard();
@@ -177,7 +191,7 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
         //Открытие списка досок и закрытие
         public void ButtonOpenBoards_Click(object sender, RoutedEventArgs e)
         {
-            int flag = 1;
+            List<Board> boards = DataBase.Board.GetListBoards().ToList();
 
             foreach (UIElement element in MainPlane.Children)
             {
@@ -199,6 +213,19 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
             //Иначе удаление
             else
             {
+                MainPlane.Children.Remove(but);
+            }
+
+
+            if (flag == 0)
+            {
+                MainPlane.Children.Add(DrawPlane.FonButtonBoard());
+                int step = 0;
+                // MainPlane.Children.Add(DrawPlane.FonButtonBoard());
+                foreach (Board board1 in boards)
+                {
+                    MainPlane.Children.Add(DrawPlane.ButtonBoard(step, board1));
+                    step += 70;
                 foreach (UIElement element in MainPlane.Children)
                 {
                     if (element is ScrollViewer)
