@@ -33,14 +33,14 @@ namespace TaskBoard
             DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[0].id);
             InitializeComponent();
 
-            //DraftBoard();
+            DraftBoard();
 
 
 
             int IDboard = 1;
             Logic l = new Logic();
             int a = l.GetIdColumsInBoard(IDboard).Count();
-            DraftColumns(a);
+            DraftColumns(a, null);
 
 
             //DisplayAllColomn();
@@ -178,7 +178,7 @@ namespace TaskBoard
                     }
                 }
 
-                }    
+                   
             }
 
             //Делаю активной другую доску, рисую активнцю доску
@@ -191,7 +191,7 @@ namespace TaskBoard
         //Открытие списка досок и закрытие
         public void ButtonOpenBoards_Click(object sender, RoutedEventArgs e)
         {
-            List<Board> boards = DataBase.Board.GetListBoards().ToList();
+            int flag = 1;
 
             foreach (UIElement element in MainPlane.Children)
             {
@@ -203,7 +203,7 @@ namespace TaskBoard
                     }
                 }
             }
-          
+
 
             //Создание кнопок и фона
             if (flag == 1)
@@ -213,19 +213,6 @@ namespace TaskBoard
             //Иначе удаление
             else
             {
-                MainPlane.Children.Remove(but);
-            }
-
-
-            if (flag == 0)
-            {
-                MainPlane.Children.Add(DrawPlane.FonButtonBoard());
-                int step = 0;
-                // MainPlane.Children.Add(DrawPlane.FonButtonBoard());
-                foreach (Board board1 in boards)
-                {
-                    MainPlane.Children.Add(DrawPlane.ButtonBoard(step, board1));
-                    step += 70;
                 foreach (UIElement element in MainPlane.Children)
                 {
                     if (element is ScrollViewer)
@@ -237,7 +224,7 @@ namespace TaskBoard
                         }
                     }
                 }
-            }
+            } 
         }
 
         //Удаление открывающегося списка
