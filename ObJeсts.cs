@@ -110,17 +110,20 @@ public class Person
     public string login;
     public string password;
     public int stateActivePerson = 0;
+    public string idBoardsRef = null;
     public Person()
     {
         id = DataBase.Person.PersonMaxID();
         stateActivePerson = 0;
+
     }
-    public Person(int id, string login, string password, int stateActivePerson)
+    public Person(int id, string login, string password, int stateActivePerson, string idBoardsRef)
     {
         this.login = login;
         this.password = password;
         this.stateActivePerson = stateActivePerson;
         this.id = id;
+        this.idBoardsRef = idBoardsRef;
     }
     
 }
