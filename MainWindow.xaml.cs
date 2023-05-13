@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,7 +37,10 @@ namespace TaskBoard
             InitializeComponent();
 
             DraftBoard();
-
+            string[] str = Logic.GetNameColumns(1);
+            string str1 = str[0];
+            string str2 = str[1];
+            string str3 = str[2];
         }
 
 
@@ -47,7 +51,6 @@ namespace TaskBoard
             int IDboard = Logic.GetCurrentBoard().id;
             int a = new Logic().GetIdColumsInBoard(IDboard).Count();
             //Удаление старых столбцов
-
             DraftColumns(a, null);
         }
         //отрисовывает определенное количество карточек
@@ -85,6 +88,7 @@ namespace TaskBoard
             }
             if (All >= 3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
             {
+                All = 3;
                 Border[] borders = new Border[All];
                 borders = DrawPlane.DrawBorder(All);
                 MainPlane.Children.Add(borders[All - 1]);

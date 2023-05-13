@@ -100,4 +100,36 @@ public class Logic : ILogic
         return i;
    
     }
+    public static string[] GetNameColumns(int id)
+    {
+        StreamReader rd = new StreamReader("../../DataBases\\Columns.csv");
+        int i = 0;
+        while (!rd.EndOfStream)//Листаем до конца
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });
+            if (id == Convert.ToInt32(parms[1]))
+            {
+                i++;
+            }
+        }
+        rd.Close();
+
+        rd = new StreamReader("../../DataBases\\Columns.csv");
+        string[] str = new string[i];
+        i = 0;
+        while (!rd.EndOfStream)//Листаем до конца
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });
+            if (id == Convert.ToInt32(parms[1]))
+            {
+                str[i] = parms[2];
+                i++;
+            }
+        }
+        rd.Close();
+        return str;
+
+    }
 }
