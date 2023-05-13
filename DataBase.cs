@@ -730,7 +730,7 @@ public partial class DataBase
         }
 
         //добавление id доски пользователю
-        //добавление id доски в колонну
+        /*
         public void AssignmentIDBoard(int idPerson, int idBoardsRef)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
         {
             //Считываю базу пользователей
@@ -750,8 +750,8 @@ public partial class DataBase
                         Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), pathDataPersons);
                         personNew.idBoardsRef = idBoardsRef;
                     }
+                    else
                     
-                    else()
                     //Меняем старый столбец на новый
                     ReplaceObject(idPerson, personNew);
                     return;
@@ -760,5 +760,6 @@ public partial class DataBase
             rd.Close();
 
         }
+        */
     }
 }
