@@ -55,11 +55,9 @@ public class Logic : ILogic
         }
         
 
-        if(count != 0)
-        {
+
             return Arr;
-        }
-        return null;
+
     }
     //ID of the cards contained in the columns - Айди карточек содержащихся в столбцах
     public List<int> GetIdCardInColomns(int id)

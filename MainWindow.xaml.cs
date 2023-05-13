@@ -24,34 +24,19 @@ namespace TaskBoard
     {
         public MainWindow()
         {
+            //Создание активной доски
             if (DataBase.Board.GetListBoards() == null)
             {
                 Board board = new Board(Logic.GetBoardNullName());
                 board.stateActive = 1;
                 DataBase.Board.AppObject(board);
+                DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[0].id);
             }
-            DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[0].id);
+            
             InitializeComponent();
 
             DraftBoard();
 
-
-
-            int IDboard = 1;
-            Logic l = new Logic();
-            int a = l.GetIdColumsInBoard(IDboard).Count();
-            DraftColumns(a, null);
-
-
-            //DisplayAllColomn();
-            Border[] borders2 = DrawPlane.DrawCard(3);
-            MainPlane.Children.Add(borders2[0]);
-            MainPlane.Children.Add(borders2[1]);
-            MainPlane.Children.Add(borders2[2]);
-            //void DisplayAllColomn()
-            //{
-
-            //}
         }
 
 
@@ -59,7 +44,11 @@ namespace TaskBoard
         public void DraftBoard()
         {
             BoardText.Text = Logic.GetCurrentBoard().name.ToString();
-            //DraftColumns();
+            int IDboard = Logic.GetCurrentBoard().id;
+            int a = new Logic().GetIdColumsInBoard(IDboard).Count();
+            //Удаление старых столбцов
+
+            DraftColumns(a, null);
         }
         //отрисовывает определенное количество карточек
         public void DraftColumns(int All, string[] str, int Browsing = 0)
@@ -244,6 +233,20 @@ namespace TaskBoard
                 }
             }
 
+        }
+
+        //Добавление столбцов
+        private void ButtonAddColumn_Click(object sender, RoutedEventArgs e)
+        {
+
+           
+            Column column = new Column(DataBase.Column.MaxID(), Logic.GetCurrentBoard().id, "Столбец " + new Logic().GetIdColumsInBoard(Logic.GetCurrentBoard().id).Count()+1.ToString());
+            DataBase.Column.AppObject(column);
+
+            
+
+            DeleteList();
+            DraftBoard();
         }
     }
 }
