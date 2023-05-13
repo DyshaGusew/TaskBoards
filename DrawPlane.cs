@@ -47,6 +47,68 @@ public class DrawPlane
 
         return btn;
     }
+    private static TextBlock TextBlock()
+    {
+        TextBlock textBlock = new TextBlock();
+        textBlock.FontSize = 40;
+        textBlock.FontWeight = FontWeights.Bold;
+        textBlock.FontStyle = FontStyles.Normal;
+
+        textBlock.Text = "Типа тут название";
+        //textBlock.Foreground = Brushes.Black;
+        textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+        textBlock.VerticalAlignment = VerticalAlignment.Top;
+        textBlock.Margin = new Thickness(0, 100, 0, 0);
+        return textBlock;
+    }
+    public static TextBlock[] DrawTextBlock(int id)
+    {
+        int[] count = new int[id];
+        if (count.Length == 1)
+        {
+            TextBlock[] btn = new TextBlock[1];
+            btn[0] = TextBlock();
+            btn[0].Margin = new Thickness(20, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].HorizontalAlignment = HorizontalAlignment.Center;
+            btn[0].VerticalAlignment = VerticalAlignment.Top;
+            return btn;
+        }
+        if (count.Length == 2)
+        {
+            TextBlock[] btn = new TextBlock[2];
+            btn[0] = TextBlock();
+            btn[0].Margin = new Thickness(290, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].HorizontalAlignment = HorizontalAlignment.Left;
+            btn[0].VerticalAlignment = VerticalAlignment.Top;
+
+            btn[1] = TextBlock();
+            btn[1].Margin = new Thickness(0, 100, 290, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1].HorizontalAlignment = HorizontalAlignment.Right;
+            btn[1].VerticalAlignment = VerticalAlignment.Top;
+            return btn;
+        }
+        else
+        {
+            TextBlock[] btn = new TextBlock[3];
+            btn[0] = TextBlock();
+            btn[0].Margin = new Thickness(100, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].HorizontalAlignment = HorizontalAlignment.Left;
+            btn[0].VerticalAlignment = VerticalAlignment.Top;
+
+            btn[1] = TextBlock();
+            btn[1].Margin = new Thickness(0, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1].HorizontalAlignment = HorizontalAlignment.Center;
+            btn[1].VerticalAlignment = VerticalAlignment.Top;
+
+            btn[2] = TextBlock();
+            btn[2].Margin = new Thickness(0, 100, 100, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[2].HorizontalAlignment = HorizontalAlignment.Right;
+            btn[2].VerticalAlignment = VerticalAlignment.Top;
+            return btn;
+        }
+    }
+
+
     public static Border[] DrawBorder(int id)
     {
         //int[] counter = Logic.GetIdColumsInBoard(15);

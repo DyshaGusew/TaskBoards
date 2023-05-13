@@ -33,14 +33,23 @@ namespace TaskBoard
                 DataBase.Board.AppObject(board);
                 DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[0].id);
             }
-            
+
             InitializeComponent();
 
             DraftBoard();
-            string[] str = Logic.GetNameColumns(1);
-            string str1 = str[0];
-            string str2 = str[1];
-            string str3 = str[2];
+            //TextBlock textBlock = new TextBlock();
+            //textBlock.FontSize = 40;
+            //textBlock.FontWeight = FontWeights.Bold;
+            //textBlock.FontStyle = FontStyles.Normal;
+
+            //textBlock.Text = "Типа тут название";
+            ////textBlock.Foreground = Brushes.Black;
+            //textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+            //textBlock.VerticalAlignment = VerticalAlignment.Top;
+            //textBlock.Margin = new Thickness(0, 100, 0, 0);
+            //MainPlane.Children.Add(textBlock);
+            
+
         }
 
 
@@ -49,9 +58,10 @@ namespace TaskBoard
         {
             BoardText.Text = Logic.GetCurrentBoard().name.ToString();
             int IDboard = Logic.GetCurrentBoard().id;
+            string[] str = Logic.GetNameColumns(IDboard);
             int a = new Logic().GetIdColumsInBoard(IDboard).Count();
             //Удаление старых столбцов
-            DraftColumns(a, null);
+            DraftColumns(a, str);
         }
         //отрисовывает определенное количество карточек
         public void DraftColumns(int All, string[] str, int Browsing = 0)
@@ -65,11 +75,14 @@ namespace TaskBoard
             {
                 Border[] borders = new Border[All];
                 borders = DrawPlane.DrawBorder(All);
+                borders[0].Name = "Border1";
                 MainPlane.Children.Add(borders[All - 1]);
                 //Выводим рамочку, куда поместим название 
                 borders = DrawPlane.DrawBorderBlox(All);
                 MainPlane.Children.Add(borders[All-1]);
-
+                TextBlock[] txt = DrawPlane.DrawTextBlock(All);
+                txt[0].Text = str[0];
+                MainPlane.Children.Add(txt[0]);
             }
             if (All == 2)
             {
@@ -82,9 +95,12 @@ namespace TaskBoard
                 MainPlane.Children.Add(borders[All - 1]);
                 MainPlane.Children.Add(borders[All - 2]);
 
-                //borders = DrawPlane.DrawBorderName(All, str);
-                //MainPlane.Children.Add(borders[All - 1]);
-                //MainPlane.Children.Add(borders[All - 2]);
+                TextBlock[] txt = DrawPlane.DrawTextBlock(All);
+                txt[0].Text = str[0];
+                txt[1].Text = str[1];
+                MainPlane.Children.Add(txt[0]);
+                MainPlane.Children.Add(txt[1]);
+
             }
             if (All >= 3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
             {
@@ -99,7 +115,15 @@ namespace TaskBoard
                 MainPlane.Children.Add(borders[All - 1]);
                 MainPlane.Children.Add(borders[All - 2]);
                 MainPlane.Children.Add(borders[All - 3]);
+                //отрисовываем текст
+                TextBlock[] txt = DrawPlane.DrawTextBlock(All);
 
+                txt[0].Text = str[0];
+                txt[1].Text = str[1];
+                txt[2].Text = str[2];
+                MainPlane.Children.Add(txt[0]);
+                MainPlane.Children.Add(txt[1]);
+                MainPlane.Children.Add(txt[2]);
             }
 
             //DraftCards();
