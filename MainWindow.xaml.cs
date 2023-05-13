@@ -240,7 +240,7 @@ namespace TaskBoard
         {
 
            
-            Column column = new Column(DataBase.Column.MaxID(), Logic.GetCurrentBoard().id, "Столбец " + new Logic().GetIdColumsInBoard(Logic.GetCurrentBoard().id).Count()+1.ToString());
+            Column column = new Column(DataBase.Column.MaxID(), Logic.GetCurrentBoard().id, "Столбец " + (new Logic().GetIdColumsInBoard(Logic.GetCurrentBoard().id).Count()+1).ToString());
             DataBase.Column.AppObject(column);
 
             DeleteList();

@@ -216,6 +216,7 @@ public class DrawPlane
         return btn;
     }
 
+    //Элементы карточек
     public static Border[] DrawCard(int id)
     {
         Border[] btn = new Border[id];
@@ -261,7 +262,7 @@ public class DrawPlane
         return btn;
     }
 
-    //Объект задней стенки для списка досок
+    //Объект для списка досок
     public static ScrollViewer FonButtonBoard()
     {
         Border border = new Border();
@@ -311,7 +312,7 @@ public class DrawPlane
         //Функция клика для этих кнопок
         void Click1(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)System.Windows.Application.Current.MainWindow).DeleteList();
+            ((TaskBoard.MainWindow)Application.Current.MainWindow).DeleteList();
         }
 
         return btn;
