@@ -6,12 +6,13 @@
         xmlns:local="clr-namespace:TaskBoard"
         mc:Ignorable="d"
         Title="TaskBoard" Icon="/Other/ocr.png" WindowStyle="ThreeDBorderWindow" Width="1920" Height="1064" Left="-10" Top="0">
-    <Grid x:Name="StartPlane" Background="#FF4AB4B4">
-        <Button Content="Выйти" Padding="15 5" Margin="15" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Exit" />
+    <Grid x:Name="StartPlane" Background="#f1f1f1">
+        <Button Content="Выйти" Background="#ff9c9c" Foreground="#000" BorderThickness="0" Padding="25 10" Margin="15,15,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand" Click="Exit" />
         <StackPanel Width="900" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Добро пожаловать!" Margin="0 0 0 55" FontSize="90" FontWeight="Bold" TextAlignment="Center" />
-            <Button Content="Авторизироваться" Padding="0 20" Margin="0 0 0 25" FontSize="40" Click="Auth" />
-            <Button Content="Зарегистрироваться" Padding="0 20"  FontSize="40" Click="Reg" />
+            <Button Content="Авторизироваться" Background="#4982de" Foreground="#fff" BorderThickness="0" Padding="0 20" Margin="0 0 0 25" FontSize="40" Cursor="Hand" Click="Auth" />
+            <Button Content="Зарегистрироваться" Background="#4982de" Foreground="#fff" BorderThickness="0" Padding="0 20"  FontSize="40" Cursor="Hand" Click="Reg" />
         </StackPanel>
+        <TextBlock Text="2023 Copyright DyshaGusew, ZubkovApa, Hoodie01, v1veX, Temberland" Margin="0 0 0 15" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>

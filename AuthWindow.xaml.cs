@@ -41,7 +41,7 @@ namespace TaskBoard
                 var Person = DataBase.Person.CheckPersonLogon(Login.Text, Password.Password);
                 if (Person != null)
                 {
-                    // А как пользователя передать в основную логику программы???
+                    DataBase.Person.ActivsPerson(Person.id);
                     MainWindow mainWindow = new MainWindow();
                     mainWindow.Show();
                     this.Close();

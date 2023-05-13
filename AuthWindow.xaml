@@ -6,14 +6,17 @@
         xmlns:local="clr-namespace:TaskBoard"
         mc:Ignorable="d"
         Title="TaskBoard - Авторизация" Icon="/Other/ocr.png" WindowStyle="ThreeDBorderWindow" Width="1920" Height="1064" Left="-10" Top="0">
-    <Grid x:Name="AuthPlane" Background="#FF4AB4B4">
-        <Button Content="Назад" Padding="15 5" Margin="15" FontSize="30" HorizontalAlignment="Left" VerticalAlignment="Top" Click="Back" />
-        <StackPanel Width="900" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <TextBlock Text="Логин" Margin="0 0 0 10" FontSize="40" />
-            <TextBox x:Name="Login" Padding="15 5" Margin="0 0 0 25" FontSize="40" />
-            <TextBlock Text="Пароль" Margin="0 0 0 10" FontSize="40" />
-            <PasswordBox x:Name="Password" Padding="15 5" Margin="0 0 0 25" FontSize="40" />
-            <Button Content="Войти" Padding="0 20"  FontSize="40" Click="Auth" />
-        </StackPanel>
+    <Grid x:Name="AuthPlane" Background="#f1f1f1">
+        <Button Content="Назад" Background="#bdd6ff" Foreground="#000" BorderThickness="0" Padding="25 10" Margin="15,15,0,0" FontSize="20" HorizontalAlignment="Left" VerticalAlignment="Top" Cursor="Hand" Click="Back" />
+        <Border Background="#fff" Width="1000" CornerRadius="10" Padding="40"  HorizontalAlignment="Center" VerticalAlignment="Center">
+            <StackPanel>
+                <TextBlock Text="Логин" Margin="0 0 0 10" FontSize="40" />
+                <TextBox x:Name="Login" Padding="15 5" Margin="0 0 0 25" FontSize="40" />
+                <TextBlock Text="Пароль" Margin="0 0 0 10" FontSize="40" />
+                <PasswordBox x:Name="Password" Padding="15 5" Margin="0 0 0 45" FontSize="40" />
+                <Button Content="Войти" Background="#4982de" Foreground="#fff" BorderThickness="0" Padding="0 20"  FontSize="40" Cursor="Hand" Click="Auth" />
+            </StackPanel>
+        </Border>
+        <TextBlock Text="2023 Copyright DyshaGusew, ZubkovApa, Hoodie01, v1veX, Temberland" Margin="0 0 0 15" FontSize="10" HorizontalAlignment="Center" VerticalAlignment="Bottom"/>
     </Grid>
 </Window>
