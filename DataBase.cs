@@ -719,7 +719,7 @@ public partial class DataBase
 
                 if (id == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
                 {
-                    Person ReplacePassPerson = new Person(Convert.ToInt32(parms[0]), parms[1], newPass, Convert.ToInt32(parms[3]),);
+                    Person ReplacePassPerson = new Person(Convert.ToInt32(parms[0]), parms[1], newPass, Convert.ToInt32(parms[3]), parms[4]);
                     
                     rd.Close();
                     ReplacePerson(id, ReplacePassPerson);
@@ -747,11 +747,11 @@ public partial class DataBase
                     rd.Close();
                     if (parms[4]==null)
                     {
-                        Person personNew = (Person)DataBase.GetPersonOfId(Convert.ToInt32(parms[0]), pathDataPersons);
+                        Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), pathDataPersons);
                         personNew.idBoardsRef = idBoardsRef;
                     }
                     
-
+                    else()
                     //Меняем старый столбец на новый
                     ReplaceObject(idPerson, personNew);
                     return;
