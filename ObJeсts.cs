@@ -26,6 +26,7 @@ public class Board : Objeсts
 {
     //Является ли указанная доска текущей
     public int stateActive = 0;
+    public int userPresents;
     public Board()
     {
         id = DataBase.Board.MaxID();
@@ -39,8 +40,9 @@ public class Board : Objeсts
         stateActive = 0;
     }
 
-    public Board(int id, string name, int stateActive)
+    public Board(int id, string name, int stateActive, int userPresents)
     {
+        this.userPresents = userPresents;
         this.stateActive = stateActive;
         this.id = id;
         this.name = name;

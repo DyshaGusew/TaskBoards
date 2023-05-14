@@ -40,7 +40,7 @@ public partial class DataBase
         if(object_ is Board)
         {
             Board board = (Board)object_;
-            scv.AppendLine($"{board.id};{name};{board.stateActive}");
+            scv.AppendLine($"{board.id};{name};{board.stateActive};{board.userPresents}");
         }
 
         else if(object_ is Column)
@@ -129,7 +129,7 @@ public partial class DataBase
                 rd.Close();
                 if (path == pathDataBoards)
                 {
-                    Board board = new Board(Convert.ToInt32(parms[0]), parms[1], Convert.ToInt32(parms[2]));
+                    Board board = new Board(Convert.ToInt32(parms[0]), parms[1], Convert.ToInt32(parms[2]), Convert.ToInt32(parms[3]));
                     return board;
                 }
                 else if(path == pathDataColumns)

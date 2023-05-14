@@ -107,8 +107,6 @@ public class DrawPlane
             return btn;
         }
     }
-
-
     public static Border[] DrawBorder(int id)
     {
         //int[] counter = Logic.GetIdColumsInBoard(15);
@@ -157,7 +155,6 @@ public class DrawPlane
             return btn;
         }
     }
-
     public static Border[] DrawBorderBlox(int id)
     {
         //int[] counter = Logic.GetIdColumsInBoard(15);
@@ -295,6 +292,42 @@ public class DrawPlane
         return btn;
     }
 
+
+
+    //Объект для списка досок
+    public static ScrollViewer FonButtonBoard()
+    {
+        Border border = new Border();
+        Grid grid = new Grid();
+        ScrollViewer scrollViewer = new ScrollViewer();
+
+        grid.Background = Brushes.White;
+        border.BorderBrush = Brushes.Black;
+        grid.Width = 300;
+
+        border.Height = DataBase.Board.GetListBoards().Count * 50 + (DataBase.Board.GetListBoards().Count - 1) * 20 + 100;
+        scrollViewer.Name = "BordList";
+        grid.Margin = new Thickness(0, 100, 0, 100);
+        grid.HorizontalAlignment = HorizontalAlignment.Center;
+        grid.VerticalAlignment = VerticalAlignment.Top;
+        border.VerticalAlignment = VerticalAlignment.Top;
+        border.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+
+        grid.Children.Add(border);
+
+        List<Board> boards = DataBase.Board.GetListBoards().ToList();
+        int step = 0;
+        foreach (Board board1 in boards)
+        {
+            grid.Children.Add(ButtonBoard(step, board1));
+            step += 70;
+        }
+
+        grid.Children.Add(ButtonClose());
+        scrollViewer.Content = grid;
+        return scrollViewer;
+    }
+
     //Создание кнопок для списка досок
     public static Button ButtonBoard(int step, Board board)
     {
@@ -324,40 +357,7 @@ public class DrawPlane
         return btn;
     }
 
-    //Объект для списка досок
-    public static ScrollViewer FonButtonBoard()
-    {
-        Border border = new Border();
-        Grid grid = new Grid();
-        ScrollViewer scrollViewer = new ScrollViewer();
-
-        grid.Background = Brushes.White;
-        border.BorderBrush = Brushes.Black;
-        grid.Width = 300;
-
-        border.Height = DataBase.Board.GetListBoards().Count * 50 + (DataBase.Board.GetListBoards().Count-1) * 20 + 100;
-        scrollViewer.Name = "BordList";
-        grid.Margin = new Thickness(0, 100, 0, 100);
-        grid.HorizontalAlignment = HorizontalAlignment.Center;
-        grid.VerticalAlignment = VerticalAlignment.Top;
-        border.VerticalAlignment = VerticalAlignment.Top;
-        border.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
-
-        grid.Children.Add(border);
-
-        List<Board> boards = DataBase.Board.GetListBoards().ToList();
-        int step = 0;
-        foreach (Board board1 in boards)
-        {
-            grid.Children.Add(ButtonBoard(step, board1));
-            step += 70;
-        }
-
-        grid.Children.Add(ButtonClose());
-        scrollViewer.Content = grid;
-        return scrollViewer;
-    }
-
+    //Кнопка закрытия для списка досок
     public static Button ButtonClose()
     {
         Button btn = new Button();
@@ -381,5 +381,93 @@ public class DrawPlane
     }
 
 
+
+    //Меню для выбора типа доски
+    public static Grid PlaneStateBoard()
+    {
+        Grid grid = new Grid();
+        grid.Height = 230;
+        grid.Width = 550;
+        grid.Name = "PlaneStateBoard";
+        grid.HorizontalAlignment = HorizontalAlignment.Center;
+        grid.VerticalAlignment = VerticalAlignment.Center;
+        grid.Background = Brushes.White;
+
+        Border bord = new Border();
+        bord.BorderBrush = Brushes.Black;
+        bord.BorderThickness = new Thickness(4);
+
+        grid.Children.Add(bord);
+        grid.Children.Add(ButtonStateBoardGlobal());
+        grid.Children.Add(ButtonStateBoardLocal());
+        return grid;
+    }
+    //Глобальная кнопка
+    public static Button ButtonStateBoardGlobal()
+    {
+        Button button = new Button();
+        button.Width = 200;
+        button.Height = 100;
+        button.Background = Brushes.Aquamarine;
+        button.BorderBrush = Brushes.Black;
+        button.Content = "Общественная";
+        button.FontSize = 24;
+        button.BorderThickness = new Thickness(2);
+
+        button.Margin = new Thickness(0, 0, 30, 0);
+        button.HorizontalAlignment = HorizontalAlignment.Right;
+        button.VerticalAlignment = VerticalAlignment.Center;
+        
+
+        button.Click += Click2;
+
+        void Click2(object sender, RoutedEventArgs e)
+        {
+            Board board = new Board(Logic.GetBoardNullName());
+            board.userPresents = 0;               //Присваиваю доске владельца, тк общественна, то ноль
+
+            DataBase.Board.AppObject(board);
+            DataBase.Board.ActivsBoard(board.id);
+
+            ((TaskBoard.MainWindow)Application.Current.MainWindow).DeleteList();
+            ((TaskBoard.MainWindow)Application.Current.MainWindow).DraftBoard();
+            ((TaskBoard.MainWindow)Application.Current.MainWindow).DeleteMenuLocalOfGlobal();
+        }
+
+        return button;
+    }
+    //Локальная кнопка
+    public static Button ButtonStateBoardLocal()
+    {
+        Button button = new Button();
+        button.Width = 200;
+        button.Height = 100;
+        button.Background = Brushes.Aquamarine;
+        button.BorderBrush = Brushes.Black;
+        button.Content = "Частная";
+        button.FontSize = 24;
+        button.BorderThickness = new Thickness(2);
+
+        button.HorizontalAlignment = HorizontalAlignment.Left;
+        button.VerticalAlignment = VerticalAlignment.Center;
+        button.Margin = new Thickness(30, 0,0,0);
+
+        button.Click += Click3;
+
+        void Click3(object sender, RoutedEventArgs e)
+        {
+            Board board = new Board(Logic.GetBoardNullName());
+            board.userPresents = Logic.GetCurrentPerson().id;               //Присваиваю доске владельца, тк общественна, то ноль
+
+            DataBase.Board.AppObject(board);
+            DataBase.Board.ActivsBoard(board.id);
+
+            ((TaskBoard.MainWindow)Application.Current.MainWindow).DeleteList();
+            ((TaskBoard.MainWindow)Application.Current.MainWindow).DraftBoard();
+            ((TaskBoard.MainWindow)Application.Current.MainWindow).DeleteMenuLocalOfGlobal();
+        }
+
+        return button;
+    }
 }
 

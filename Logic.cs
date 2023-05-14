@@ -23,6 +23,19 @@ public class Logic : ILogic
         return null;
     }
 
+    //Писк текущего пользователя
+    public static Person GetCurrentPerson()
+    {
+        foreach(Person person in DataBase.Person.GetListPersons())
+        {
+            if(person.stateActivePerson == 1)
+            {
+                return person;
+            }
+        }
+        return null;
+    }
+
     //Получение имени доски при создании
     public static string GetBoardNullName() 
     {

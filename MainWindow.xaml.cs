@@ -37,19 +37,6 @@ namespace TaskBoard
             InitializeComponent();
 
             DraftBoard();
-            //TextBlock textBlock = new TextBlock();
-            //textBlock.FontSize = 40;
-            //textBlock.FontWeight = FontWeights.Bold;
-            //textBlock.FontStyle = FontStyles.Normal;
-
-            //textBlock.Text = "Типа тут название";
-            ////textBlock.Foreground = Brushes.Black;
-            //textBlock.HorizontalAlignment = HorizontalAlignment.Center;
-            //textBlock.VerticalAlignment = VerticalAlignment.Top;
-            //textBlock.Margin = new Thickness(0, 100, 0, 0);
-            //MainPlane.Children.Add(textBlock);
-            
-
         }
 
 
@@ -151,13 +138,7 @@ namespace TaskBoard
         //Добавление доски
         private void ButtonAddBoard_Click(object sender, RoutedEventArgs e)
         {
-            Board board = new Board(Logic.GetBoardNullName());
-
-            DataBase.Board.AppObject(board);
-            DataBase.Board.ActivsBoard(board.id);
-
-            DeleteList();
-            DraftBoard();
+            MainPlane.Children.Add(DrawPlane.PlaneStateBoard());
         }
 
         //Удаление доски со всеми ее элементами
@@ -261,6 +242,24 @@ namespace TaskBoard
                 }
             }
 
+        }
+
+        //Удаление меню с выбором вида доски
+        public void DeleteMenuLocalOfGlobal()
+        {
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("PlaneStateBoard"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+
+                        DraftBoard();
+                        return;
+                    }
+                }
+            }
         }
 
         //Добавление столбцов
