@@ -34,7 +34,7 @@ namespace TaskBoard
                 DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[0].id);
             }
             //Активация первой доски пользователя
-            DataBase.Board.ActivsBoard(Logic.GetBoardsPerson(Logic.GetCurrentPerson().id)[Logic.GetBoardsPerson(Logic.GetCurrentPerson().id).Count-1].id);
+            DataBase.Board.ActivsBoard(Logic.GetBoardsTrue()[Logic.GetBoardsTrue().Count-1].id);
 
 
             InitializeComponent();
