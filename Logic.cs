@@ -23,7 +23,7 @@ public class Logic : ILogic
         return null;
     }
 
-    //Писк текущего пользователя
+    //Поиск текущего пользователя
     public static Person GetCurrentPerson()
     {
         foreach(Person person in DataBase.Person.GetListPersons())
@@ -45,6 +45,36 @@ public class Logic : ILogic
         }
         string text = "Доска номер " + (DataBase.Board.GetListBoards().Count()+1).ToString();
         return text; 
+    }
+
+    //Получение подходящих пож отображение досок для определенного пользователя
+    public static List<Board> GetBoardsTrue() 
+    {
+        List<Board> boardsTrue = new List<Board>();
+
+        foreach (Board board in DataBase.Board.GetListBoards())
+        {
+            if(board.userPresents == GetCurrentPerson().id || board.userPresents == 0)
+            {
+                boardsTrue.Add(board);
+            } 
+        }
+        return boardsTrue;
+    }
+
+    //Определение только частных досок пользователя
+    public static List<Board> GetBoardsPerson(int idPerson)
+    {
+        List<Board> boardsTrue = new List<Board>();
+
+        foreach (Board board in DataBase.Board.GetListBoards())
+        {
+            if (board.userPresents == idPerson)
+            {
+                boardsTrue.Add(board);
+            }
+        }
+        return boardsTrue;
     }
 
     //Поправить косяк со считыванием элементов
@@ -80,6 +110,10 @@ public class Logic : ILogic
         //счеткик
         int count = 0;
         //Считываем базу данных
+        if(DataBase.Card.GetListСards() == null)
+        {
+            return null;
+        }
         foreach (Card card in DataBase.Card.GetListСards())
         {
             if (card.idColumnsRef == id)

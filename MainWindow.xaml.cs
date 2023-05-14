@@ -25,7 +25,7 @@ namespace TaskBoard
     {
         public MainWindow()
         {
-            //Создание активной доски
+            //Создание активной доски если доски отсутствуют
             if (DataBase.Board.GetListBoards() == null)
             {
                 Board board = new Board(Logic.GetBoardNullName());
@@ -33,12 +33,17 @@ namespace TaskBoard
                 DataBase.Board.AppObject(board);
                 DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[0].id);
             }
+            //Активация первой доски пользователя
+            DataBase.Board.ActivsBoard(Logic.GetBoardsPerson(Logic.GetCurrentPerson().id)[Logic.GetBoardsPerson(Logic.GetCurrentPerson().id).Count-1].id);
+
 
             InitializeComponent();
 
             DraftBoard();
         }
 
+
+        //Отрисовка элементов
 
         //Отрисовка доски
         public void DraftBoard()
@@ -121,6 +126,46 @@ namespace TaskBoard
         }
 
 
+        //Удаление элементов
+
+        //Удаление открывающегося списка
+        public void DeleteList()
+        {
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is ScrollViewer)
+                {
+                    if (((ScrollViewer)element).Name.ToString().Contains("BordList"))
+                    {
+                        MainPlane.Children.Remove((ScrollViewer)element);
+
+                        DraftBoard();
+                        return;
+                    }
+                }
+            }
+
+        }
+
+        //Удаление меню с выбором вида доски
+        public void DeleteMenuLocalOfGlobal()
+        {
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("PlaneStateBoard"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+
+                        DraftBoard();
+                        return;
+                    }
+                }
+            }
+        }
+
+
         //Обработчики нажатий на доске
 
         //Замена имени доски на введенную
@@ -132,13 +177,50 @@ namespace TaskBoard
             newBoard.name = text.Text;   //Меняю имя на введенное
 
             //Заменяю в базе данных
+            DeleteList();
+            DeleteMenuLocalOfGlobal();
             DataBase.Board.ReplaceObject(Logic.GetCurrentBoard().id, newBoard);
+            
         }
 
-        //Добавление доски
+        //Добавление доски(открытие меню какой тип доски добавить)
         private void ButtonAddBoard_Click(object sender, RoutedEventArgs e)
         {
-            MainPlane.Children.Add(DrawPlane.PlaneStateBoard());
+            int flag = 1;
+
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("PlaneStateBoard"))
+                    {
+                        flag = 0; break;
+                    }
+                }
+            }
+
+
+            //Создание кнопок и фона
+            if (flag == 1)
+            {
+                DeleteList();
+                MainPlane.Children.Add(DrawPlane.PlaneStateBoard(this));
+            }
+            //Иначе удаление
+            else
+            {
+                foreach (UIElement element in MainPlane.Children)
+                {
+                    if (element is Grid)
+                    {
+                        if (((Grid)element).Name.ToString().Contains("PlaneStateBoard"))
+                        {
+                            MainPlane.Children.Remove((Grid)element);
+                            break;
+                        }
+                    }
+                }
+            }
         }
 
         //Удаление доски со всеми ее элементами
@@ -182,6 +264,7 @@ namespace TaskBoard
             //Делаю активной другую доску, рисую активнцю доску
             DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[DataBase.Board.GetListBoards().Count - 1].id);
             DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[DataBase.Board.GetListBoards().Count-1].id);
+            DeleteMenuLocalOfGlobal();
             DeleteList();
             DraftBoard();
         }
@@ -206,7 +289,8 @@ namespace TaskBoard
             //Создание кнопок и фона
             if (flag == 1)
             {
-                MainPlane.Children.Add(DrawPlane.FonButtonBoard());
+                DeleteMenuLocalOfGlobal();
+                MainPlane.Children.Add(DrawPlane.FonButtonBoard(this));           
             }
             //Иначе удаление
             else
@@ -225,55 +309,20 @@ namespace TaskBoard
             } 
         }
 
-        //Удаление открывающегося списка
-        public void DeleteList()
-        {
-            foreach (UIElement element in MainPlane.Children)
-            {
-                if (element is ScrollViewer)
-                {
-                    if (((ScrollViewer)element).Name.ToString().Contains("BordList"))
-                    {
-                        MainPlane.Children.Remove((ScrollViewer)element);
-
-                        DraftBoard();
-                        return;
-                    }
-                }
-            }
-
-        }
-
-        //Удаление меню с выбором вида доски
-        public void DeleteMenuLocalOfGlobal()
-        {
-            foreach (UIElement element in MainPlane.Children)
-            {
-                if (element is Grid)
-                {
-                    if (((Grid)element).Name.ToString().Contains("PlaneStateBoard"))
-                    {
-                        MainPlane.Children.Remove((Grid)element);
-
-                        DraftBoard();
-                        return;
-                    }
-                }
-            }
-        }
-
         //Добавление столбцов
         private void ButtonAddColumn_Click(object sender, RoutedEventArgs e)
         {
 
-           
-            Column column = new Column(DataBase.Column.MaxID(), Logic.GetCurrentBoard().id, "Столбец " + (new Logic().GetIdColumsInBoard(Logic.GetCurrentBoard().id).Count()+1).ToString());
+
+            Column column = new Column(DataBase.Column.MaxID(), Logic.GetCurrentBoard().id, "Столбец " + (new Logic().GetIdColumsInBoard(Logic.GetCurrentBoard().id).Count() + 1).ToString());
             DataBase.Column.AppObject(column);
 
             DeleteList();
+            DeleteMenuLocalOfGlobal();
             DraftBoard();
         }
 
+        //Кнопка перехода к выбору пользователя
         private void ButtonBack_Click(object sender, RoutedEventArgs e)
         {
             StartWindow startWindow = new StartWindow();

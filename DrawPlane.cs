@@ -295,7 +295,7 @@ public class DrawPlane
 
 
     //Объект для списка досок
-    public static ScrollViewer FonButtonBoard()
+    public static ScrollViewer FonButtonBoard(MainWindow window)
     {
         Border border = new Border();
         Grid grid = new Grid();
@@ -305,7 +305,7 @@ public class DrawPlane
         border.BorderBrush = Brushes.Black;
         grid.Width = 300;
 
-        border.Height = DataBase.Board.GetListBoards().Count * 50 + (DataBase.Board.GetListBoards().Count - 1) * 20 + 100;
+        border.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 100;
         scrollViewer.Name = "BordList";
         grid.Margin = new Thickness(0, 100, 0, 100);
         grid.HorizontalAlignment = HorizontalAlignment.Center;
@@ -317,19 +317,19 @@ public class DrawPlane
 
         List<Board> boards = DataBase.Board.GetListBoards().ToList();
         int step = 0;
-        foreach (Board board1 in boards)
+        foreach (Board board in Logic.GetBoardsTrue())
         {
-            grid.Children.Add(ButtonBoard(step, board1));
+            grid.Children.Add(ButtonBoard(step, board, window));
             step += 70;
         }
 
-        grid.Children.Add(ButtonClose());
+        grid.Children.Add(ButtonListClose(window));
         scrollViewer.Content = grid;
         return scrollViewer;
     }
 
     //Создание кнопок для списка досок
-    public static Button ButtonBoard(int step, Board board)
+    public static Button ButtonBoard(int step, Board board, MainWindow window)
     {
         Button btn = new Button();
 
@@ -351,14 +351,14 @@ public class DrawPlane
         void Click1(object sender, RoutedEventArgs e)
         {
             DataBase.Board.ActivsBoard(board.id);
-            ((MainWindow)System.Windows.Application.Current.MainWindow).DeleteList();
+            window.DeleteList();
         }
             
         return btn;
     }
 
     //Кнопка закрытия для списка досок
-    public static Button ButtonClose()
+    public static Button ButtonListClose(MainWindow window)
     {
         Button btn = new Button();
         btn.Width = 80;
@@ -374,7 +374,7 @@ public class DrawPlane
         //Функция клика для этих кнопок
         void Click1(object sender, RoutedEventArgs e)
         {
-            ((TaskBoard.MainWindow)Application.Current.MainWindow).DeleteList();
+            window.DeleteList();
         }
 
         return btn;
@@ -383,7 +383,7 @@ public class DrawPlane
 
 
     //Меню для выбора типа доски
-    public static Grid PlaneStateBoard()
+    public static Grid PlaneStateBoard(MainWindow window)
     {
         Grid grid = new Grid();
         grid.Height = 230;
@@ -397,13 +397,36 @@ public class DrawPlane
         bord.BorderBrush = Brushes.Black;
         bord.BorderThickness = new Thickness(4);
 
+        TextBlock textBlock = new TextBlock();
+        textBlock.Text = "Укажите тип доски";
+        textBlock.HorizontalAlignment = HorizontalAlignment.Center;
+        textBlock.VerticalAlignment = VerticalAlignment.Top;
+        textBlock.Margin = new Thickness(0, 28, 0, 0);
+        textBlock.FontSize = 28;
+        //textBlock.Background = Brushes.Aquamarine;
+        textBlock.Height = 50;
+
+
+        Border bord2 = new Border();
+        bord2.BorderBrush = Brushes.Black;
+        bord2.BorderThickness = new Thickness(2.5);
+        bord2.HorizontalAlignment = HorizontalAlignment.Center;
+        bord2.VerticalAlignment = VerticalAlignment.Top;
+        bord2.Height = 50;
+        bord2.Width = 350;
+        bord2.Margin = new Thickness(0, 20, 0, 0);
+        bord2.Background = Brushes.Aquamarine;
+
         grid.Children.Add(bord);
-        grid.Children.Add(ButtonStateBoardGlobal());
-        grid.Children.Add(ButtonStateBoardLocal());
+        grid.Children.Add(bord2);
+        grid.Children.Add(textBlock);
+        grid.Children.Add(ButtonMenuTypeClose(window));
+        grid.Children.Add(ButtonStateBoardGlobal(window));
+        grid.Children.Add(ButtonStateBoardLocal(window));
         return grid;
     }
     //Глобальная кнопка
-    public static Button ButtonStateBoardGlobal()
+    public static Button ButtonStateBoardGlobal(MainWindow window)
     {
         Button button = new Button();
         button.Width = 200;
@@ -414,9 +437,9 @@ public class DrawPlane
         button.FontSize = 24;
         button.BorderThickness = new Thickness(2);
 
-        button.Margin = new Thickness(0, 0, 30, 0);
+        button.Margin = new Thickness(0, 0, 30, 25);
         button.HorizontalAlignment = HorizontalAlignment.Right;
-        button.VerticalAlignment = VerticalAlignment.Center;
+        button.VerticalAlignment = VerticalAlignment.Bottom;
         
 
         button.Click += Click2;
@@ -429,15 +452,16 @@ public class DrawPlane
             DataBase.Board.AppObject(board);
             DataBase.Board.ActivsBoard(board.id);
 
-            ((TaskBoard.MainWindow)Application.Current.MainWindow).DeleteList();
-            ((TaskBoard.MainWindow)Application.Current.MainWindow).DraftBoard();
-            ((TaskBoard.MainWindow)Application.Current.MainWindow).DeleteMenuLocalOfGlobal();
+            
+            window.DeleteList();
+            window.DraftBoard();
+            window.DeleteMenuLocalOfGlobal();
         }
 
         return button;
     }
     //Локальная кнопка
-    public static Button ButtonStateBoardLocal()
+    public static Button ButtonStateBoardLocal(MainWindow window)
     {
         Button button = new Button();
         button.Width = 200;
@@ -449,8 +473,8 @@ public class DrawPlane
         button.BorderThickness = new Thickness(2);
 
         button.HorizontalAlignment = HorizontalAlignment.Left;
-        button.VerticalAlignment = VerticalAlignment.Center;
-        button.Margin = new Thickness(30, 0,0,0);
+        button.VerticalAlignment = VerticalAlignment.Bottom;
+        button.Margin = new Thickness(30, 0,0,25);
 
         button.Click += Click3;
 
@@ -462,12 +486,35 @@ public class DrawPlane
             DataBase.Board.AppObject(board);
             DataBase.Board.ActivsBoard(board.id);
 
-            ((TaskBoard.MainWindow)Application.Current.MainWindow).DeleteList();
-            ((TaskBoard.MainWindow)Application.Current.MainWindow).DraftBoard();
-            ((TaskBoard.MainWindow)Application.Current.MainWindow).DeleteMenuLocalOfGlobal();
+            window.DeleteList();
+            window.DraftBoard();
+            window.DeleteMenuLocalOfGlobal();
         }
 
         return button;
+    }
+
+    //Кнопка закрытия выбора типа доски
+    public static Button ButtonMenuTypeClose(MainWindow window)
+    {
+        Button btn = new Button();
+        btn.Width = 60;
+        btn.Height = 40;
+        btn.Background = Brushes.IndianRed;
+        btn.BorderBrush = Brushes.Black;
+        btn.Content = "Закрыть";
+        btn.Click += Click1;
+        btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        btn.HorizontalAlignment = HorizontalAlignment.Right;
+        btn.VerticalAlignment = VerticalAlignment.Top;
+
+        //Функция клика для этих кнопок
+        void Click1(object sender, RoutedEventArgs e)
+        {
+            window.DeleteMenuLocalOfGlobal();
+        }
+
+        return btn;
     }
 }
 
