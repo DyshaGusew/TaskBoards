@@ -49,10 +49,12 @@ namespace TaskBoard
         public void DraftBoard()
         {
             BoardText.Text = Logic.GetCurrentBoard().name.ToString();
+
+            //Удаление старых столбцов должно быть тут
+
             int IDboard = Logic.GetCurrentBoard().id;
             string[] str = Logic.GetNameColumns(IDboard);
             int a = new Logic().GetIdColumsInBoard(IDboard).Count();
-            //Удаление старых столбцов
             DraftColumns(a, str);
         }
         //отрисовывает определенное количество карточек
@@ -133,11 +135,11 @@ namespace TaskBoard
         {
             foreach (UIElement element in MainPlane.Children)
             {
-                if (element is ScrollViewer)
+                if (element is Grid)
                 {
-                    if (((ScrollViewer)element).Name.ToString().Contains("BordList"))
+                    if (((Grid)element).Name.ToString().Contains("BordList"))
                     {
-                        MainPlane.Children.Remove((ScrollViewer)element);
+                        MainPlane.Children.Remove((Grid)element);
 
                         DraftBoard();
                         return;
@@ -276,9 +278,9 @@ namespace TaskBoard
 
             foreach (UIElement element in MainPlane.Children)
             {
-                if (element is ScrollViewer)
+                if (element is Grid)
                 {
-                    if (((ScrollViewer)element).Name.ToString().Contains("BordList"))
+                    if (((Grid)element).Name.ToString().Contains("BordList"))
                     {
                         flag = 0; break;
                     }
@@ -297,11 +299,11 @@ namespace TaskBoard
             {
                 foreach (UIElement element in MainPlane.Children)
                 {
-                    if (element is ScrollViewer)
+                    if (element is Grid)
                     {
-                        if (((ScrollViewer)element).Name.ToString().Contains("BordList"))
+                        if (((Grid)element).Name.ToString().Contains("BordList"))
                         {
-                            MainPlane.Children.Remove((ScrollViewer)element);
+                            MainPlane.Children.Remove((Grid)element);
                             break;
                         }
                     }

@@ -258,44 +258,8 @@ public class DrawPlane
 
 
 
-    private static Border Card()
-    {
-        int a = 400; // Ширина
-        int b = 200; // Высота досок
-        Border btn = new Border();
-        btn.Background = Brushes.Aqua;
-        btn.BorderBrush = Brushes.Black;
-        btn.CornerRadius = new CornerRadius(25);
-        btn.Width = a;
-        btn.Height = b;
-        btn.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
-        btn.Margin = new Thickness(20, 20, 20, 20); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-        btn.HorizontalAlignment = HorizontalAlignment.Center;
-        btn.VerticalAlignment = VerticalAlignment.Top;
-        return btn;
-    }
-
-    //Элементы карточек
-    public static Border[] DrawCard(int id)
-    {
-        Border[] btn = new Border[id];
-
-        btn[0] = Card();
-        btn[0].Margin = new Thickness(0, 120, 0, 0);
-
-        for (int i = 2; i<=id; i++)
-        {
-            btn[i-1] = Card();
-            btn[i-1].Margin = new Thickness(0, 60+ 200*i, 0, 0);
-        }
-
-        return btn;
-    }
-
-
-
-    //Объект для списка досок
-    public static ScrollViewer FonButtonBoard(MainWindow window)
+    //Отрсовка объекта списка карточек
+    public static ScrollViewer PlaneCardInColumn(MainWindow window)
     {
         Border border = new Border();
         Grid grid = new Grid();
@@ -304,6 +268,7 @@ public class DrawPlane
         grid.Background = Brushes.White;
         border.BorderBrush = Brushes.Black;
         grid.Width = 300;
+        grid.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 100;
 
         border.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 100;
         scrollViewer.Name = "BordList";
@@ -328,6 +293,99 @@ public class DrawPlane
         return scrollViewer;
     }
 
+    //
+    private static Grid Card(int step, Column column, MainWindow window)
+    {
+        Grid grid = new Grid();
+        int a = 400; // Ширина
+        int b = 200; // Высота досок
+        Border btn = new Border();
+        btn.Background = Brushes.Aqua;
+        btn.BorderBrush = Brushes.Black;
+        btn.CornerRadius = new CornerRadius(25);
+        btn.Width = a;
+        btn.Height = b;
+        btn.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        btn.Margin = new Thickness(20, 20, 20, 20); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+        btn.HorizontalAlignment = HorizontalAlignment.Center;
+        btn.VerticalAlignment = VerticalAlignment.Top;
+        return grid;
+    }
+
+    //Элементы карточек
+    public static Border[] DrawCard(int id)
+    {
+        Border[] btn = new Border[id];
+
+       // btn[0] = Card();
+        btn[0].Margin = new Thickness(0, 120, 0, 0);
+
+        for (int i = 2; i<=id; i++)
+        {
+        //    btn[i-1] = Card();
+            btn[i-1].Margin = new Thickness(0, 60+ 200*i, 0, 0);
+        }
+
+        return btn;
+    }
+
+
+
+    //Объект для списка досок
+    public static Grid FonButtonBoard(MainWindow window)
+    {
+        Grid gridMain = new Grid();
+        gridMain.Name = "BordList";
+
+        gridMain.Background = Brushes.White;
+        gridMain.Width = 335;
+        gridMain.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 100;
+        gridMain.MaxHeight = 5 * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 100;
+        gridMain.HorizontalAlignment = HorizontalAlignment.Center;
+        gridMain.VerticalAlignment = VerticalAlignment.Top;
+        gridMain.Margin = new Thickness(0, 150, 0, 0);
+
+        Grid gridScrollBut = new Grid();
+        gridScrollBut.Margin = new Thickness(0, 0, 0, 0);
+        gridScrollBut.Width = 300;
+        gridScrollBut.HorizontalAlignment = HorizontalAlignment.Center;
+        gridScrollBut.VerticalAlignment = VerticalAlignment.Top;
+        gridScrollBut.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 40;
+
+
+
+        ScrollViewer scrollViewer = new ScrollViewer();
+        scrollViewer.Width = 320;
+        scrollViewer.VerticalAlignment = VerticalAlignment.Top;
+        scrollViewer.HorizontalAlignment = HorizontalAlignment.Center;
+       // scrollViewer.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 20;
+        scrollViewer.Margin = new Thickness(0, 50, 0, 10);
+
+        Border border = new Border();
+        border.BorderBrush = Brushes.Black;
+        border.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 100;
+        border.MaxHeight = 5 * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 100;
+        border.VerticalAlignment = VerticalAlignment.Top;
+        border.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+
+        
+        List<Board> boards = DataBase.Board.GetListBoards().ToList();
+        int step = 0;
+        foreach (Board board in Logic.GetBoardsTrue())
+        {
+            gridScrollBut.Children.Add(ButtonBoard(step, board, window));
+            step += 70;
+        }
+
+      //  gridScrollBut.Children.Add(ButtonListClose(window));
+        scrollViewer.Content = gridScrollBut;
+
+        gridMain.Children.Add(border);
+        gridMain.Children.Add(scrollViewer);
+        gridMain.Children.Add(ButtonListClose(window));
+        return gridMain;
+    }
+
     //Создание кнопок для списка досок
     public static Button ButtonBoard(int step, Board board, MainWindow window)
     {
@@ -339,7 +397,7 @@ public class DrawPlane
         btn.Height = 50;
         btn.Name = "Mini" + board.name.Replace(" ", "");
         btn.Content = board.name;
-        btn.Margin = new Thickness(0, step+50, 0, 0); //Расположение каждый раз разное
+        btn.Margin = new Thickness(0, step, 0, 0); //Расположение каждый раз разное
 
         btn.HorizontalAlignment = HorizontalAlignment.Center;
         btn.VerticalAlignment = VerticalAlignment.Top;
