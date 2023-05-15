@@ -39,11 +39,11 @@ public class Logic : ILogic
     //Получение имени доски при создании
     public static string GetBoardNullName() 
     {
-        if(DataBase.Board.GetListBoards() == null)
+        if(GetBoardsTrue() == null)
         {
             return "Доска номер 1";
         }
-        string text = "Доска номер " + (DataBase.Board.GetListBoards().Count()+1).ToString();
+        string text = "Доска номер " + (GetBoardsTrue().Count()+1).ToString();
         return text; 
     }
 

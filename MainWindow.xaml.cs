@@ -56,6 +56,8 @@ namespace TaskBoard
             string[] str = Logic.GetNameColumns(IDboard);
             int a = new Logic().GetIdColumsInBoard(IDboard).Count();
             DraftColumns(a, str);
+            MainPlane.Children.Add(DrawPlane.Card(new Column(), this));
+            
         }
         //отрисовывает определенное количество карточек
         public void DraftColumns(int All, string[] str, int Browsing = 0)
@@ -228,7 +230,7 @@ namespace TaskBoard
         //Удаление доски со всеми ее элементами
         private void ButtonDeleteBoard_Click(object sender, RoutedEventArgs e)
         {
-            if (DataBase.Board.GetListBoards().Count() == 1)
+            if (Logic.GetBoardsTrue().Count() == 1)
             {
                 MessageBox.Show("Нельзя удалить единственную доску");
                 return;
@@ -258,14 +260,11 @@ namespace TaskBoard
                         //Удаляю сам столбец
                         DataBase.Column.DeleteByID(iColumn);
                     }
-                }
-
-                   
+                }   
             }
 
             //Делаю активной другую доску, рисую активнцю доску
-            DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[DataBase.Board.GetListBoards().Count - 1].id);
-            DataBase.Board.ActivsBoard(DataBase.Board.GetListBoards()[DataBase.Board.GetListBoards().Count-1].id);
+            DataBase.Board.ActivsBoard(Logic.GetBoardsTrue()[Logic.GetBoardsTrue().Count - 1].id);
             DeleteMenuLocalOfGlobal();
             DeleteList();
             DraftBoard();

@@ -9,7 +9,7 @@
     <Grid x:Name="MainPlane" Background="#FF4AB4B4">
         
         <Grid x:Name="BoardNamePanel" Background="#FF287EA1" VerticalAlignment="Top" Height="60">
-            <TextBox x:Name="BoardText" Text="" TextChanged="BoardText_TextChanget" VerticalAlignment="Center" FontSize="36" HorizontalAlignment="Left" Foreground="Black" Background="#FF2B7D9E" BorderBrush="#00ABADB3" Grid.Column="1" Margin="609,0,0,0"/>
+            <TextBox x:Name="BoardText" Text="" TextChanged="BoardText_TextChanget" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" VerticalAlignment="Center" FontSize="36" HorizontalAlignment="Center" Foreground="Black" Background="#FF2B7D9E" BorderBrush="#00ABADB3" Grid.Column="1"/>
 
             <Button x:Name="ButtonBack" Content="Сменить пользователя" Click="ButtonBack_Click"    VerticalAlignment="Center" FontSize="24" HorizontalAlignment="Right" Background="#FFEEEEEE" Margin="0,0,30,0" BorderBrush="#FF1A1A1A" Padding="5,0,5,0" Grid.IsSharedSizeScope="True" Grid.Column="1"/>
             <Button x:Name="ButtonAddColumn" Content="Добавить столбец" Click="ButtonAddColumn_Click"    VerticalAlignment="Center" FontSize="24" HorizontalAlignment="Right" Background="#FFEEEEEE" Margin="0,0,330,0" BorderBrush="#FF1A1A1A" Padding="5,0,5,0" Grid.IsSharedSizeScope="True" Grid.Column="1"/>
