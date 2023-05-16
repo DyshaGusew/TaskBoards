@@ -354,11 +354,11 @@ public class DrawPlane
         btnName.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
 
         TextBox nameCard = new TextBox();
-        nameCard.Text = "gggg";
-        nameCard.Height = 35;
+        nameCard.Text = Logic.GetСardNullName(column.id);
+        nameCard.Height = 40;
         nameCard.Width = widthCard-35;
         nameCard.VerticalAlignment = VerticalAlignment.Center;
-        nameCard.FontSize = 20;
+        nameCard.FontSize = 28;
         nameCard.BorderBrush = Brushes.White;
         nameCard.HorizontalContentAlignment = HorizontalAlignment.Center;
         nameCard.VerticalContentAlignment = VerticalAlignment.Center;
@@ -481,6 +481,115 @@ public class DrawPlane
     }
     //Кнопка закрытия для списка досок
     public static Button ButtonListClose(MainWindow window)
+    {
+        Button btn = new Button();
+        btn.Width = 80;
+        btn.Height = 40;
+        btn.Background = Brushes.IndianRed;
+        btn.BorderBrush = Brushes.Black;
+        btn.Content = "Закрыть";
+        btn.Click += Click1;
+        btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        btn.HorizontalAlignment = HorizontalAlignment.Right;
+        btn.VerticalAlignment = VerticalAlignment.Top;
+
+        //Функция клика для этих кнопок
+        void Click1(object sender, RoutedEventArgs e)
+        {
+            window.DeleteList();
+        }
+
+        return btn;
+    }
+
+
+
+    //Объект для списка пользователей
+    public static Grid FonButtonPerson(MainWindow window)
+    {
+        //Основной блок, куда все помещаю
+        Grid gridMain = new Grid();
+        gridMain.Name = "PersList";
+
+        gridMain.Background = Brushes.White;
+        gridMain.Width = 335;
+        gridMain.Height = Logic.GetTruePersons().Count * 50 + (Logic.GetTruePersons().Count - 1) * 20 + 100;
+        gridMain.MaxHeight = 5 * 50 + (Logic.GetTruePersons().Count - 1) * 20 + 100;
+        gridMain.HorizontalAlignment = HorizontalAlignment.Center;
+        gridMain.VerticalAlignment = VerticalAlignment.Top;
+        gridMain.Margin = new Thickness(0, 150, 0, 0);
+
+        //Сетка для отображения скрол бара и кнопок
+        Grid gridScrollBut = new Grid();
+        gridScrollBut.Margin = new Thickness(0, 0, 0, 0);
+        gridScrollBut.Width = 300;
+        gridScrollBut.HorizontalAlignment = HorizontalAlignment.Center;
+        gridScrollBut.VerticalAlignment = VerticalAlignment.Top;
+        gridScrollBut.Height = Logic.GetTruePersons().Count * 50 + (Logic.GetTruePersons().Count - 1) * 20 + 40;
+
+        //Сам скрол объект куда позже помещается сетка выше 
+        ScrollViewer scrollViewer = new ScrollViewer();
+        scrollViewer.Width = 320;
+        scrollViewer.VerticalAlignment = VerticalAlignment.Top;
+        scrollViewer.HorizontalAlignment = HorizontalAlignment.Center;
+        // scrollViewer.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 20;
+        scrollViewer.Margin = new Thickness(0, 50, 0, 10);
+
+        //Обводка, помещаемая в главный блок
+        Border border = new Border();
+        border.BorderBrush = Brushes.Black;
+        border.Height = Logic.GetTruePersons().Count * 50 + (Logic.GetTruePersons().Count - 1) * 20 + 100;
+        border.MaxHeight = 5 * 50 + (Logic.GetTruePersons().Count - 1) * 20 + 100;
+        border.VerticalAlignment = VerticalAlignment.Top;
+        border.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+
+        //Добавление кнопок в грид для скролл бара
+        int step = 0;
+        foreach (Person person in Logic.GetTruePersons())
+        {
+            gridScrollBut.Children.Add(ButtonPerson(step, person, window));
+            step += 70;
+        }
+
+        //Помещаю грид в скрол вью
+        scrollViewer.Content = gridScrollBut;
+
+        //Добавляю в главный элемент границы, скролл сетку с кнопками и кнопку закрытия
+        gridMain.Children.Add(border);
+        gridMain.Children.Add(scrollViewer);
+        gridMain.Children.Add(PersonListClose(window));
+        return gridMain;
+    }
+    //Создание кнопок для списка пользователей
+    public static Button ButtonPerson(int step, Person person, MainWindow window)
+    {
+        Button btn = new Button();
+
+        btn.Background = Brushes.Aquamarine;
+        btn.BorderBrush = Brushes.Black;
+        btn.Width = 250;
+        btn.Height = 50;
+        btn.Name = "Mini" + person.login.Replace(" ", "");
+        btn.Content = person.login;
+        btn.Margin = new Thickness(0, step, 0, 0); //Расположение каждый раз разное
+
+        btn.HorizontalAlignment = HorizontalAlignment.Center;
+        btn.VerticalAlignment = VerticalAlignment.Top;
+
+        btn.Click += Click1;
+        btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+
+        //Функция клика для этих кнопок
+        void Click1(object sender, RoutedEventArgs e)
+        {
+            //Доска добавляется к пользователю и теперь он может делать в ней что-либо
+            window.DeleteList();
+        }
+
+        return btn;
+    }
+    //Кнопка закрытия для списка пользователей
+    public static Button PersonListClose(MainWindow window)
     {
         Button btn = new Button();
         btn.Width = 80;

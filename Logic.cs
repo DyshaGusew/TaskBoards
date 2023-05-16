@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-public class Logic : ILogic
+public class Logic
 {
     //Проверка на текущую доску
     public static Board GetCurrentBoard()
@@ -36,6 +36,24 @@ public class Logic : ILogic
         return null;
     }
 
+    //Поиск всех пользователей кроме текущего
+    public static List<Person> GetTruePersons()
+    {
+        List < Person > people = new List<Person>();
+        foreach (Person person in DataBase.Person.GetListPersons())
+        {
+            if (person.stateActivePerson != 1)
+            {
+                people.Add(person);
+            }
+        }
+        if(people.Count == 0)
+        {
+            return null;
+        }
+        return people;
+    }
+
     //Получение имени доски при создании
     public static string GetBoardNullName() 
     {
@@ -45,6 +63,51 @@ public class Logic : ILogic
         }
         string text = "Доска номер " + (GetBoardsTrue().Count()+1).ToString();
         return text; 
+    }
+
+    //Получение имени карточки при создании
+    public static string GetСardNullName(int colId)
+    {
+        if (GetIdCardInColomns(colId) == null)
+        {
+            return "Карточка номер 1";
+        }
+        string text = "Карточка номер " + (GetIdCardInColomns(colId).Count() + 1).ToString();
+        return text;
+    }
+
+    //Получение имени столбца при создании
+    public static string[] GetNameColumns(int id)
+    {
+        StreamReader rd = new StreamReader("../../DataBases\\Columns.csv");
+        int i = 0;
+        while (!rd.EndOfStream)//Листаем до конца
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });
+            if (id == Convert.ToInt32(parms[1]))
+            {
+                i++;
+            }
+        }
+        rd.Close();
+
+        rd = new StreamReader("../../DataBases\\Columns.csv");
+        string[] str = new string[i];
+        i = 0;
+        while (!rd.EndOfStream)//Листаем до конца
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });
+            if (id == Convert.ToInt32(parms[1]))
+            {
+                str[i] = parms[2];
+                i++;
+            }
+        }
+        rd.Close();
+        return str;
+
     }
 
     //Получение подходящих пож отображение досок для определенного пользователя
@@ -103,7 +166,7 @@ public class Logic : ILogic
 
     }
     //ID of the cards contained in the columns - Айди карточек содержащихся в столбцах
-    public List<int> GetIdCardInColomns(int id)
+    public static List<int> GetIdCardInColomns(int id)
     {
 
         List<int> Arr = new List<int>();
@@ -147,36 +210,5 @@ public class Logic : ILogic
         return i;
    
     }
-    public static string[] GetNameColumns(int id)
-    {
-        StreamReader rd = new StreamReader("../../DataBases\\Columns.csv");
-        int i = 0;
-        while (!rd.EndOfStream)//Листаем до конца
-        {
-            string line = rd.ReadLine();
-            string[] parms = line.Split(new char[] { ';' });
-            if (id == Convert.ToInt32(parms[1]))
-            {
-                i++;
-            }
-        }
-        rd.Close();
-
-        rd = new StreamReader("../../DataBases\\Columns.csv");
-        string[] str = new string[i];
-        i = 0;
-        while (!rd.EndOfStream)//Листаем до конца
-        {
-            string line = rd.ReadLine();
-            string[] parms = line.Split(new char[] { ';' });
-            if (id == Convert.ToInt32(parms[1]))
-            {
-                str[i] = parms[2];
-                i++;
-            }
-        }
-        rd.Close();
-        return str;
-
-    }
+    
 }

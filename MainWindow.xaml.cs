@@ -132,7 +132,7 @@ namespace TaskBoard
 
         //Удаление элементов
 
-        //Удаление открывающегося списка
+        //Удаление открывающегося списка как пользователей, так и досок
         public void DeleteList()
         {
             foreach (UIElement element in MainPlane.Children)
@@ -142,13 +142,21 @@ namespace TaskBoard
                     if (((Grid)element).Name.ToString().Contains("BordList"))
                     {
                         MainPlane.Children.Remove((Grid)element);
-
-                        DraftBoard();
-                        return;
+                        break;
                     }
                 }
             }
-
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("PersList"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
         }
 
         //Удаление меню с выбором вида доски
@@ -179,17 +187,17 @@ namespace TaskBoard
             //Получаю активную доску
             Board newBoard = Logic.GetCurrentBoard();
             newBoard.name = text.Text;   //Меняю имя на введенное
-
+            BoardText.Text = newBoard.name;
             //Заменяю в базе данных
             DeleteList();
             DeleteMenuLocalOfGlobal();
             DataBase.Board.ReplaceObject(Logic.GetCurrentBoard().id, newBoard);
-            
         }
 
         //Добавление доски(открытие меню какой тип доски добавить)
         private void ButtonAddBoard_Click(object sender, RoutedEventArgs e)
         {
+            DeleteList();
             int flag = 1;
 
             foreach (UIElement element in MainPlane.Children)
@@ -230,6 +238,7 @@ namespace TaskBoard
         //Удаление доски со всеми ее элементами
         private void ButtonDeleteBoard_Click(object sender, RoutedEventArgs e)
         {
+            DeleteList();
             if (Logic.GetBoardsTrue().Count() == 1)
             {
                 MessageBox.Show("Нельзя удалить единственную доску");
@@ -248,9 +257,9 @@ namespace TaskBoard
                     foreach (int iColumn in IdColumns)
                     {
                         //Получаю все айди карточки в столбце
-                        if (new Logic().GetIdCardInColomns(iColumn) != null)
+                        if (Logic.GetIdCardInColomns(iColumn) != null)
                         {
-                            List<int> IdCards = new Logic().GetIdCardInColomns(iColumn);
+                            List<int> IdCards = Logic.GetIdCardInColomns(iColumn);
                             foreach (int iCard in IdCards)
                             {
                                 //Удаляю каждую карточку столбца
@@ -273,6 +282,18 @@ namespace TaskBoard
         //Открытие списка досок и закрытие
         public void ButtonOpenBoards_Click(object sender, RoutedEventArgs e)
         {
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("PersList"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
+
             int flag = 1;
 
             foreach (UIElement element in MainPlane.Children)
@@ -310,15 +331,66 @@ namespace TaskBoard
             } 
         }
 
+        //Открыти списка пользователей для добавления
+        public void ButtonOpenPerson_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("BordList"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
+
+            int flag = 1;
+
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("PersList"))
+                    {
+                        flag = 0; break;
+                    }
+                }
+            }
+
+
+            //Создание кнопок и фона
+            if (flag == 1)
+            {
+                DeleteMenuLocalOfGlobal();
+                MainPlane.Children.Add(DrawPlane.FonButtonPerson(this));
+            }
+            //Иначе удаление
+            else
+            {
+                foreach (UIElement element in MainPlane.Children)
+                {
+                    if (element is Grid)
+                    {
+                        if (((Grid)element).Name.ToString().Contains("PersList"))
+                        {
+                            MainPlane.Children.Remove((Grid)element);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+
         //Добавление столбцов
         private void ButtonAddColumn_Click(object sender, RoutedEventArgs e)
         {
-
+            DeleteList();
 
             Column column = new Column(DataBase.Column.MaxID(), Logic.GetCurrentBoard().id, "Столбец " + (new Logic().GetIdColumsInBoard(Logic.GetCurrentBoard().id).Count() + 1).ToString());
             DataBase.Column.AppObject(column);
 
-            DeleteList();
             DeleteMenuLocalOfGlobal();
             DraftBoard();
         }
