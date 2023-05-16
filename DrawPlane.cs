@@ -68,7 +68,7 @@ public class DrawPlane
         {
             TextBlock[] btn = new TextBlock[1];
             btn[0] = TextBlock();
-            btn[0].Margin = new Thickness(20, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
             return btn;
@@ -77,13 +77,13 @@ public class DrawPlane
         {
             TextBlock[] btn = new TextBlock[2];
             btn[0] = TextBlock();
-            btn[0].Margin = new Thickness(290, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[0].HorizontalAlignment = HorizontalAlignment.Left;
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
 
             btn[1] = TextBlock();
-            btn[1].Margin = new Thickness(0, 100, 290, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[1].HorizontalAlignment = HorizontalAlignment.Right;
+            btn[1].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1].HorizontalAlignment = HorizontalAlignment.Center;
             btn[1].VerticalAlignment = VerticalAlignment.Top;
             return btn;
         }
@@ -91,18 +91,18 @@ public class DrawPlane
         {
             TextBlock[] btn = new TextBlock[3];
             btn[0] = TextBlock();
-            btn[0].Margin = new Thickness(100, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[0].HorizontalAlignment = HorizontalAlignment.Left;
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
 
             btn[1] = TextBlock();
-            btn[1].Margin = new Thickness(0, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[1].HorizontalAlignment = HorizontalAlignment.Center;
             btn[1].VerticalAlignment = VerticalAlignment.Top;
 
             btn[2] = TextBlock();
-            btn[2].Margin = new Thickness(0, 100, 100, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[2].HorizontalAlignment = HorizontalAlignment.Right;
+            btn[2].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[2].HorizontalAlignment = HorizontalAlignment.Center;
             btn[2].VerticalAlignment = VerticalAlignment.Top;
             return btn;
         }
@@ -116,7 +116,7 @@ public class DrawPlane
         {
             Border[] btn = new Border[1];
             btn[0] = Border();
-            btn[0].Margin = new Thickness(20, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
             return btn;
@@ -125,13 +125,13 @@ public class DrawPlane
         {
             Border[] btn = new Border[2];
             btn[0] = Border();
-            btn[0].Margin = new Thickness(250, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[0].HorizontalAlignment = HorizontalAlignment.Left;
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
 
             btn[1] = Border();
-            btn[1].Margin = new Thickness(0, 100, 250, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[1].HorizontalAlignment = HorizontalAlignment.Right;
+            btn[1].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1].HorizontalAlignment = HorizontalAlignment.Center;
             btn[1].VerticalAlignment = VerticalAlignment.Top;
             return btn;
         }
@@ -139,18 +139,18 @@ public class DrawPlane
         {
             Border[] btn = new Border[3];
             btn[0] = Border();
-            btn[0].Margin = new Thickness(60, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[0].HorizontalAlignment = HorizontalAlignment.Left;
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
 
             btn[1] = Border();
-            btn[1].Margin = new Thickness(0, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[1].HorizontalAlignment = HorizontalAlignment.Center;
             btn[1].VerticalAlignment = VerticalAlignment.Top;
 
             btn[2] = Border();
-            btn[2].Margin = new Thickness(0, 100, 60, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[2].HorizontalAlignment = HorizontalAlignment.Right;
+            btn[2].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[2].HorizontalAlignment = HorizontalAlignment.Center;
             btn[2].VerticalAlignment = VerticalAlignment.Top;
             return btn;
         }
@@ -164,7 +164,7 @@ public class DrawPlane
         {
             Border[] btn = new Border[1];
             btn[0] = BorderMini();
-            btn[0].Margin = new Thickness(20, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
             return btn;
@@ -173,13 +173,13 @@ public class DrawPlane
         {
             Border[] btn = new Border[2];
             btn[0] = BorderMini();
-            btn[0].Margin = new Thickness(250, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[0].HorizontalAlignment = HorizontalAlignment.Left;
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
 
             btn[1] = BorderMini();
-            btn[1].Margin = new Thickness(0, 100, 250, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[1].HorizontalAlignment = HorizontalAlignment.Right;
+            btn[1].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1].HorizontalAlignment = HorizontalAlignment.Center;
             btn[1].VerticalAlignment = VerticalAlignment.Top;
             return btn;
         }
@@ -187,18 +187,18 @@ public class DrawPlane
         {
             Border[] btn = new Border[3];
             btn[0] = BorderMini();
-            btn[0].Margin = new Thickness(60, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[0].HorizontalAlignment = HorizontalAlignment.Left;
+            btn[0].Margin = new Thickness(0,0 ,0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
 
             btn[1] = BorderMini();
-            btn[1].Margin = new Thickness(0, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[1].HorizontalAlignment = HorizontalAlignment.Center;
             btn[1].VerticalAlignment = VerticalAlignment.Top;
 
             btn[2] = BorderMini();
-            btn[2].Margin = new Thickness(0, 100, 60, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[2].HorizontalAlignment = HorizontalAlignment.Right;
+            btn[2].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[2].HorizontalAlignment = HorizontalAlignment.Center;
             btn[2].VerticalAlignment = VerticalAlignment.Top;
             return btn;
 
@@ -214,7 +214,7 @@ public class DrawPlane
         {
             Border[] btn = new Border[1];
             btn[0] = BorderMini();
-            btn[0].Margin = new Thickness(20, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].Margin = new Thickness(0,0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
             return btn;
@@ -223,13 +223,13 @@ public class DrawPlane
         {
             Border[] btn = new Border[2];
             btn[0] = BorderMini();
-            btn[0].Margin = new Thickness(250, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[0].HorizontalAlignment = HorizontalAlignment.Left;
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
 
             btn[1] = BorderMini();
-            btn[1].Margin = new Thickness(0, 100, 250, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[1].HorizontalAlignment = HorizontalAlignment.Right;
+            btn[1].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1].HorizontalAlignment = HorizontalAlignment.Center;
             btn[1].VerticalAlignment = VerticalAlignment.Top;
             return btn;
         }
@@ -237,25 +237,36 @@ public class DrawPlane
         {
             Border[] btn = new Border[3];
             btn[0] = BorderMini();
-            btn[0].Margin = new Thickness(60, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[0].HorizontalAlignment = HorizontalAlignment.Left;
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
 
             btn[1] = BorderMini();
-            btn[1].Margin = new Thickness(0, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[1].HorizontalAlignment = HorizontalAlignment.Center;
             btn[1].VerticalAlignment = VerticalAlignment.Top;
 
             btn[2] = BorderMini();
-            btn[2].Margin = new Thickness(0, 100, 60, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-            btn[2].HorizontalAlignment = HorizontalAlignment.Right;
+            btn[2].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[2].HorizontalAlignment = HorizontalAlignment.Center;
             btn[2].VerticalAlignment = VerticalAlignment.Top;
             return btn;
 
 
         }
     }
-
+    public static Grid NewGrid()
+    {
+        Grid grid = new Grid();
+        grid.Name = "Column";
+        grid.Margin = new Thickness(60, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+        grid.HorizontalAlignment = HorizontalAlignment.Left;
+        grid.VerticalAlignment = VerticalAlignment.Top;
+        grid.Width = 480;
+        grid.Height = 740;
+        grid.VerticalAlignment = VerticalAlignment.Top;
+        return grid;
+    }
 
 
     //Отрсовка объекта списка карточек
