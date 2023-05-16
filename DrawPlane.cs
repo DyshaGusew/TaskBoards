@@ -255,16 +255,15 @@ public class DrawPlane
 
         }
     }
-    public static Grid NewGrid()
+    public static Grid GridColumn()
     {
         Grid grid = new Grid();
         grid.Name = "Column";
         grid.Margin = new Thickness(60, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-        grid.HorizontalAlignment = HorizontalAlignment.Left;
+        grid.HorizontalAlignment = HorizontalAlignment.Center;
         grid.VerticalAlignment = VerticalAlignment.Top;
         grid.Width = 480;
         grid.Height = 740;
-        grid.VerticalAlignment = VerticalAlignment.Top;
         return grid;
     }
 
