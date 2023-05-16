@@ -110,7 +110,7 @@ public class Person
     public string login;
     public string password;
     public int stateActivePerson = 0;
-    public string idBoardsRef = null;
+    public string idBoardsRef = "0";
     public Person()
     {
         id = DataBase.Person.PersonMaxID();

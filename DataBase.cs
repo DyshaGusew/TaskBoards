@@ -745,7 +745,7 @@ public partial class DataBase
                 {
                     //Получаем нужны столбец, создаем новый, новому добавляем ссылаемую доску
                     rd.Close();
-                    if (parms[4]==null)
+                    if (parms[4] == "0")
                     {
                         Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
                         personNew.idBoardsRef = idBoardsRef;
@@ -782,13 +782,20 @@ public partial class DataBase
 
                 if (idPerson == Convert.ToInt32(parms[0]))          //Если ID равен указанному, до добавляю
                 {
-                    //Получаем нужны столбец, создаем новый, новому добавляем ссылаемую доску
+                   
                     rd.Close();
                     Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
-                    string[] Boards = parms[4].Split(',');
-                    for(int i = 0; i < Boards.Length; i++)
+                    if (parms[4] == "0")
                     {
-                        Console.WriteLine(Boards[i]);
+                        return;
+                    }
+                    else
+                    {
+                        string[] Boards = parms[4].Split(',');
+                        for (int i = 0; i < Boards.Length; i++)
+                        {
+                            Console.WriteLine(Boards[i]);
+                        }
                     }
 
                 }
@@ -814,26 +821,36 @@ public partial class DataBase
                     //Получаем нужны столбец, создаем новый, новому добавляем ссылаемую доску
                     rd.Close();
                     Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
-                    string[] Boards = parms[4].Split(',');
-                    for(int i = 0; i < Boards.Length; i++)
+                    if (parms[4] == "0")
                     {
-                        int result = string.Compare(Boards[i], idBoardsRef);
-                        if (result != 0)
+                        return;
+                    }
+                    else
+                    {
+                        string[] Boards = parms[4].Split(',');
+                        for (int i = 0; i < Boards.Length; i++)
                         {
-                            TimeBox[i]= Boards[i];
+                            int result = string.Compare(Boards[i], idBoardsRef);
+                            if (result != 0)
+                            {
+                                TimeBox[i] = Boards[i];
+                            }
                         }
+                        personNew.idBoardsRef = TimeBox[0];
+                        for (int i = 1; i < TimeBox.Length; i++)
+                        {
+                            personNew.idBoardsRef = personNew.idBoardsRef + ',' + TimeBox[i];
+                        }
+                        ReplacePerson(idPerson, personNew);
+                        return;
                     }
-                    personNew.idBoardsRef = TimeBox[0];
-                    for (int i = 1; i< TimeBox.Length; i++)
-                    {
-                        personNew.idBoardsRef = personNew.idBoardsRef + ',' + TimeBox[i];
-                    }
-                    ReplacePerson(idPerson, personNew);
-                    return;
-                }
-            }
-            rd.Close();
 
+
+
+                }
+
+                rd.Close();
+            }
         }
     }
 }
