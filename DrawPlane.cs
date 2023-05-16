@@ -406,8 +406,6 @@ public class DrawPlane
         return grid;
     }
 
-
-
     //Кнопки карточки
     public static Button ButtonCard(int num, Card card, MainWindow window)
     { 
@@ -417,11 +415,15 @@ public class DrawPlane
         buttonOpenInfo.HorizontalAlignment = HorizontalAlignment.Left;
         buttonOpenInfo.VerticalAlignment = VerticalAlignment.Bottom;
         buttonOpenInfo.Margin = new Thickness(10, 0, 0, 10);
-        buttonOpenInfo.Content = "Открыть описание";
         LogColorButtonCard(card.color, buttonOpenInfo);
         buttonOpenInfo.BorderBrush = Brushes.Black;
         buttonOpenInfo.BorderThickness = new Thickness(3);
-        buttonOpenInfo.FontSize = 21;
+        buttonOpenInfo.FontSize = 20;
+
+        if(card.text == "null")
+            buttonOpenInfo.Content = "Добавить описание";
+        else
+            buttonOpenInfo.Content = "Открыть описание";
 
         Button buttonDeleteCard = new Button();
         buttonDeleteCard.Click += ButtonDeleteCard_Click;
@@ -433,7 +435,7 @@ public class DrawPlane
         LogColorButtonCard(card.color, buttonDeleteCard);
         buttonDeleteCard.BorderBrush = Brushes.Black;
         buttonDeleteCard.BorderThickness = new Thickness(3);
-        buttonDeleteCard.FontSize = 21;
+        buttonDeleteCard.FontSize = 20;
 
         void ButtonDeleteCard_Click(object sender, RoutedEventArgs e)
         {
@@ -443,7 +445,10 @@ public class DrawPlane
 
         void ButtonOpenInfo_Click(object sender, RoutedEventArgs e)
         {
-            
+            if(card.text == "null")
+            {
+
+            }
         }
 
         if(num == 1)

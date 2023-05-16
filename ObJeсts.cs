@@ -86,7 +86,7 @@ public class Card : Objeсts
         name = null;
         color = "white";
         typeDeskrip = 1;
-        text = null;
+        text = "null";
     }
 
     public Card(int idColumnsRef):this() 

@@ -40,7 +40,7 @@ namespace TaskBoard
             InitializeComponent();
 
             DraftBoard();
-            MainPlane.Children.Add(DrawPlane.Card(DataBase.Card.GetObjOfId(3), this));
+            MainPlane.Children.Add(DrawPlane.Card(DataBase.Card.GetObjOfId(4), this));
         }
 
 
