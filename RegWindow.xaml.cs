@@ -58,7 +58,7 @@ namespace TaskBoard
             }
             else 
             {
-                if (DataBase.Person.CreatePerson(100, Login.Text, Password1.Password, 1) == 0) // первый и последний аргументы могут быть ваще любыми, все равно они меняются
+                if (DataBase.Person.CreatePerson(100, Login.Text, Password1.Password, 1, "0")==0) // первый и последний аргументы могут быть ваще любыми, все равно они меняются
                 {
                     MessageBox.Show("Регистрация прошла успешно!", "Все хорошо", MessageBoxButton.OK, MessageBoxImage.Information);
                     StartWindow startWindow = new StartWindow();

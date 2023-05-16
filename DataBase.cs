@@ -474,9 +474,10 @@ public partial class DataBase
         static readonly string pathDataPersons = "../../DataBases\\PersonBase.csv"; 
         
         // создает нового пользователя и добавляет его в бд
-         public int CreatePerson(int id,string login, string password, int stateActivePerson)
+         public int CreatePerson(int id,string login, string password, int stateActivePerson, string idBoardsRef)
         {
-            Person newPerson = new Person(id, login, password, stateActivePerson);
+
+            Person newPerson = new Person(id, login, password, stateActivePerson, idBoardsRef);
 
             //Проверка на наличие такого же пользователя
             int result;
@@ -489,7 +490,7 @@ public partial class DataBase
                 default:   //Добавляет если нет ошибок
                     Person person = new Person();
                     StringBuilder scv = new StringBuilder();
-                    scv.AppendLine($"{person.id};{login};{password};{person.stateActivePerson}");
+                    scv.AppendLine($"{person.id};{login};{password};{person.stateActivePerson};{person.idBoardsRef}");
                     File.AppendAllText(pathDataPersons, scv.ToString());
                     result = 0;
                     break;
@@ -508,7 +509,7 @@ public partial class DataBase
                 login = person.login;
 
             StringBuilder scv = new StringBuilder();
-            scv.AppendLine($"{person.id};{login};{person.password};{person.stateActivePerson}");
+            scv.AppendLine($"{person.id};{login};{person.password};{person.stateActivePerson},{person.idBoardsRef}");
             File.AppendAllText(pathDataPersons, scv.ToString());
         }
 
@@ -569,7 +570,7 @@ public partial class DataBase
 
                 if (id == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
                 {
-                    Person person = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]));
+                    Person person = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
                     rd.Close();
                     return person;
                 }
@@ -600,7 +601,7 @@ public partial class DataBase
                 string line = rd.ReadLine();
                 string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
 
-                Person person = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]));
+                Person person = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]) ;
                 persons.Add(person);
             }
             rd.Close();
@@ -696,7 +697,7 @@ public partial class DataBase
                 if (id == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
                 {
                     
-                    Person ReplaceLoginPerson = new Person(Convert.ToInt32(parms[0]), newLogin, parms[2], Convert.ToInt32(parms[3]));
+                    Person ReplaceLoginPerson = new Person(Convert.ToInt32(parms[0]), newLogin, parms[2], Convert.ToInt32(parms[3]), parms[4]);
 
                     ReplacePerson(id, ReplaceLoginPerson);
                     return;
@@ -718,7 +719,7 @@ public partial class DataBase
 
                 if (id == Convert.ToInt32(parms[0]))          //Если ID равен указанному, то возвращаю пользователя
                 {
-                    Person ReplacePassPerson = new Person(Convert.ToInt32(parms[0]), parms[1], newPass, Convert.ToInt32(parms[3]));
+                    Person ReplacePassPerson = new Person(Convert.ToInt32(parms[0]), parms[1], newPass, Convert.ToInt32(parms[3]), parms[4]);
                     
                     rd.Close();
                     ReplacePerson(id, ReplacePassPerson);
@@ -726,6 +727,130 @@ public partial class DataBase
                 }
             }
 
+        }
+
+        //добавление id доски пользователю
+        
+        public void AssignmentIDBoard(int idPerson, string idBoardsRef)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
+        {
+            //Считываю базу пользователей
+            StreamReader rd = new StreamReader(pathDataPersons);
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                if (idPerson == Convert.ToInt32(parms[0]))          //Если ID равен указанному, до добавляю
+                {
+                    //Получаем нужны столбец, создаем новый, новому добавляем ссылаемую доску
+                    rd.Close();
+                    if (parms[4] == "0")
+                    {
+                        Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
+                        personNew.idBoardsRef = idBoardsRef;
+                        ReplacePerson(idPerson, personNew);
+                        return;
+                    }
+                    else
+                    {
+                       
+                        Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
+                        personNew.idBoardsRef =parms[4]+','+ idBoardsRef;
+                        ReplacePerson(idPerson, personNew);
+                        return;
+                    }
+                        
+                    
+                }
+            }
+            rd.Close();
+
+        }
+
+        // вывод всех досок принадлежащих пользоватлю
+        
+        public void GetBoardsOfPerson(int idPerson)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
+        {
+            //Считываю базу пользователей
+            StreamReader rd = new StreamReader(pathDataPersons);
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                if (idPerson == Convert.ToInt32(parms[0]))          //Если ID равен указанному, до добавляю
+                {
+                   
+                    rd.Close();
+                    Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
+                    if (parms[4] == "0")
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        string[] Boards = parms[4].Split(',');
+                        for (int i = 0; i < Boards.Length; i++)
+                        {
+                            Console.WriteLine(Boards[i]);
+                        }
+                    }
+
+                }
+            }
+            rd.Close();
+
+        }
+
+        //удаление указаной доски
+        public void DeleteBoardsOfPerson(int idPerson, string idBoardsRef)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
+        {
+            //Считываю базу пользователей
+            StreamReader rd = new StreamReader(pathDataPersons);
+            string[] TimeBox=null;
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                if (idPerson == Convert.ToInt32(parms[0]))          //Если ID равен указанному, до добавляю
+                {
+                    //Получаем нужны столбец, создаем новый, новому добавляем ссылаемую доску
+                    rd.Close();
+                    Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
+                    if (parms[4] == "0")
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        string[] Boards = parms[4].Split(',');
+                        for (int i = 0; i < Boards.Length; i++)
+                        {
+                            int result = string.Compare(Boards[i], idBoardsRef);
+                            if (result != 0)
+                            {
+                                TimeBox[i] = Boards[i];
+                            }
+                        }
+                        personNew.idBoardsRef = TimeBox[0];
+                        for (int i = 1; i < TimeBox.Length; i++)
+                        {
+                            personNew.idBoardsRef = personNew.idBoardsRef + ',' + TimeBox[i];
+                        }
+                        ReplacePerson(idPerson, personNew);
+                        return;
+                    }
+
+
+
+                }
+
+                rd.Close();
+            }
         }
     }
 }
