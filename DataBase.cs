@@ -748,7 +748,7 @@ public partial class DataBase
                     if (parms[4]==null)
                     {
                         Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), pathDataPersons);
-                        personNew.idBoardsRef = Convert.ToInt32(idBoardsRef);
+                        personNew.idBoardsRef = idBoardsRef;
                         ReplaceObject(idPerson, personNew);
                         return;
                     }
