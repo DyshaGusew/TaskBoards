@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 public class Logic
 {
@@ -124,6 +126,8 @@ public class Logic
         }
         return boardsTrue;
     }
+
+
 
     //Определение только частных досок пользователя
     public static List<Board> GetBoardsPerson(int idPerson)

@@ -35,11 +35,12 @@ namespace TaskBoard
             }
             //Активация первой доски пользователя
             DataBase.Board.ActivsBoard(Logic.GetBoardsTrue()[Logic.GetBoardsTrue().Count-1].id);
-
+            
 
             InitializeComponent();
 
             DraftBoard();
+            MainPlane.Children.Add(DrawPlane.Card(DataBase.Card.GetObjOfId(3), this));
         }
 
 
@@ -56,7 +57,7 @@ namespace TaskBoard
             string[] str = Logic.GetNameColumns(IDboard);
             int a = new Logic().GetIdColumsInBoard(IDboard).Count();
             DraftColumns(a, str);
-            MainPlane.Children.Add(DrawPlane.Card(new Column(), this));
+            
             
         }
         //отрисовывает определенное количество карточек
@@ -277,6 +278,24 @@ namespace TaskBoard
             DeleteMenuLocalOfGlobal();
             DeleteList();
             DraftBoard();
+        }
+
+        //Удаление карточки в столбце
+        public void DeleteCard(Card card)
+        {
+            DeleteList();
+            DeleteMenuLocalOfGlobal();
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("Card"+card.id))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
         }
 
         //Открытие списка досок и закрытие

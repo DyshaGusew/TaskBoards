@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-
+using System.Windows.Input;
 using System.Windows.Media;
 using TaskBoard;
 using static DataBase;
@@ -316,21 +316,41 @@ public class DrawPlane
         return gridMain;
     }
 
-    //
-    public static Grid Card(Column column, MainWindow window)
+    //Пока хз зачем
+    public static Border[] DrawCard(int id)
+    {
+        Border[] btn = new Border[id];
+
+        // btn[0] = Card();
+        btn[0].Margin = new Thickness(0, 120, 0, 0);
+
+        for (int i = 2; i <= id; i++)
+        {
+            //    btn[i-1] = Card();
+            btn[i - 1].Margin = new Thickness(0, 60 + 200 * i, 0, 0);
+        }
+
+        return btn;
+    }
+
+
+
+    //Одиночная карточка 
+    public static Grid Card(Card card, MainWindow window)
     {
         Grid grid = new Grid();
+        grid.Name = "Card" + card.id;
         int widthCard = 400; 
-        int heightCard = 200; 
+        int heightCard = 100; 
         grid.Width = widthCard;
         grid.Height = heightCard;
         grid.HorizontalAlignment = HorizontalAlignment.Center;
         grid.VerticalAlignment = VerticalAlignment.Center;
 
         Border btn = new Border();
-        btn.Background = Brushes.Aqua;
+        LogColorCard(card.color, btn);
         btn.BorderBrush = Brushes.Black;
-        btn.CornerRadius = new CornerRadius(25);
+        btn.CornerRadius = new CornerRadius(15);
         btn.Width = widthCard;
         btn.Height = heightCard;
         btn.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
@@ -348,21 +368,31 @@ public class DrawPlane
         Border btnName = new Border();
         btnName.BorderBrush = Brushes.Black;
         btnName.CornerRadius = new CornerRadius(15);
-        btnName.Background = Brushes.White;
+        LogColorCard(card.color, btnName);
         btnName.Width = widthCard;
         btnName.Height = 50;
         btnName.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
 
         TextBox nameCard = new TextBox();
-        nameCard.Text = Logic.GetСardNullName(column.id);
+        nameCard.TextChanged += NameCard_TextChanged;
+        nameCard.Text = card.name;
         nameCard.Height = 40;
         nameCard.Width = widthCard-35;
         nameCard.VerticalAlignment = VerticalAlignment.Center;
         nameCard.FontSize = 28;
-        nameCard.BorderBrush = Brushes.White;
+        nameCard.BorderBrush = btn.Background;
+        nameCard.Background = btn.Background;
         nameCard.HorizontalContentAlignment = HorizontalAlignment.Center;
         nameCard.VerticalContentAlignment = VerticalAlignment.Center;
 
+        void NameCard_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            window.DeleteList();
+            window.DeleteMenuLocalOfGlobal();
+            TextBox text = (TextBox)sender;
+            card.name = text.Text;
+            DataBase.Card.ReplaceObject(card.id, card);
+        }
 
         gridName.Children.Add(btnName);
         gridName.Children.Add(nameCard);
@@ -370,27 +400,114 @@ public class DrawPlane
 
         grid.Children.Add(btn);
         grid.Children.Add(gridName);
-        
+        grid.Children.Add(ButtonCard(1, card, window));
+        grid.Children.Add(ButtonCard(2, card, window));
 
         return grid;
     }
 
-    //Элементы карточек
-    public static Border[] DrawCard(int id)
-    {
-        Border[] btn = new Border[id];
 
-       // btn[0] = Card();
-        btn[0].Margin = new Thickness(0, 120, 0, 0);
 
-        for (int i = 2; i<=id; i++)
+    //Кнопки карточки
+    public static Button ButtonCard(int num, Card card, MainWindow window)
+    { 
+        Button buttonOpenInfo = new Button();
+        buttonOpenInfo.Click += ButtonOpenInfo_Click;
+        buttonOpenInfo.Width = 192;
+        buttonOpenInfo.HorizontalAlignment = HorizontalAlignment.Left;
+        buttonOpenInfo.VerticalAlignment = VerticalAlignment.Bottom;
+        buttonOpenInfo.Margin = new Thickness(10, 0, 0, 10);
+        buttonOpenInfo.Content = "Открыть описание";
+        LogColorButtonCard(card.color, buttonOpenInfo);
+        buttonOpenInfo.BorderBrush = Brushes.Black;
+        buttonOpenInfo.BorderThickness = new Thickness(3);
+        buttonOpenInfo.FontSize = 21;
+
+        Button buttonDeleteCard = new Button();
+        buttonDeleteCard.Click += ButtonDeleteCard_Click;
+        buttonDeleteCard.Width = 192;
+        buttonDeleteCard.HorizontalAlignment = HorizontalAlignment.Right;
+        buttonDeleteCard.VerticalAlignment = VerticalAlignment.Bottom;
+        buttonDeleteCard.Margin = new Thickness(0, 0, 10, 10);
+        buttonDeleteCard.Content = "Удалить карточку";
+        LogColorButtonCard(card.color, buttonDeleteCard);
+        buttonDeleteCard.BorderBrush = Brushes.Black;
+        buttonDeleteCard.BorderThickness = new Thickness(3);
+        buttonDeleteCard.FontSize = 21;
+
+        void ButtonDeleteCard_Click(object sender, RoutedEventArgs e)
         {
-        //    btn[i-1] = Card();
-            btn[i-1].Margin = new Thickness(0, 60+ 200*i, 0, 0);
+            DataBase.Card.DeleteByID(card.id);
+            window.DeleteCard(card);
         }
 
-        return btn;
+        void ButtonOpenInfo_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        if(num == 1)
+        {
+            return buttonOpenInfo;
+        }
+        else
+        {
+            return buttonDeleteCard;
+        }
     }
+
+    //Настройка цвета карточки
+    public static void LogColorCard(string textColor, Border bord)
+    {
+        switch (textColor)
+        {
+            case "green":
+                bord.Background = Brushes.LimeGreen;
+                break;
+            case "red":
+                bord.Background = Brushes.Red;
+                break;
+            case "blue":
+                bord.Background = new SolidColorBrush(Color.FromRgb(30, 144, 255));
+                break;
+            case "aqua":
+                bord.Background = Brushes.Aqua;
+                break;
+            case "yellow":
+                bord.Background = Brushes.Yellow;
+                break;
+            default: bord.Background = Brushes.White; return;
+
+        }
+
+    }
+
+    //Настройка цвета кнопок
+    public static void LogColorButtonCard(string textColor, Button but)
+    {
+        switch (textColor)
+        {
+            case "green":
+                but.Background = new SolidColorBrush(Color.FromRgb(0, 128, 0));
+                break;
+            case "red":
+                but.Background = new SolidColorBrush(Color.FromRgb(139, 0, 0));
+                break;
+            case "blue":
+                but.Background = new SolidColorBrush(Color.FromRgb(65, 105, 255));            
+                    break;
+            case "aqua":
+                but.Background = new SolidColorBrush(Color.FromRgb(30, 144, 255));
+                break;
+            case "yellow":
+                but.Background = new SolidColorBrush(Color.FromRgb(184, 134, 11)); 
+                break;
+            default: but.Background = Brushes.Gray;  return;
+
+        }
+
+    }
+
 
 
 
