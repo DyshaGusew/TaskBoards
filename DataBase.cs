@@ -509,7 +509,7 @@ public partial class DataBase
                 login = person.login;
 
             StringBuilder scv = new StringBuilder();
-            scv.AppendLine($"{person.id};{login};{person.password};{person.stateActivePerson};{person.idBoardsRef}");
+            scv.AppendLine($"{person.id};{login};{person.password};{person.stateActivePerson},{person.idBoardsRef}");
             File.AppendAllText(pathDataPersons, scv.ToString());
         }
 
@@ -730,7 +730,7 @@ public partial class DataBase
         }
 
         //добавление id доски пользователю
-        /*
+        
         public void AssignmentIDBoard(int idPerson, int idBoardsRef)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
         {
             //Считываю базу пользователей
@@ -748,7 +748,9 @@ public partial class DataBase
                     if (parms[4]==null)
                     {
                         Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), pathDataPersons);
-                        personNew.idBoardsRef = idBoardsRef;
+                        personNew.idBoardsRef = Convert.ToInt32(idBoardsRef);
+                        ReplaceObject(idPerson, personNew);
+                        return;
                     }
                     else
                     
@@ -760,6 +762,6 @@ public partial class DataBase
             rd.Close();
 
         }
-        */
+        
     }
 }
