@@ -747,17 +747,17 @@ public partial class DataBase
                     rd.Close();
                     if (parms[4]==null)
                     {
-                        Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), parms[1], parms[2], parms[3], parms[4]);
+                        Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
                         personNew.idBoardsRef = idBoardsRef;
-                        ReplaceObject(idPerson, personNew);
+                        ReplacePerson(idPerson, personNew);
                         return;
                     }
                     else
                     {
                        
-                        Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), parms[1], parms[2], parms[3], parms[4]);
+                        Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
                         personNew.idBoardsRef =parms[4]+','+ idBoardsRef;
-                        ReplaceObject(idPerson, personNew);
+                        ReplacePerson(idPerson, personNew);
                         return;
                     }
                         
@@ -784,7 +784,7 @@ public partial class DataBase
                 {
                     //Получаем нужны столбец, создаем новый, новому добавляем ссылаемую доску
                     rd.Close();
-                    Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), parms[1], parms[2], parms[3], parms[4]);
+                    Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
                     string[] Boards = parms[4].Split(',');
                     for(int i = 0; i < Boards.Length; i++)
                     {
@@ -796,7 +796,9 @@ public partial class DataBase
             rd.Close();
 
         }
-        public void GetBoardsOfPerson(int idPerson, string idBoardsRef)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
+
+        //удаление указаной доски
+        public void DeleteBoardsOfPerson(int idPerson, string idBoardsRef)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
         {
             //Считываю базу пользователей
             StreamReader rd = new StreamReader(pathDataPersons);
@@ -811,7 +813,7 @@ public partial class DataBase
                 {
                     //Получаем нужны столбец, создаем новый, новому добавляем ссылаемую доску
                     rd.Close();
-                    Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), parms[1], parms[2], parms[3], parms[4]);
+                    Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
                     string[] Boards = parms[4].Split(',');
                     for(int i = 0; i < Boards.Length; i++)
                     {
@@ -826,7 +828,7 @@ public partial class DataBase
                     {
                         personNew.idBoardsRef = personNew.idBoardsRef + ',' + TimeBox[i];
                     }
-                    ReplaceObject(idPerson, personNew);
+                    ReplacePerson(idPerson, personNew);
                     return;
                 }
             }
