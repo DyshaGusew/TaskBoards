@@ -731,7 +731,7 @@ public partial class DataBase
 
         //добавление id доски пользователю
         
-        public void AssignmentIDBoard(int idPerson, int idBoardsRef)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
+        public void AssignmentIDBoard(int idPerson, string idBoardsRef)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
         {
             //Считываю базу пользователей
             StreamReader rd = new StreamReader(pathDataPersons);
@@ -747,14 +747,85 @@ public partial class DataBase
                     rd.Close();
                     if (parms[4]==null)
                     {
-                        Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), pathDataPersons);
+                        Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), parms[1], parms[2], parms[3], parms[4]);
                         personNew.idBoardsRef = idBoardsRef;
                         ReplaceObject(idPerson, personNew);
                         return;
                     }
                     else
+                    {
+                       
+                        Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), parms[1], parms[2], parms[3], parms[4]);
+                        personNew.idBoardsRef =parms[4]+','+ idBoardsRef;
+                        ReplaceObject(idPerson, personNew);
+                        return;
+                    }
+                        
                     
-                    //Меняем старый столбец на новый
+                }
+            }
+            rd.Close();
+
+        }
+
+        // вывод всех досок принадлежащих пользоватлю
+        
+        public void GetBoardsOfPerson(int idPerson)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
+        {
+            //Считываю базу пользователей
+            StreamReader rd = new StreamReader(pathDataPersons);
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                if (idPerson == Convert.ToInt32(parms[0]))          //Если ID равен указанному, до добавляю
+                {
+                    //Получаем нужны столбец, создаем новый, новому добавляем ссылаемую доску
+                    rd.Close();
+                    Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), parms[1], parms[2], parms[3], parms[4]);
+                    string[] Boards = parms[4].Split(',');
+                    for(int i = 0; i < Boards.Length; i++)
+                    {
+                        Console.WriteLine(Boards[i]);
+                    }
+
+                }
+            }
+            rd.Close();
+
+        }
+        public void GetBoardsOfPerson(int idPerson, string idBoardsRef)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
+        {
+            //Считываю базу пользователей
+            StreamReader rd = new StreamReader(pathDataPersons);
+            string[] TimeBox=null;
+
+            while (!rd.EndOfStream)           //Пока не конец файла проверяю
+            {
+                string line = rd.ReadLine();
+                string[] parms = line.Split(new char[] { ';' });   //Разделяю строчку на блоки 
+
+                if (idPerson == Convert.ToInt32(parms[0]))          //Если ID равен указанному, до добавляю
+                {
+                    //Получаем нужны столбец, создаем новый, новому добавляем ссылаемую доску
+                    rd.Close();
+                    Person personNew = (Person)GetPersonOfId(Convert.ToInt32(parms[0]), parms[1], parms[2], parms[3], parms[4]);
+                    string[] Boards = parms[4].Split(',');
+                    for(int i = 0; i < Boards.Length; i++)
+                    {
+                        int result = string.Compare(Boards[i], idBoardsRef);
+                        if (result != 0)
+                        {
+                            TimeBox[i]= Boards[i];
+                        }
+                    }
+                    personNew.idBoardsRef = TimeBox[0];
+                    for (int i = 1; i< TimeBox.Length; i++)
+                    {
+                        personNew.idBoardsRef = personNew.idBoardsRef + ',' + TimeBox[i];
+                    }
                     ReplaceObject(idPerson, personNew);
                     return;
                 }
@@ -762,6 +833,5 @@ public partial class DataBase
             rd.Close();
 
         }
-        
     }
 }
