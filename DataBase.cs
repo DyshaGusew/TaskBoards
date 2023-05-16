@@ -509,7 +509,7 @@ public partial class DataBase
                 login = person.login;
 
             StringBuilder scv = new StringBuilder();
-            scv.AppendLine($"{person.id};{login};{person.password};{person.stateActivePerson},{person.idBoardsRef}");
+            scv.AppendLine($"{person.id};{login};{person.password};{person.stateActivePerson};{person.idBoardsRef}");
             File.AppendAllText(pathDataPersons, scv.ToString());
         }
 
@@ -756,7 +756,7 @@ public partial class DataBase
                     {
                        
                         Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
-                        personNew.idBoardsRef =parms[4]+','+ idBoardsRef;
+                        personNew.idBoardsRef =parms[4]+';' + idBoardsRef;
                         ReplacePerson(idPerson, personNew);
                         return;
                     }
@@ -791,7 +791,7 @@ public partial class DataBase
                     }
                     else
                     {
-                        string[] Boards = parms[4].Split(',');
+                        string[] Boards = parms[4].Split(';');
                         for (int i = 0; i < Boards.Length; i++)
                         {
                             Console.WriteLine(Boards[i]);
@@ -827,7 +827,7 @@ public partial class DataBase
                     }
                     else
                     {
-                        string[] Boards = parms[4].Split(',');
+                        string[] Boards = parms[4].Split(';');
                         for (int i = 0; i < Boards.Length; i++)
                         {
                             int result = string.Compare(Boards[i], idBoardsRef);
@@ -839,7 +839,7 @@ public partial class DataBase
                         personNew.idBoardsRef = TimeBox[0];
                         for (int i = 1; i < TimeBox.Length; i++)
                         {
-                            personNew.idBoardsRef = personNew.idBoardsRef + ',' + TimeBox[i];
+                            personNew.idBoardsRef = personNew.idBoardsRef + ';' + TimeBox[i];
                         }
                         ReplacePerson(idPerson, personNew);
                         return;
