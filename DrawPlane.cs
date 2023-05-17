@@ -764,6 +764,7 @@ public class DrawPlane
         {
             DataBase.Board.ActivsBoard(board.id);
             window.DeleteList();
+            window.ClearColumn();
             window.DraftBoard();
         }
             
@@ -978,6 +979,7 @@ public class DrawPlane
 
 
             window.DeleteList();
+            window.ClearColumn();
             window.DraftBoard();
             window.DeleteMenuLocalOfGlobal();
         }
@@ -1012,6 +1014,7 @@ public class DrawPlane
             DataBase.Person.AssignmentIDBoard(Logic.GetCurrentPerson().id, Logic.GetCurrentBoard().id.ToString());
 
             window.DeleteList();
+            window.ClearColumn();
             window.DraftBoard();
             window.DeleteMenuLocalOfGlobal();
         }

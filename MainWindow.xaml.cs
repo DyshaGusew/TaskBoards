@@ -16,6 +16,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Xml.Linq;
+using static DataBase;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace TaskBoard
@@ -38,7 +39,7 @@ namespace TaskBoard
             
 
             InitializeComponent();
-
+            ClearColumn();
             DraftBoard();
 
             //Не удалять делал кнопку минуса для удаления столбцов, пока не очень получилось
@@ -57,7 +58,8 @@ namespace TaskBoard
             //Удаляет столбцы
             //ClearColumn();
             //По идее, чтобы перерисовывать столбцы нужно вызывать метод клир и метод отрисовки столбцов
-            MainPlane.Children.Add(DrawPlane.Card(DataBase.Card.GetObjOfId(4), this));
+
+            //MainPlane.Children.Add(DrawPlane.Card(DataBase.Card.GetObjOfId(4), this));
         }
 
 
@@ -217,7 +219,7 @@ namespace TaskBoard
             {
                 if (element is Grid)
                 {
-                    if (((Grid)element).Name.ToString().Contains("Column1"))
+                    if (((Grid)element).Name.ToString().Contains("Columns"))
                     {
                         MainPlane.Children.Remove((Grid)element);
                         break;
@@ -405,6 +407,7 @@ namespace TaskBoard
             DataBase.Board.ActivsBoard(Logic.GetBoardsTrue()[Logic.GetBoardsTrue().Count - 1].id);
             DeleteMenuLocalOfGlobal();
             DeleteList();
+            ClearColumn();
             DraftBoard();
         }
 
@@ -549,7 +552,7 @@ namespace TaskBoard
                 return;
             }
             DeleteList();
-
+            ClearColumn();
             Column column = new Column(DataBase.Column.MaxID(), Logic.GetCurrentBoard().id, "Столбец " + (new Logic().GetIdColumsInBoard(Logic.GetCurrentBoard().id).Count() + 1).ToString());
             DataBase.Column.AppObject(column);
 
