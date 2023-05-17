@@ -59,7 +59,8 @@ namespace TaskBoard
             //ClearColumn();
             //По идее, чтобы перерисовывать столбцы нужно вызывать метод клир и метод отрисовки столбцов
 
-            //MainPlane.Children.Add(DrawPlane.Card(DataBase.Card.GetObjOfId(4), this));
+
+            MainPlane.Children.Add(DrawPlane.Card(DataBase.Card.GetObjOfId(4), this)); // ВОва убери комментарий
         }
 
 
@@ -281,6 +282,45 @@ namespace TaskBoard
             }
         }
 
+        //Удаление карточки в столбце
+        public void DeleteCard(Card card)
+        {
+            if (!CheckPressBut())
+            {
+                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            DeleteList();
+            DeleteMenuLocalOfGlobal();
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("Card" + card.id))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
+        }
+
+        //Удаление менюшки информации в карточке
+        public void DeleteInfoCard()
+        {
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("InfoCard"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
+        }
+
         //Проверка можно ли нажимать на кнопку
         public bool CheckPressBut()
         {
@@ -409,29 +449,6 @@ namespace TaskBoard
             DeleteList();
             ClearColumn();
             DraftBoard();
-        }
-
-        //Удаление карточки в столбце
-        public void DeleteCard(Card card)
-        {
-            if (!CheckPressBut())
-            {
-                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            DeleteList();
-            DeleteMenuLocalOfGlobal();
-            foreach (UIElement element in MainPlane.Children)
-            {
-                if (element is Grid)
-                {
-                    if (((Grid)element).Name.ToString().Contains("Card"+card.id))
-                    {
-                        MainPlane.Children.Remove((Grid)element);
-                        break;
-                    }
-                }
-            }
         }
 
         //Открытие списка досок и закрытие

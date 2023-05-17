@@ -535,7 +535,7 @@ public class DrawPlane
 
 
 
-    //Объект содержания карточки
+    //Объект отображения описания карточки
     public static Grid MenuCardInfo(Card card, MainWindow window)
     {
         Grid mainGrid = new Grid();
@@ -551,7 +551,7 @@ public class DrawPlane
         borderMainGrid.Width = 650;
         borderMainGrid.Height = 500;
         borderMainGrid.BorderThickness = new Thickness(3);
-        borderMainGrid.Background = Brushes.White;
+        borderMainGrid.Background = Brushes.Gray;
         mainGrid.Children.Add(borderMainGrid);
 
 
@@ -567,30 +567,70 @@ public class DrawPlane
         borderUpGrid.BorderBrush = Brushes.Black;
         borderUpGrid.BorderThickness = new Thickness(2);
         borderUpGrid.CornerRadius = new CornerRadius(12);
-        borderUpGrid.Background = Brushes.DarkGray;
+        LogColorCard(card.color, borderUpGrid);
 
 
         UpGrid.Children.Add(borderUpGrid);
-        UpGrid.Children.Add(ButtonMenuCardAppInfo(window));
-        UpGrid.Children.Add(ButtonMenuCardDeleteInfo(window));
-        UpGrid.Children.Add(ButtonMenuCardAppCheckList(window));
-        UpGrid.Children.Add(ButtonMenuCardClose(window));
+        UpGrid.Children.Add(ButtonMenuCardAppInfo(card, window));
+        UpGrid.Children.Add(ButtonMenuCardDeleteInfo(card, window));
+        UpGrid.Children.Add(ButtonMenuCardAppCheckList(card, window));
+        UpGrid.Children.Add(ButtonMenuCardClose(card, window));
 
         mainGrid.Children.Add(UpGrid);
 
+        TextBox mainText = new TextBox();
+        mainText.Name = "MainTextCard";
+
+        mainText.Background = Brushes.DarkGray;
+        mainText.TextWrapping = TextWrapping.Wrap;
+        mainText.AcceptsReturn = true;
+        mainText.KeyUp += keyEnter;
+        mainText.Width = 600;
+        mainText.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+        mainText.MinHeight = 50;
+        mainText.MaxHeight = 300;
+        mainText.HorizontalAlignment = HorizontalAlignment.Center;
+        mainText.VerticalAlignment = VerticalAlignment.Top;
+        mainText.Margin = new Thickness(0,130,0, 0);
+        mainText.BorderBrush = Brushes.Black;
+        mainText.BorderThickness = new Thickness(1);
+        mainText.TextChanged += MainText_TextChanged;
+        mainText.FontSize = 24;
+        mainText.VerticalContentAlignment = VerticalAlignment.Center;
+
+        mainText.Text = card.text.Replace('`', '\r').Replace('*', '\n');
+        void keyEnter(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                mainText.Select(mainText.Text.Length-1, 0); 
+            }
+        }
+        void MainText_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            mainText.Text = ((TextBox)sender).Text;
+            Card card1 = card;
+            card1.text = mainText.Text.Replace('\n', '*');
+            card1.text = card1.text.Replace('\r', '`');
+            DataBase.Card.ReplaceObject(card.id, card1 );
+        }
+
+        mainGrid.Children.Add(mainText);
         return mainGrid;
     }
 
 
-    public static Button ButtonMenuCardAppInfo(MainWindow window)
+
+    //Карточки для работы с описанием карточки
+    public static Button ButtonMenuCardAppInfo(Card card, MainWindow window)
     {
         Button button = new Button();
-        button.Width = 180;
+        button.Width = 160;
         button.Height = 60;
-        button.Background = Brushes.Gray;
+        LogColorButtonCard(card.color, button);
         button.BorderBrush = Brushes.Black;
-        button.Content = "Добавить описание";
-        button.FontSize = 20;
+        button.Content = "Поменять цвет";
+        button.FontSize = 16;
         button.BorderThickness = new Thickness(2);
 
         button.Margin = new Thickness(30, 0, 0, 0);
@@ -608,18 +648,19 @@ public class DrawPlane
         return button;
     }
 
-    public static Button ButtonMenuCardDeleteInfo(MainWindow window)
+    public static Button ButtonMenuCardAppCheckList(Card card, MainWindow window)
     {
         Button button = new Button();
-        button.Width = 180;
+        button.Width = 160;
         button.Height = 60;
-        button.Background = Brushes.Aquamarine;
+        LogColorButtonCard(card.color, button);
         button.BorderBrush = Brushes.Black;
-        button.Content = "Удалить содержание";
-        button.FontSize = 20;
+        button.Content = "Добавить чеклист";
+        button.FontSize = 16;
         button.BorderThickness = new Thickness(2);
 
         button.HorizontalAlignment = HorizontalAlignment.Center;
+        button.Margin = new Thickness(0, 0, 50, 0);
         button.VerticalAlignment = VerticalAlignment.Center;
 
         button.Click += Click3;
@@ -632,20 +673,20 @@ public class DrawPlane
         return button;
     }
 
-    public static Button ButtonMenuCardAppCheckList(MainWindow window)
+    public static Button ButtonMenuCardDeleteInfo(Card card, MainWindow window)
     {
         Button button = new Button();
-        button.Width = 180;
+        button.Width = 160;
         button.Height = 60;
-        button.Background = Brushes.Aquamarine;
+        LogColorButtonCard(card.color, button);
         button.BorderBrush = Brushes.Black;
-        button.Content = "Добавить чеклист";
-        button.FontSize = 20;
+        button.Content = "Удалить содержание";
+        button.FontSize = 16;
         button.BorderThickness = new Thickness(2);
 
         button.HorizontalAlignment = HorizontalAlignment.Right;
         button.VerticalAlignment = VerticalAlignment.Center;
-        button.Margin = new Thickness(0, 0, 30, 0);
+        button.Margin = new Thickness(0, 0, 80, 0);
 
         button.Click += Click3;
 
@@ -657,23 +698,30 @@ public class DrawPlane
         return button;
     }
 
-    public static Button ButtonMenuCardClose(MainWindow window)
+    //Закрытие информации
+    public static Button ButtonMenuCardClose(Card card, MainWindow window)
     {
         Button btn = new Button();
-        btn.Width = 80;
-        btn.Height = 50;
+        btn.Width = 60;
+        btn.Height = 35;
         btn.Background = Brushes.IndianRed;
+        if(card.color == "red")
+        {
+            btn.Background = Brushes.Gray;
+        }
         btn.BorderBrush = Brushes.Black;
         btn.Content = "Закрыть";
+        btn.FontSize = 14;
         btn.Click += Click1;
         btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
         btn.HorizontalAlignment = HorizontalAlignment.Right;
         btn.VerticalAlignment = VerticalAlignment.Top;
+        
 
         //Функция клика для этих кнопок
         void Click1(object sender, RoutedEventArgs e)
         {
-            
+            window.DeleteInfoCard();
         }
 
         return btn;
