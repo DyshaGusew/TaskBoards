@@ -117,13 +117,15 @@ public class Person
         stateActivePerson = 0;
 
     }
-    public Person(int id, string login, string password, int stateActivePerson, string idBoardsRef)
+    public Person(int id, string login, string password, int stateActivePerson, string idBoardsRef1)
     {
         this.login = login;
         this.password = password;
         this.stateActivePerson = stateActivePerson;
         this.id = id;
-        this.idBoardsRef = idBoardsRef;
+        this.idBoardsRef = idBoardsRef1;
+
+
     }
     
 }

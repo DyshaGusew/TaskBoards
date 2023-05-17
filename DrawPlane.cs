@@ -439,16 +439,26 @@ public class DrawPlane
 
         void ButtonDeleteCard_Click(object sender, RoutedEventArgs e)
         {
+            if (!window.CheckPressBut())
+            {
+                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            window.DeleteList();
+            window.DeleteMenuLocalOfGlobal();
             DataBase.Card.DeleteByID(card.id);
             window.DeleteCard(card);
         }
 
         void ButtonOpenInfo_Click(object sender, RoutedEventArgs e)
         {
-            if(card.text == "null")
+            if (!window.CheckPressBut())
             {
-
+                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
+
+            window.MainPlane.Children.Add(MenuCardInfo(card, window));
         }
 
         if(num == 1)
@@ -512,6 +522,153 @@ public class DrawPlane
         }
 
     }
+
+
+
+    //Объект содержания карточки
+    public static Grid MenuCardInfo(Card card, MainWindow window)
+    {
+        Grid mainGrid = new Grid();
+        mainGrid.Name = "InfoCard";
+        mainGrid.Width = 650;
+        mainGrid.Height = 500;
+        mainGrid.VerticalAlignment = VerticalAlignment.Center;
+        mainGrid.HorizontalAlignment = HorizontalAlignment.Center;
+        
+        Border borderMainGrid = new Border();
+        borderMainGrid.BorderBrush = Brushes.Black;
+        borderMainGrid.CornerRadius = new CornerRadius(12);
+        borderMainGrid.Width = 650;
+        borderMainGrid.Height = 500;
+        borderMainGrid.BorderThickness = new Thickness(3);
+        borderMainGrid.Background = Brushes.White;
+        mainGrid.Children.Add(borderMainGrid);
+
+
+        Grid UpGrid = new Grid();
+        UpGrid.Width = 650;
+        UpGrid.Height = 100;
+        UpGrid.VerticalAlignment = VerticalAlignment.Top;
+        UpGrid.HorizontalAlignment = HorizontalAlignment.Center;
+
+        Border borderUpGrid = new Border();
+        borderUpGrid.Width = UpGrid.Width;
+        borderUpGrid.Height = UpGrid.Height;
+        borderUpGrid.BorderBrush = Brushes.Black;
+        borderUpGrid.BorderThickness = new Thickness(2);
+        borderUpGrid.CornerRadius = new CornerRadius(12);
+        borderUpGrid.Background = Brushes.DarkGray;
+
+
+        UpGrid.Children.Add(borderUpGrid);
+        UpGrid.Children.Add(ButtonMenuCardAppInfo(window));
+        UpGrid.Children.Add(ButtonMenuCardDeleteInfo(window));
+        UpGrid.Children.Add(ButtonMenuCardAppCheckList(window));
+        UpGrid.Children.Add(ButtonMenuCardClose(window));
+
+        mainGrid.Children.Add(UpGrid);
+
+        return mainGrid;
+    }
+
+
+    public static Button ButtonMenuCardAppInfo(MainWindow window)
+    {
+        Button button = new Button();
+        button.Width = 180;
+        button.Height = 60;
+        button.Background = Brushes.Gray;
+        button.BorderBrush = Brushes.Black;
+        button.Content = "Добавить описание";
+        button.FontSize = 20;
+        button.BorderThickness = new Thickness(2);
+
+        button.Margin = new Thickness(30, 0, 0, 0);
+        button.HorizontalAlignment = HorizontalAlignment.Left;
+        button.VerticalAlignment = VerticalAlignment.Center;
+
+
+        button.Click += Click2;
+
+        void Click2(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        return button;
+    }
+
+    public static Button ButtonMenuCardDeleteInfo(MainWindow window)
+    {
+        Button button = new Button();
+        button.Width = 180;
+        button.Height = 60;
+        button.Background = Brushes.Aquamarine;
+        button.BorderBrush = Brushes.Black;
+        button.Content = "Удалить содержание";
+        button.FontSize = 20;
+        button.BorderThickness = new Thickness(2);
+
+        button.HorizontalAlignment = HorizontalAlignment.Center;
+        button.VerticalAlignment = VerticalAlignment.Center;
+
+        button.Click += Click3;
+
+        void Click3(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        return button;
+    }
+
+    public static Button ButtonMenuCardAppCheckList(MainWindow window)
+    {
+        Button button = new Button();
+        button.Width = 180;
+        button.Height = 60;
+        button.Background = Brushes.Aquamarine;
+        button.BorderBrush = Brushes.Black;
+        button.Content = "Добавить чеклист";
+        button.FontSize = 20;
+        button.BorderThickness = new Thickness(2);
+
+        button.HorizontalAlignment = HorizontalAlignment.Right;
+        button.VerticalAlignment = VerticalAlignment.Center;
+        button.Margin = new Thickness(0, 0, 30, 0);
+
+        button.Click += Click3;
+
+        void Click3(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        return button;
+    }
+
+    public static Button ButtonMenuCardClose(MainWindow window)
+    {
+        Button btn = new Button();
+        btn.Width = 80;
+        btn.Height = 50;
+        btn.Background = Brushes.IndianRed;
+        btn.BorderBrush = Brushes.Black;
+        btn.Content = "Закрыть";
+        btn.Click += Click1;
+        btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        btn.HorizontalAlignment = HorizontalAlignment.Right;
+        btn.VerticalAlignment = VerticalAlignment.Top;
+
+        //Функция клика для этих кнопок
+        void Click1(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        return btn;
+    }
+
 
 
 
@@ -597,6 +754,7 @@ public class DrawPlane
         {
             DataBase.Board.ActivsBoard(board.id);
             window.DeleteList();
+            window.DraftBoard();
         }
             
         return btn;
@@ -705,6 +863,7 @@ public class DrawPlane
         void Click1(object sender, RoutedEventArgs e)
         {
             //Доска добавляется к пользователю и теперь он может делать в ней что-либо
+            DataBase.Person.AssignmentIDBoard(person.id, Logic.GetCurrentBoard().id.ToString());
             window.DeleteList();
         }
 
@@ -801,11 +960,13 @@ public class DrawPlane
         {
             Board board = new Board(Logic.GetBoardNullName());
             board.userPresents = 0;               //Присваиваю доске владельца, тк общественна, то ноль
+           
 
             DataBase.Board.AppObject(board);
             DataBase.Board.ActivsBoard(board.id);
+            DataBase.Person.AssignmentIDBoard(Logic.GetCurrentPerson().id, Logic.GetCurrentBoard().id.ToString());
 
-            
+
             window.DeleteList();
             window.DraftBoard();
             window.DeleteMenuLocalOfGlobal();

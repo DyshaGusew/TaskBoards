@@ -125,6 +125,12 @@ namespace TaskBoard
 
             //DraftCards();
         }
+
+        //Отрисовка меню карточки
+        public void DraftCardInfo(Grid grid)
+        {
+            MainPlane.Children.Add(grid);
+        }
         public void DraftCards()
         {
             //Отрисовка всех карточек в столбце
@@ -178,13 +184,37 @@ namespace TaskBoard
             }
         }
 
+        //Проверка можно ли нажимать на кнопку
+        public bool CheckPressBut()
+        {
+            Person person = Logic.GetCurrentPerson();
+
+            foreach (int indexBoard in DataBase.Person.GetBoardsOfPerson(person.id))
+            {
+                if (Logic.GetCurrentBoard().id == indexBoard)
+                    return true;
+            }
+            return false;
+        }
+
 
         //Обработчики нажатий на доске
 
         //Замена имени доски на введенную
         private void BoardText_TextChanget(object sender, TextChangedEventArgs e)
         {
+
+
             TextBox text = (TextBox)sender;
+            if(text.Text != Logic.GetCurrentBoard().name)
+            {
+                if (!CheckPressBut())
+                {
+                    MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                    DraftBoard() ;
+                    return;
+                }
+            }
             //Получаю активную доску
             Board newBoard = Logic.GetCurrentBoard();
             newBoard.name = text.Text;   //Меняю имя на введенное
@@ -193,6 +223,7 @@ namespace TaskBoard
             DeleteList();
             DeleteMenuLocalOfGlobal();
             DataBase.Board.ReplaceObject(Logic.GetCurrentBoard().id, newBoard);
+
         }
 
         //Добавление доски(открытие меню какой тип доски добавить)
@@ -239,6 +270,11 @@ namespace TaskBoard
         //Удаление доски со всеми ее элементами
         private void ButtonDeleteBoard_Click(object sender, RoutedEventArgs e)
         {
+            if (!CheckPressBut())
+            {
+                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             DeleteList();
             if (Logic.GetBoardsTrue().Count() == 1)
             {
@@ -283,6 +319,11 @@ namespace TaskBoard
         //Удаление карточки в столбце
         public void DeleteCard(Card card)
         {
+            if (!CheckPressBut())
+            {
+                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             DeleteList();
             DeleteMenuLocalOfGlobal();
             foreach (UIElement element in MainPlane.Children)
@@ -353,6 +394,11 @@ namespace TaskBoard
         //Открыти списка пользователей для добавления
         public void ButtonOpenPerson_Click(object sender, RoutedEventArgs e)
         {
+            if (!CheckPressBut())
+            {
+                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             foreach (UIElement element in MainPlane.Children)
             {
                 if (element is Grid)
@@ -405,6 +451,11 @@ namespace TaskBoard
         //Добавление столбцов
         private void ButtonAddColumn_Click(object sender, RoutedEventArgs e)
         {
+            if (!CheckPressBut())
+            {
+                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
             DeleteList();
 
             Column column = new Column(DataBase.Column.MaxID(), Logic.GetCurrentBoard().id, "Столбец " + (new Logic().GetIdColumsInBoard(Logic.GetCurrentBoard().id).Count() + 1).ToString());

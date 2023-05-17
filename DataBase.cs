@@ -756,7 +756,7 @@ public partial class DataBase
                     {
                        
                         Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
-                        personNew.idBoardsRef =parms[4]+';' + idBoardsRef;
+                        personNew.idBoardsRef = GetPersonOfId(idPerson).idBoardsRef + ',' + idBoardsRef;
                         ReplacePerson(idPerson, personNew);
                         return;
                     }
@@ -770,8 +770,9 @@ public partial class DataBase
 
         // вывод всех досок принадлежащих пользоватлю
         
-        public void GetBoardsOfPerson(int idPerson)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
+        public List<int> GetBoardsOfPerson(int idPerson)  //Передаю id колонны в которую надо записать доску и id доски, в которой она должна находиться 
         {
+            List<int> ints = new List<int>();
             //Считываю базу пользователей
             StreamReader rd = new StreamReader(pathDataPersons);
 
@@ -787,21 +788,25 @@ public partial class DataBase
                     Person personNew = new Person(Convert.ToInt32(parms[0]), parms[1], parms[2], Convert.ToInt32(parms[3]), parms[4]);
                     if (parms[4] == "0")
                     {
-                        return;
+                        rd.Close();
+                        return null;
                     }
                     else
                     {
-                        string[] Boards = parms[4].Split(';');
+                        string[] Boards = parms[4].Split(',');
                         for (int i = 0; i < Boards.Length; i++)
                         {
-                            Console.WriteLine(Boards[i]);
+                            ints.Add(Convert.ToInt32(Boards[i]));
                         }
+                        rd.Close();
+                        return ints;
                     }
 
                 }
+                
             }
             rd.Close();
-
+            return ints;
         }
 
         //удаление указаной доски
@@ -827,7 +832,7 @@ public partial class DataBase
                     }
                     else
                     {
-                        string[] Boards = parms[4].Split(';');
+                        string[] Boards = parms[4].Split(',');
                         for (int i = 0; i < Boards.Length; i++)
                         {
                             int result = string.Compare(Boards[i], idBoardsRef);
@@ -839,7 +844,7 @@ public partial class DataBase
                         personNew.idBoardsRef = TimeBox[0];
                         for (int i = 1; i < TimeBox.Length; i++)
                         {
-                            personNew.idBoardsRef = personNew.idBoardsRef + ';' + TimeBox[i];
+                            personNew.idBoardsRef = personNew.idBoardsRef + ',' + TimeBox[i];
                         }
                         ReplacePerson(idPerson, personNew);
                         return;
