@@ -267,6 +267,40 @@ public class DrawPlane
         return grid;
     }
 
+    public static Button ButtonRightLeft()
+    {
+        Button button = new Button();
+        button.Content = "-";
+        button.Width = 50;
+        button.Height = 50;
+        button.Margin = new Thickness(0, 0, 0, 0);
+        button.HorizontalAlignment = HorizontalAlignment.Left;
+        button.VerticalAlignment = VerticalAlignment.Center;
+        button.FontSize = 15;
+        button.FontWeight = FontWeights.ExtraBold;
+        return button;
+    }
+    public static Button DelBatton()
+    {
+        Button buttonDel1 = DrawPlane.ButtonRightLeft();
+        //uttonDel.Content = "-";
+        buttonDel1.HorizontalAlignment = HorizontalAlignment.Right;
+        buttonDel1.VerticalAlignment = VerticalAlignment.Top;
+        buttonDel1.Width = 30;
+        buttonDel1.Height = 10;
+        buttonDel1.Background = new SolidColorBrush(Colors.Black);
+        buttonDel1.Margin = new Thickness(0, 23, 40, 0);
+        buttonDel1.FontSize = 15;
+        return buttonDel1;
+    }
+
+
+
+
+
+
+
+
 
     //Отрсовка объекта списка карточек
     public static Grid GridCards(MainWindow window)

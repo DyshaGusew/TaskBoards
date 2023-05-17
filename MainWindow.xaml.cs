@@ -42,24 +42,6 @@ namespace TaskBoard
             ClearColumn();
             DraftBoard();
 
-            //Не удалять делал кнопку минуса для удаления столбцов, пока не очень получилось
-            //Button button = new Button();
-            //button.Content = "-";
-            //button.Width = 50;
-            //button.Height = 50;
-            //button.Margin = new Thickness(0, 0, 0, 0);
-            //button.HorizontalAlignment = HorizontalAlignment.Center;
-            //button.VerticalAlignment = VerticalAlignment.Top;
-            //button.FontSize = 15;
-            //button.FontWeight = FontWeights.ExtraBold;
-            ////button.CornerRadius = new CornerRadius(25);
-            //MainPlane.Children.Add(button);
-
-            //Удаляет столбцы
-            //ClearColumn();
-            //По идее, чтобы перерисовывать столбцы нужно вызывать метод клир и метод отрисовки столбцов
-
-            //MainPlane.Children.Add(DrawPlane.Card(DataBase.Card.GetObjOfId(4), this));
         }
 
 
@@ -75,9 +57,7 @@ namespace TaskBoard
             int IDboard = Logic.GetCurrentBoard().id;
             string[] str = Logic.GetNameColumns(IDboard);
             int a = new Logic().GetIdColumsInBoard(IDboard).Count();
-            DraftColumns(a, str);
-            
-            
+            DraftColumns(3, str);    
         }
         //отрисовывает определенное количество карточек
         public void DraftColumns(int All, string[] str, int Browsing = 0)
@@ -89,11 +69,20 @@ namespace TaskBoard
             grid.Width = 1550;
             grid.Height = 1064;
             grid.Name = "Columns";
+
+            Button buttonL = DrawPlane.ButtonRightLeft();
+            buttonL.Content = "<";
+            MainPlane.Children.Add(buttonL);
+
+            Button buttonR = DrawPlane.ButtonRightLeft();
+            buttonR.Content = ">";
+            buttonR.HorizontalAlignment = HorizontalAlignment.Right;
+            MainPlane.Children.Add(buttonR);
+
             if (All == 0)
             {
                 //Ничего
             }
-
             if (All == 1)
             {
                 //Создание грида
@@ -114,6 +103,11 @@ namespace TaskBoard
                 grid1.Children.Add(txt[0]);
                 grid.Children.Add(grid1);
                 MainPlane.Children.Add(grid);
+
+
+                //делаем кнопку удаления столбцов
+                Button buttonDel = DrawPlane.DelBatton();
+                grid1.Children.Add(buttonDel);
             }
             if (All == 2)
             {
@@ -144,13 +138,22 @@ namespace TaskBoard
                 txt[1].Text = str[Browsing+1];
                 grid1.Children.Add(txt[0]);
                 grid2.Children.Add(txt[1]);
+
+                //делаем кнопку удаления столбцов
+                Button buttonDel1 = DrawPlane.DelBatton();
+                grid1.Children.Add(buttonDel1);
+
+                //делаем кнопку удаления столбцов
+                Button buttonDel2 = DrawPlane.DelBatton();
+                grid2.Children.Add(buttonDel2);
+
                 grid.Children.Add(grid1);
                 grid.Children.Add(grid2);
                 MainPlane.Children.Add(grid);
             }
             if (All >= 3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
             {
-                
+
                 //grid.Background = Brushes.Black;
 
                 Grid grid1 = DrawPlane.GridColumn();
@@ -187,16 +190,47 @@ namespace TaskBoard
                 txt[1].Text = str[1];
                 txt[2].Text = str[2];
 
+                //делаем кнопку удаления столбцов
+                Button buttonDel1 = DrawPlane.DelBatton();
+                grid1.Children.Add(buttonDel1);
+
+                //делаем кнопку удаления столбцов
+                Button buttonDel2 = DrawPlane.DelBatton();
+                grid2.Children.Add(buttonDel2);
+
+                //делаем кнопку удаления столбцов
+                Button buttonDel3 = DrawPlane.DelBatton();
+                grid3.Children.Add(buttonDel3);
 
                 grid1.Children.Add(txt[Browsing]);
-                grid2.Children.Add(txt[Browsing+1]);
-                grid3.Children.Add(txt[Browsing+2]);
+                grid2.Children.Add(txt[Browsing + 1]);
+                grid3.Children.Add(txt[Browsing + 2]);
+
+                //Button buttonDel1 = DrawPlane.ButtonRightLeft();
+                ////uttonDel.Content = "-";
+                //buttonDel1.HorizontalAlignment = HorizontalAlignment.Right;
+                //buttonDel1.VerticalAlignment = VerticalAlignment.Top;
+                //buttonDel1.Width = 30;
+                //buttonDel1.Height = 10;
+                //buttonDel1.Background = new SolidColorBrush(Colors.Black);
+                //buttonDel1.Margin = new Thickness(0, 23, 40, 0);
+                //buttonDel1.FontSize = 15;
+                //grid1.Children.Add(buttonDel1);
+
+
+
+
+
+
+
+
                 grid.Children.Add(grid1);
                 grid.Children.Add(grid2);
                 grid.Children.Add(grid3);
                 //grid.Background = Brushes.Black;
                 MainPlane.Children.Add(grid);
             }
+
         }
         public void ClearColumn()
         {
@@ -232,6 +266,27 @@ namespace TaskBoard
         {
             //Отрисовка всех карточек в столбце
         }
+
+        private void RightButton(object sender, RoutedEventArgs e)
+        {
+           ClearColumn();
+            int IDboard = Logic.GetCurrentBoard().id;
+            string[] str = Logic.GetNameColumns(IDboard);
+            int a = new Logic().GetIdColumsInBoard(IDboard).Count();
+            Enumeration.Change(Enumeration.value + 1);
+            DraftColumns(a, str, Enumeration.value);
+
+        }
+        public class Enumeration
+        {
+            public static int value = 0;
+
+            public static void Change(int a)
+            {
+                Enumeration.value = a;
+            }
+        }
+
 
 
         //Удаление элементов
