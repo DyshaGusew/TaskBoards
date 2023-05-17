@@ -40,6 +40,23 @@ namespace TaskBoard
             InitializeComponent();
 
             DraftBoard();
+
+            //Не удалять делал кнопку минуса для удаления столбцов, пока не очень получилось
+            //Button button = new Button();
+            //button.Content = "-";
+            //button.Width = 50;
+            //button.Height = 50;
+            //button.Margin = new Thickness(0, 0, 0, 0);
+            //button.HorizontalAlignment = HorizontalAlignment.Center;
+            //button.VerticalAlignment = VerticalAlignment.Top;
+            //button.FontSize = 15;
+            //button.FontWeight = FontWeights.ExtraBold;
+            ////button.CornerRadius = new CornerRadius(25);
+            //MainPlane.Children.Add(button);
+
+            //Удаляет столбцы
+            //ClearColumn();
+            //По идее, чтобы перерисовывать столбцы нужно вызывать метод клир и метод отрисовки столбцов
             MainPlane.Children.Add(DrawPlane.Card(DataBase.Card.GetObjOfId(4), this));
         }
 
@@ -63,6 +80,13 @@ namespace TaskBoard
         //отрисовывает определенное количество карточек
         public void DraftColumns(int All, string[] str, int Browsing = 0)
         {
+            Grid grid = DrawPlane.GridColumn();
+            grid.Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            grid.HorizontalAlignment = HorizontalAlignment.Center;
+            grid.VerticalAlignment = VerticalAlignment.Top;
+            grid.Width = 1550;
+            grid.Height = 1064;
+            grid.Name = "Columns";
             if (All == 0)
             {
                 //Ничего
@@ -70,67 +94,138 @@ namespace TaskBoard
 
             if (All == 1)
             {
+                //Создание грида
+                Grid grid1 = DrawPlane.GridColumn();
+                grid1.Margin = new Thickness(0, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+                grid1.HorizontalAlignment = HorizontalAlignment.Center;
+                grid1.VerticalAlignment = VerticalAlignment.Top;
+
                 Border[] borders = new Border[All];
                 borders = DrawPlane.DrawBorder(All);
-                borders[0].Name = "Border1";
-                MainPlane.Children.Add(borders[All - 1]);
+                grid1.Children.Add(borders[All - 1]);
+
                 //Выводим рамочку, куда поместим название 
                 borders = DrawPlane.DrawBorderBlox(All);
-                MainPlane.Children.Add(borders[All-1]);
+                grid1.Children.Add(borders[All - 1]);
                 TextBlock[] txt = DrawPlane.DrawTextBlock(All);
-                txt[0].Text = str[0];
-                MainPlane.Children.Add(txt[0]);
+                txt[0].Text = str[Browsing];
+                grid1.Children.Add(txt[0]);
+                grid.Children.Add(grid1);
+                MainPlane.Children.Add(grid);
             }
             if (All == 2)
             {
+                Grid grid1 = DrawPlane.GridColumn();
+                Grid grid2 = DrawPlane.GridColumn();
+
+                grid1.Margin = new Thickness(250, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+                grid1.HorizontalAlignment = HorizontalAlignment.Left;
+                grid1.VerticalAlignment = VerticalAlignment.Top;
+
+                grid2.Margin = new Thickness(0, 100, 250, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+                grid2.HorizontalAlignment = HorizontalAlignment.Right;
+                grid2.VerticalAlignment = VerticalAlignment.Top;
+
+
                 Border[] borders = new Border[All];
                 borders = DrawPlane.DrawBorder(All);
-                MainPlane.Children.Add(borders[All - 1]);
-                MainPlane.Children.Add(borders[All - 2]);
+                grid1.Children.Add(borders[All - 1]);
+                grid2.Children.Add(borders[All - 2]);
+
                 //Выводи рамочку
                 borders = DrawPlane.DrawBorderBlox(All);
-                MainPlane.Children.Add(borders[All - 1]);
-                MainPlane.Children.Add(borders[All - 2]);
+                grid1.Children.Add(borders[All - 1]);
+                grid2.Children.Add(borders[All - 2]);
 
                 TextBlock[] txt = DrawPlane.DrawTextBlock(All);
-                txt[0].Text = str[0];
-                txt[1].Text = str[1];
-                MainPlane.Children.Add(txt[0]);
-                MainPlane.Children.Add(txt[1]);
-
+                txt[0].Text = str[Browsing];
+                txt[1].Text = str[Browsing+1];
+                grid1.Children.Add(txt[0]);
+                grid2.Children.Add(txt[1]);
+                grid.Children.Add(grid1);
+                grid.Children.Add(grid2);
+                MainPlane.Children.Add(grid);
             }
             if (All >= 3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
             {
+                
+                //grid.Background = Brushes.Black;
+
+                Grid grid1 = DrawPlane.GridColumn();
+
+                grid1.Margin = new Thickness(60, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+                grid1.HorizontalAlignment = HorizontalAlignment.Left;
+                grid1.VerticalAlignment = VerticalAlignment.Top;
+
+                Grid grid2 = DrawPlane.GridColumn();
+
+                grid2.Margin = new Thickness(0, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+                grid2.HorizontalAlignment = HorizontalAlignment.Center;
+                grid2.VerticalAlignment = VerticalAlignment.Top;
+
+                Grid grid3 = DrawPlane.GridColumn();
+                grid3.Margin = new Thickness(0, 100, 60, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+                grid3.HorizontalAlignment = HorizontalAlignment.Right;
+                grid3.VerticalAlignment = VerticalAlignment.Top;
+
                 All = 3;
                 Border[] borders = new Border[All];
                 borders = DrawPlane.DrawBorder(All);
-                MainPlane.Children.Add(borders[All - 1]);
-                MainPlane.Children.Add(borders[All - 2]);
-                MainPlane.Children.Add(borders[All - 3]);
+                grid1.Children.Add(borders[All - 1]);
+                grid2.Children.Add(borders[All - 2]);
+                grid3.Children.Add(borders[All - 3]);
                 //Вывод рамочки
                 borders = DrawPlane.DrawBorderBlox(All);
-                MainPlane.Children.Add(borders[All - 1]);
-                MainPlane.Children.Add(borders[All - 2]);
-                MainPlane.Children.Add(borders[All - 3]);
+                grid1.Children.Add(borders[All - 1]);
+                grid2.Children.Add(borders[All - 2]);
+                grid3.Children.Add(borders[All - 3]);
                 //отрисовываем текст
                 TextBlock[] txt = DrawPlane.DrawTextBlock(All);
-
                 txt[0].Text = str[0];
                 txt[1].Text = str[1];
                 txt[2].Text = str[2];
-                MainPlane.Children.Add(txt[0]);
-                MainPlane.Children.Add(txt[1]);
-                MainPlane.Children.Add(txt[2]);
+
+
+                grid1.Children.Add(txt[Browsing]);
+                grid2.Children.Add(txt[Browsing+1]);
+                grid3.Children.Add(txt[Browsing+2]);
+                grid.Children.Add(grid1);
+                grid.Children.Add(grid2);
+                grid.Children.Add(grid3);
+                //grid.Background = Brushes.Black;
+                MainPlane.Children.Add(grid);
             }
-
-            //DraftCards();
         }
-
-        //Отрисовка меню карточки
-        public void DraftCardInfo(Grid grid)
+        public void ClearColumn()
         {
-            MainPlane.Children.Add(grid);
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("Columns"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
         }
+
+        public void DeleteColumn(Grid grid)
+        {
+            foreach (UIElement element in grid.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("Column1"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
+        }
+
         public void DraftCards()
         {
             //Отрисовка всех карточек в столбце
@@ -203,8 +298,6 @@ namespace TaskBoard
         //Замена имени доски на введенную
         private void BoardText_TextChanget(object sender, TextChangedEventArgs e)
         {
-
-
             TextBox text = (TextBox)sender;
             if(text.Text != Logic.GetCurrentBoard().name)
             {
@@ -223,7 +316,6 @@ namespace TaskBoard
             DeleteList();
             DeleteMenuLocalOfGlobal();
             DataBase.Board.ReplaceObject(Logic.GetCurrentBoard().id, newBoard);
-
         }
 
         //Добавление доски(открытие меню какой тип доски добавить)

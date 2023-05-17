@@ -79,6 +79,7 @@ public class Logic
     }
 
     //Получение имени столбца при создании
+    //По id доски получаем названия столбцов
     public static string[] GetNameColumns(int id)
     {
         StreamReader rd = new StreamReader("../../DataBases\\Columns.csv");
@@ -109,9 +110,39 @@ public class Logic
         }
         rd.Close();
         return str;
-
     }
+    //Получаем id столбцов по id доски
+    public static string[] GetColumsID(int id)
+    {
+        StreamReader rd = new StreamReader("../../DataBases\\Columns.csv");
+        int i = 0;
+        while (!rd.EndOfStream)//Листаем до конца
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });
+            if (id == Convert.ToInt32(parms[1]))
+            {
+                i++;
+            }
+        }
+        rd.Close();
 
+        rd = new StreamReader("../../DataBases\\Columns.csv");
+        string[] str = new string[i];
+        i = 0;
+        while (!rd.EndOfStream)//Листаем до конца
+        {
+            string line = rd.ReadLine();
+            string[] parms = line.Split(new char[] { ';' });
+            if (id == Convert.ToInt32(parms[1]))
+            {
+                str[i] = parms[0];
+                i++;
+            }
+        }
+        rd.Close();
+        return str;
+    }
     //Получение подходящих пож отображение досок для определенного пользователя
     public static List<Board> GetBoardsTrue() 
     {
