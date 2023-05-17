@@ -1009,6 +1009,7 @@ public class DrawPlane
 
             DataBase.Board.AppObject(board);
             DataBase.Board.ActivsBoard(board.id);
+            DataBase.Person.AssignmentIDBoard(Logic.GetCurrentPerson().id, Logic.GetCurrentBoard().id.ToString());
 
             window.DeleteList();
             window.DraftBoard();
