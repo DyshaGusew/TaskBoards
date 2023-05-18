@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -314,6 +315,17 @@ public class DrawPlane
                 return;
             }
             DataBase.Column.DeleteByID(Convert.ToInt32(colId));
+
+            if (Logic.GetIdCardInColomns(Convert.ToInt32(colId)) != null)
+            {
+                List<int> IdCards = Logic.GetIdCardInColomns(Convert.ToInt32(colId));
+                foreach (int iCard in IdCards)
+                {
+                    //Удаляю каждую карточку столбца
+                    DataBase.Card.DeleteByID(iCard);
+                }
+            }
+
             window.ClearColumn();
             window.DraftBoard();
         }
@@ -322,7 +334,7 @@ public class DrawPlane
     }
 
     //Кнопка добавления карточки в столбец
-    public static Button AppCardBatton(MainWindow window, string colId)
+    public static Button AppCardButton(MainWindow window, string colId)
     {
         Button buttonDel1 = DrawPlane.ButtonRightLeft();
         buttonDel1.Content = "+";
@@ -539,7 +551,7 @@ public class DrawPlane
             window.DeleteList();
             window.DeleteMenuLocalOfGlobal();
             DataBase.Card.DeleteByID(card.id);
-            window.DeleteCard(card);
+            window.DraftBoard();
         }
 
         void ButtonOpenInfo_Click(object sender, RoutedEventArgs e)

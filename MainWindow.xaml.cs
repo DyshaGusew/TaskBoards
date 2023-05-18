@@ -107,7 +107,7 @@ namespace TaskBoard
                 //делаем кнопку удаления столбцов
                 Button buttonDel = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid1.Children.Add(buttonDel);
-                grid1.Children.Add(DrawPlane.AppCardBatton(this, grid1.Name.Substring(6)));
+                grid1.Children.Add(DrawPlane.AppCardButton(this, grid1.Name.Substring(6)));
                 if (Logic.GetIdCardInColomns(column.id) != null)
                 {
                     grid1.Children.Add(DrawPlane.DraftCards(column, this));
@@ -172,8 +172,8 @@ namespace TaskBoard
                 {
                     grid1.Children.Add(DrawPlane.DraftCards(column1, this));
                 }
-                grid1.Children.Add(DrawPlane.AppCardBatton(this, grid1.Name.Substring(6)));
-                grid2.Children.Add(DrawPlane.AppCardBatton(this, grid2.Name.Substring(6)));
+                grid1.Children.Add(DrawPlane.AppCardButton(this, grid1.Name.Substring(6)));
+                grid2.Children.Add(DrawPlane.AppCardButton(this, grid2.Name.Substring(6)));
                 MainPlane.Children.Add(grid1);
                 MainPlane.Children.Add(grid2);
 
@@ -249,9 +249,9 @@ namespace TaskBoard
                 grid2.Children.Add(txt[1]);
                 grid3.Children.Add(txt[2]);
 
-                grid1.Children.Add(DrawPlane.AppCardBatton(this, grid1.Name.Substring(6)));
-                grid2.Children.Add(DrawPlane.AppCardBatton(this, grid2.Name.Substring(6)));
-                grid3.Children.Add(DrawPlane.AppCardBatton(this, grid3.Name.Substring(6)));
+                grid1.Children.Add(DrawPlane.AppCardButton(this, grid1.Name.Substring(6)));
+                grid2.Children.Add(DrawPlane.AppCardButton(this, grid2.Name.Substring(6)));
+                grid3.Children.Add(DrawPlane.AppCardButton(this, grid3.Name.Substring(6)));
 
                 if (Logic.GetIdCardInColomns(column1.id) != null)
                 {
@@ -355,20 +355,6 @@ namespace TaskBoard
                     }
                 }
             }
-        }
-
-        //Удаление карточки в столбце
-        public void DeleteCard(Card card)
-        {
-            if (!CheckPressBut())
-            {
-                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            DeleteList();
-            DeleteMenuLocalOfGlobal();
-
-            DraftBoard();
         }
 
         //Удаление менюшки информации в карточке
