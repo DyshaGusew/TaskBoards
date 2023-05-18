@@ -99,22 +99,7 @@ namespace TaskBoard
                 grid1.Children.Add(borders[All - 1]);
                 TextBox[] txt = DrawPlane.DrawTextBox(All);
                 txt[0].Text = column.name;
-                txt[0].TextChanged += MainWindow_TextChanged;
-                void MainWindow_TextChanged(object sender, TextChangedEventArgs e)
-                {
-                    TextBox text = (TextBox)sender;
-                    if (text.Text != Logic.GetCurrentBoard().name)
-                    {
-                        if (!CheckPressBut())
-                        {
-                            MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
-                            DraftBoard();
-                            return;
-                        }
-                    }
-                    column.name = txt[0].Text;
-                    DataBase.Column.ReplaceObject(columnsId[0], column);
-                }
+                DrawPlane.DraftNameColumn(column, txt[0], this);
                 grid1.Children.Add(txt[0]);
                 MainPlane.Children.Add(grid1);
 
@@ -155,6 +140,8 @@ namespace TaskBoard
                 TextBox[] txt = DrawPlane.DrawTextBox(All);
                 txt[0].Text = column1.name;
                 txt[1].Text = column2.name;
+                DrawPlane.DraftNameColumn(column1, txt[0], this);
+                DrawPlane.DraftNameColumn(column2, txt[1], this);
                 grid1.Children.Add(txt[0]);
                 grid2.Children.Add(txt[1]);
 
@@ -214,6 +201,10 @@ namespace TaskBoard
                 txt[0].Text = column1.name;
                 txt[1].Text = column2.name;
                 txt[2].Text = column3.name;
+                DrawPlane.DraftNameColumn(column1, txt[0], this);
+                DrawPlane.DraftNameColumn(column2, txt[1], this);
+                DrawPlane.DraftNameColumn(column3, txt[2], this);
+
 
                 //делаем кнопку удаления столбцов
                 Button buttonDel1 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
@@ -617,6 +608,12 @@ namespace TaskBoard
                 MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+            if (Logic.GetCurrentBoard().userPresents != 0)
+            {
+                MessageBox.Show("К частной доске нельзя добавить пользователя", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
             foreach (UIElement element in MainPlane.Children)
             {
                 if (element is Grid)

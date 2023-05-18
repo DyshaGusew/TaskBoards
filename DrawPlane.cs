@@ -321,7 +321,25 @@ public class DrawPlane
         return buttonDel1;
     }
 
-
+    public static void DraftNameColumn(Column column, TextBox textBox, MainWindow window)
+    {
+        textBox.TextChanged += MainWindow_TextChanged;
+        void MainWindow_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox text = (TextBox)sender;
+            if (text.Text != Logic.GetCurrentBoard().name)
+            {
+                if (!window.CheckPressBut())
+                {
+                    MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                    window.DraftBoard();
+                    return;
+                }
+            }
+            column.name = textBox.Text;
+            DataBase.Column.ReplaceObject(column.id, column);
+        }
+    }
 
 
 
@@ -682,7 +700,7 @@ public class DrawPlane
         return mainGrid;
     }
 
-    //Карточки для работы с описанием карточки
+    //Кнопки для работы с описанием карточки
     public static Button ButtonMenuCardAppInfo(Card card, MainWindow window)
     {
         Button button = new Button();
@@ -832,11 +850,11 @@ public class DrawPlane
         border.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
 
         //Добавление кнопок в грид для скролл бара
-        List<Board> boards = DataBase.Board.GetListBoards().ToList();
+        List<Board> boards = Logic.GetBoardsTrue().ToList();
         int step = 0;
-        foreach (Board board in Logic.GetBoardsTrue())
+        for(int i = boards.Count - 1; i>=0; i--)
         {
-            gridScrollBut.Children.Add(ButtonBoard(step, board, window));
+            gridScrollBut.Children.Add(ButtonBoard(step, boards[i], window));
             step += 70;
         }
 
