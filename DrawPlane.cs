@@ -18,12 +18,12 @@ public class DrawPlane
         int a = 440; // Ширина
         int b = 640; // Высота досок
         Border btn = new Border();
-        btn.Background = Brushes.Blue;
-        btn.BorderBrush = Brushes.Black;
+        btn.Background = new SolidColorBrush(Color.FromRgb(194, 225, 255));
+        //btn.BorderBrush = Brushes.Black;
         btn.CornerRadius = new CornerRadius(25);
         btn.Width = a;
         btn.Height = b;
-        btn.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        btn.BorderThickness = new Thickness(0); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
         ///btn.Margin = new Thickness(20, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
         //btn.HorizontalAlignment = HorizontalAlignment.Center;
         //btn.VerticalAlignment = VerticalAlignment.Top;
@@ -35,12 +35,12 @@ public class DrawPlane
         int a = 440; // Ширина
         int b = 60; // Высота досок
         Border btn = new Border();
-        btn.Background = Brushes.Gray;
-        btn.BorderBrush = Brushes.Black;
-        btn.CornerRadius = new CornerRadius(25);
+        btn.Background = Brushes.White;
+        //btn.BorderBrush = Brushes.Black;
+        btn.CornerRadius = new CornerRadius(25, 25, 0, 0);
         btn.Width = a;
         btn.Height = b;
-        btn.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        btn.BorderThickness = new Thickness(0); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
         btn.Margin = new Thickness(20, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
         btn.HorizontalAlignment = HorizontalAlignment.Center;
         btn.VerticalAlignment = VerticalAlignment.Top;
@@ -54,7 +54,7 @@ public class DrawPlane
         textBlock.Height = 50;
         textBlock.FontWeight = FontWeights.Bold;
         textBlock.FontStyle = FontStyles.Normal;
-        textBlock.BorderBrush = Brushes.Gray;
+        textBlock.BorderBrush = Brushes.Transparent;
         textBlock.Text = "Типа тут название";
         //textBlock.Foreground = Brushes.Black;
         textBlock.HorizontalAlignment = HorizontalAlignment.Center;
@@ -81,7 +81,7 @@ public class DrawPlane
             btn[0] = TextBox();
             btn[0].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
-            btn[0].Background = Brushes.Gray;
+            btn[0].Background = Brushes.Transparent;
             return btn;
         }
         if (count.Length == 2)
@@ -90,12 +90,12 @@ public class DrawPlane
             btn[0] = TextBox();
             btn[0].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
-            btn[0].Background = Brushes.Gray;
+            btn[0].Background = Brushes.Transparent;
 
             btn[1] = TextBox();
             btn[1].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[1].HorizontalAlignment = HorizontalAlignment.Center;
-            btn[1].Background = Brushes.Gray;
+            btn[1].Background = Brushes.Transparent;
             return btn;
         }
         else
@@ -104,18 +104,18 @@ public class DrawPlane
             btn[0] = TextBox();
             btn[0].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
-            btn[0].Background = Brushes.Gray;
+            btn[0].Background = Brushes.Transparent;
 
             btn[1] = TextBox();
             btn[1].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[1].HorizontalAlignment = HorizontalAlignment.Center;
-            btn[1].Background = Brushes.Gray;
+            btn[1].Background = Brushes.Transparent;
 
             btn[2] = TextBox();
             btn[2].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[2].HorizontalAlignment = HorizontalAlignment.Center;
             
-            btn[2].Background = Brushes.Gray;
+            btn[2].Background = Brushes.Transparent;
             return btn;
         }
     }
@@ -295,14 +295,15 @@ public class DrawPlane
     public static Button DelBatton(Window window)
     {
         Button buttonDel1 = DrawPlane.ButtonRightLeft();
-        //uttonDel.Content = "-";
+        buttonDel1.Content = "×";
         buttonDel1.HorizontalAlignment = HorizontalAlignment.Right;
         buttonDel1.VerticalAlignment = VerticalAlignment.Top;
-        buttonDel1.Width = 30;
-        buttonDel1.Height = 10;
-        buttonDel1.Background = new SolidColorBrush(Colors.Black);
-        buttonDel1.Margin = new Thickness(0, 23, 40, 0);
-        buttonDel1.FontSize = 15;
+        buttonDel1.Width = 40;
+        buttonDel1.Height = 40;
+        buttonDel1.Background = Brushes.Transparent;
+        buttonDel1.BorderThickness = new Thickness(0);
+        buttonDel1.Margin = new Thickness(0, 10, 30, 0);
+        buttonDel1.FontSize = 25;
         buttonDel1.Click += ButtonDel1_Click;
 
         void ButtonDel1_Click(object sender, RoutedEventArgs e)
