@@ -103,16 +103,20 @@ namespace TaskBoard
                 txt[0].Text = column.name;
                 DrawPlane.DraftNameColumn(column, txt[0], this);
                 grid1.Children.Add(txt[0]);
-                MainPlane.Children.Add(grid1);
-
 
                 //делаем кнопку удаления столбцов
                 Button buttonDel = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid1.Children.Add(buttonDel);
-                if(Logic.GetIdCardInColomns(column.id) != null)
+                grid1.Children.Add(DrawPlane.AppCardBatton(this, grid1.Name.Substring(6)));
+                if (Logic.GetIdCardInColomns(column.id) != null)
                 {
                     grid1.Children.Add(DrawPlane.DraftCards(column, this));
                 }
+
+                MainPlane.Children.Add(grid1);
+
+
+
                 
             }
             if (All == 2)
@@ -159,9 +163,6 @@ namespace TaskBoard
                 //делаем кнопку удаления столбцов
                 Button buttonDel2 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid2.Children.Add(buttonDel2);
-                
-                MainPlane.Children.Add(grid1);
-                MainPlane.Children.Add(grid2);
 
                 if (Logic.GetIdCardInColomns(column2.id) != null)
                 {
@@ -171,6 +172,12 @@ namespace TaskBoard
                 {
                     grid1.Children.Add(DrawPlane.DraftCards(column1, this));
                 }
+                grid1.Children.Add(DrawPlane.AppCardBatton(this, grid1.Name.Substring(6)));
+                grid2.Children.Add(DrawPlane.AppCardBatton(this, grid2.Name.Substring(6)));
+                MainPlane.Children.Add(grid1);
+                MainPlane.Children.Add(grid2);
+
+                
             }
             if (All >= 3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
             {
@@ -242,10 +249,10 @@ namespace TaskBoard
                 grid2.Children.Add(txt[1]);
                 grid3.Children.Add(txt[2]);
 
-                //grid.Background = Brushes.Black;
-                MainPlane.Children.Add(grid1);
-                MainPlane.Children.Add(grid2);
-                MainPlane.Children.Add(grid3);
+                grid1.Children.Add(DrawPlane.AppCardBatton(this, grid1.Name.Substring(6)));
+                grid2.Children.Add(DrawPlane.AppCardBatton(this, grid2.Name.Substring(6)));
+                grid3.Children.Add(DrawPlane.AppCardBatton(this, grid3.Name.Substring(6)));
+
                 if (Logic.GetIdCardInColomns(column1.id) != null)
                 {
                     grid1.Children.Add(DrawPlane.DraftCards(column1, this));
@@ -258,6 +265,11 @@ namespace TaskBoard
                 {
                     grid3.Children.Add(DrawPlane.DraftCards(column3, this));
                 }
+
+                //grid.Background = Brushes.Black;
+                MainPlane.Children.Add(grid1);
+                MainPlane.Children.Add(grid2);
+                MainPlane.Children.Add(grid3);
             }
 
         }

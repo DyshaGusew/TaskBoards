@@ -298,12 +298,12 @@ public class DrawPlane
         buttonDel1.Content = "×";
         buttonDel1.HorizontalAlignment = HorizontalAlignment.Right;
         buttonDel1.VerticalAlignment = VerticalAlignment.Top;
-        buttonDel1.Width = 40;
-        buttonDel1.Height = 40;
+
         buttonDel1.Background = Brushes.Transparent;
         buttonDel1.BorderThickness = new Thickness(0);
-        buttonDel1.Margin = new Thickness(0, 10, 30, 0);
-        buttonDel1.FontSize = 25;
+        buttonDel1.Margin = new Thickness(0, 5, 30, 0);
+        buttonDel1.FontSize = 35;
+        buttonDel1.VerticalContentAlignment = VerticalAlignment.Center;
         buttonDel1.Click += ButtonDel1_Click;
 
         void ButtonDel1_Click(object sender, RoutedEventArgs e)
@@ -315,6 +315,42 @@ public class DrawPlane
             }
             DataBase.Column.DeleteByID(Convert.ToInt32(colId));
             window.ClearColumn();
+            window.DraftBoard();
+        }
+
+        return buttonDel1;
+    }
+
+    //Кнопка добавления карточки в столбец
+    public static Button AppCardBatton(MainWindow window, string colId)
+    {
+        Button buttonDel1 = DrawPlane.ButtonRightLeft();
+        buttonDel1.Content = "+";
+        buttonDel1.HorizontalAlignment = HorizontalAlignment.Right;
+        buttonDel1.VerticalAlignment = VerticalAlignment.Top;
+        buttonDel1.VerticalContentAlignment = VerticalAlignment.Center;
+
+        buttonDel1.Background = Brushes.Transparent;
+        buttonDel1.BorderThickness = new Thickness(0);
+        buttonDel1.Margin = new Thickness(0, 5, 70, 0);
+        buttonDel1.FontSize = 35;
+        buttonDel1.Click += ButtonApp1_Click;
+
+        void ButtonApp1_Click(object sender, RoutedEventArgs e)
+        {
+            if (!window.CheckPressBut())
+            {
+                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            Card card = new Card();
+            card.name = Logic.GetСardNullName(Convert.ToInt32(colId));
+            card.idColumnsRef = Convert.ToInt32(colId);
+            card.color = "white";
+            card.text = "";
+
+            DataBase.Card.AppObject(card);
+
             window.DraftBoard();
         }
 
@@ -342,71 +378,6 @@ public class DrawPlane
         }
     }
 
-
-
-
-
-
-
-
-
-    //Отрсовка объекта списка карточек
-    public static Grid GridCards(MainWindow window)
-    {
-        //Основной блок, куда все помещаю
-        Grid gridMain = new Grid();
-        gridMain.Name = "GridCards";
-
-        gridMain.Background = Brushes.White;
-        gridMain.Width = 335;
-        gridMain.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 100;
-        gridMain.MaxHeight = 5 * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 100;
-        gridMain.HorizontalAlignment = HorizontalAlignment.Center;
-        gridMain.VerticalAlignment = VerticalAlignment.Top;
-        gridMain.Margin = new Thickness(0, 150, 0, 0);
-
-        //Сетка для отображения скрол бара и кнопок
-        Grid gridScrollBut = new Grid();
-        gridScrollBut.Margin = new Thickness(0, 0, 0, 0);
-        gridScrollBut.Width = 300;
-        gridScrollBut.HorizontalAlignment = HorizontalAlignment.Center;
-        gridScrollBut.VerticalAlignment = VerticalAlignment.Top;
-        gridScrollBut.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 40;
-
-        //Сам скрол объект куда позже помещается сетка выше 
-        ScrollViewer scrollViewer = new ScrollViewer();
-        scrollViewer.Width = 320;
-        scrollViewer.VerticalAlignment = VerticalAlignment.Top;
-        scrollViewer.HorizontalAlignment = HorizontalAlignment.Center;
-        // scrollViewer.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 20;
-        scrollViewer.Margin = new Thickness(0, 50, 0, 10);
-
-        //Обводка, помещаемая в главный блок
-        Border border = new Border();
-        border.BorderBrush = Brushes.Black;
-        border.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 100;
-        border.MaxHeight = 5 * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 100;
-        border.VerticalAlignment = VerticalAlignment.Top;
-        border.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
-
-        //Добавление кнопок в грид для скролл бара
-        List<Board> boards = DataBase.Board.GetListBoards().ToList();
-        int step = 0;
-        foreach (Board board in Logic.GetBoardsTrue())
-        {
-            gridScrollBut.Children.Add(ButtonBoard(step, board, window));
-            step += 70;
-        }
-
-        //Помещаю грид в скрол вью
-        scrollViewer.Content = gridScrollBut;
-
-        //Добавляю в главный элемент границы, скролл сетку с кнопками и кнопку закрытия
-        gridMain.Children.Add(border);
-        gridMain.Children.Add(scrollViewer);
-        gridMain.Children.Add(ButtonListClose(window));
-        return gridMain;
-    }
 
 
 
@@ -688,7 +659,7 @@ public class DrawPlane
         borderMainGrid.Width = 650;
         borderMainGrid.Height = 500;
         borderMainGrid.BorderThickness = new Thickness(3);
-        borderMainGrid.Background = Brushes.Gray;
+        borderMainGrid.Background = new SolidColorBrush(Color.FromRgb(194, 225, 255));
         mainGrid.Children.Add(borderMainGrid);
 
 
@@ -718,7 +689,7 @@ public class DrawPlane
         TextBox mainText = new TextBox();
         mainText.Name = "MainTextCard";
 
-        mainText.Background = Brushes.DarkGray;
+        mainText.Background = Brushes.White;
         mainText.TextWrapping = TextWrapping.Wrap;
         mainText.AcceptsReturn = true;
         mainText.KeyUp += keyEnter;
