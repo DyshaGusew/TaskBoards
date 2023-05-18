@@ -69,11 +69,13 @@ namespace TaskBoard
 
             Button buttonL = DrawPlane.ButtonRightLeft();
             buttonL.Content = "<";
+            buttonL.Click += LeftButton;
             MainPlane.Children.Add(buttonL);
 
             Button buttonR = DrawPlane.ButtonRightLeft();
             buttonR.Content = ">";
             buttonR.HorizontalAlignment = HorizontalAlignment.Right;
+            buttonR.Click += RightButton;
             MainPlane.Children.Add(buttonR);
 
             if (All == 0)
@@ -172,9 +174,9 @@ namespace TaskBoard
             }
             if (All >= 3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
             {
-                Column column1 = DataBase.Column.GetObjOfId(columnsId[0]);
-                Column column2 = DataBase.Column.GetObjOfId(columnsId[1]);
-                Column column3 = DataBase.Column.GetObjOfId(columnsId[2]);
+                Column column1 = DataBase.Column.GetObjOfId(columnsId[Browsing]);
+                Column column2 = DataBase.Column.GetObjOfId(columnsId[Browsing+1]);
+                Column column3 = DataBase.Column.GetObjOfId(columnsId[Browsing+2]);
                 //grid.Background = Brushes.Black;
 
                 Grid grid1 = DrawPlane.GridColumn();
@@ -195,9 +197,9 @@ namespace TaskBoard
                 grid3.VerticalAlignment = VerticalAlignment.Top;
 
 
-                grid1.Name = "Column" + columnsId[0].ToString(); 
-                grid2.Name = "Column" + columnsId[1].ToString(); 
-                grid3.Name = "Column" + columnsId[2].ToString(); 
+                grid1.Name = "Column" + columnsId[Browsing].ToString(); 
+                grid2.Name = "Column" + columnsId[Browsing+1].ToString(); 
+                grid3.Name = "Column" + columnsId[Browsing+2].ToString(); 
 
                 All = 3;
                 Border[] borders = new Border[All];
@@ -210,6 +212,7 @@ namespace TaskBoard
                 grid1.Children.Add(borders[All - 1]);
                 grid2.Children.Add(borders[All - 2]);
                 grid3.Children.Add(borders[All - 3]);
+
                 //отрисовываем текст
                 TextBox[] txt = DrawPlane.DrawTextBox(All);
                 txt[0].Text = column1.name;
@@ -235,23 +238,9 @@ namespace TaskBoard
                 grid3.Children.Add(buttonDel3);
                 
 
-                grid1.Children.Add(txt[Browsing]);
-                grid2.Children.Add(txt[Browsing + 1]);
-                grid3.Children.Add(txt[Browsing + 2]);
-
-                //Button buttonDel1 = DrawPlane.ButtonRightLeft();
-                ////uttonDel.Content = "-";
-                //buttonDel1.HorizontalAlignment = HorizontalAlignment.Right;
-                //buttonDel1.VerticalAlignment = VerticalAlignment.Top;
-                //buttonDel1.Width = 30;
-                //buttonDel1.Height = 10;
-                //buttonDel1.Background = new SolidColorBrush(Colors.Black);
-                //buttonDel1.Margin = new Thickness(0, 23, 40, 0);
-                //buttonDel1.FontSize = 15;
-                //grid1.Children.Add(buttonDel1);
-
-
-
+                grid1.Children.Add(txt[0]);
+                grid2.Children.Add(txt[1]);
+                grid3.Children.Add(txt[2]);
 
                 //grid.Background = Brushes.Black;
                 MainPlane.Children.Add(grid1);
@@ -281,13 +270,21 @@ namespace TaskBoard
 
         private void RightButton(object sender, RoutedEventArgs e)
         {
-           ClearColumn();
+            ClearColumn();
             int IDboard = Logic.GetCurrentBoard().id;
             string[] str = Logic.GetNameColumns(IDboard);
             int a = new Logic().GetIdColumsInBoard(IDboard).Count();
             Enumeration.Change(Enumeration.value + 1);
             DraftColumns(new Logic().GetIdColumsInBoard(IDboard), str, Enumeration.value);
-
+        }
+        private void LeftButton(object sender, RoutedEventArgs e)
+        {
+            ClearColumn();
+            int IDboard = Logic.GetCurrentBoard().id;
+            string[] str = Logic.GetNameColumns(IDboard);
+            int a = new Logic().GetIdColumsInBoard(IDboard).Count();
+            Enumeration.Change(Enumeration.value - 1);
+            DraftColumns(new Logic().GetIdColumsInBoard(IDboard), str, Enumeration.value);
         }
         public class Enumeration
         {
