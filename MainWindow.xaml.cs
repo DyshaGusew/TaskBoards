@@ -274,19 +274,16 @@ namespace TaskBoard
 
         }
 
-
-
-        
-
-        
-
         private void RightButton(object sender, RoutedEventArgs e)
         {
             ClearColumn();
             int IDboard = Logic.GetCurrentBoard().id;
             string[] str = Logic.GetNameColumns(IDboard);
             int a = new Logic().GetIdColumsInBoard(IDboard).Count();
-            Enumeration.Change(Enumeration.value + 1);
+            if (Enumeration.value < (str.Length-3))
+            {
+                Enumeration.Change(Enumeration.value + 1);
+            }
             DraftColumns(new Logic().GetIdColumsInBoard(IDboard), str, Enumeration.value);
         }
         private void LeftButton(object sender, RoutedEventArgs e)
@@ -295,7 +292,10 @@ namespace TaskBoard
             int IDboard = Logic.GetCurrentBoard().id;
             string[] str = Logic.GetNameColumns(IDboard);
             int a = new Logic().GetIdColumsInBoard(IDboard).Count();
-            Enumeration.Change(Enumeration.value - 1);
+            if (Enumeration.value>0)
+            {
+                Enumeration.Change(Enumeration.value - 1);
+            }
             DraftColumns(new Logic().GetIdColumsInBoard(IDboard), str, Enumeration.value);
         }
         public class Enumeration
