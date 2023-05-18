@@ -321,6 +321,7 @@ public class DrawPlane
         return buttonDel1;
     }
 
+    //Функция для сохранения имени столбца
     public static void DraftNameColumn(Column column, TextBox textBox, MainWindow window)
     {
         textBox.TextChanged += MainWindow_TextChanged;
@@ -407,27 +408,55 @@ public class DrawPlane
         return gridMain;
     }
 
-    //Пока хз зачем
-    public static Border[] DrawCard(int id)
+
+
+    //Отрисовка всех карточек в столбце
+    public static Grid DraftCards(Column column, MainWindow window)
     {
-        Border[] btn = new Border[id];
 
-        // btn[0] = Card();
-        btn[0].Margin = new Thickness(0, 120, 0, 0);
+        Grid gridMain = new Grid();
+        gridMain.Name = "Cards";
 
-        for (int i = 2; i <= id; i++)
+        //gridMain.Background = Brushes.White;
+        gridMain.Width = 440;
+        gridMain.Height = 570;
+        gridMain.HorizontalAlignment = HorizontalAlignment.Center;
+        gridMain.VerticalAlignment = VerticalAlignment.Top;
+        gridMain.Margin = new Thickness(0, 60, 0, 0);
+        //Сетка для отображения скрол бара и кнопок
+        Grid gridScrollBut = new Grid();
+        gridScrollBut.Width = 445;
+       // gridScrollBut.Height = 690;
+        gridScrollBut.HorizontalAlignment = HorizontalAlignment.Center;
+        gridScrollBut.VerticalAlignment = VerticalAlignment.Top;
+        gridScrollBut.Height = Logic.GetIdCardInColomns(column.id).Count * 100 + (Logic.GetIdCardInColomns(column.id).Count - 1) * 20 + 40;
+        gridScrollBut.Margin = new Thickness(0, 10, 0, 0);
+
+
+        //Сам скрол объект куда позже помещается сетка выше 
+        ScrollViewer scrollViewer = new ScrollViewer();
+        scrollViewer.Width = 430;
+        scrollViewer.Height = 560;
+        scrollViewer.VerticalAlignment = VerticalAlignment.Top;
+        scrollViewer.HorizontalAlignment = HorizontalAlignment.Center;
+        scrollViewer.Margin = new Thickness(0,10,0,0);
+
+
+        int step = 0;
+        foreach (int idCard in Logic.GetIdCardInColomns(column.id))
         {
-            //    btn[i-1] = Card();
-            btn[i - 1].Margin = new Thickness(0, 60 + 200 * i, 0, 0);
+            gridScrollBut.Children.Add(Card(DataBase.Card.GetObjOfId(idCard), step, window));
+            step += 120;
+            
         }
+        scrollViewer.Content = gridScrollBut;
+        gridMain.Children.Add(scrollViewer);
+        return gridMain;
 
-        return btn;
     }
 
-
-
     //Одиночная карточка 
-    public static Grid Card(Card card, MainWindow window)
+    public static Grid Card(Card card, int step, MainWindow window)
     {
         Grid grid = new Grid();
         grid.Name = "Card" + card.id;
@@ -436,7 +465,8 @@ public class DrawPlane
         grid.Width = widthCard;
         grid.Height = heightCard;
         grid.HorizontalAlignment = HorizontalAlignment.Center;
-        grid.VerticalAlignment = VerticalAlignment.Center;
+        grid.VerticalAlignment = VerticalAlignment.Top;
+        grid.Margin = new Thickness(0,step,0,0);
 
         Border btn = new Border();
         LogColorCard(card.color, btn);

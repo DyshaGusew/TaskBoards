@@ -42,7 +42,7 @@ namespace TaskBoard
             InitializeComponent();
             ClearColumn();
             DraftBoard();
-            MainPlane.Children.Add(DrawPlane.Card(DataBase.Card.GetObjOfId(4), this));
+           
         }
 
 
@@ -107,6 +107,11 @@ namespace TaskBoard
                 //делаем кнопку удаления столбцов
                 Button buttonDel = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid1.Children.Add(buttonDel);
+                if(Logic.GetIdCardInColomns(column.id) != null)
+                {
+                    grid1.Children.Add(DrawPlane.DraftCards(column, this));
+                }
+                
             }
             if (All == 2)
             {
@@ -148,13 +153,22 @@ namespace TaskBoard
                 //делаем кнопку удаления столбцов
                 Button buttonDel1 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid1.Children.Add(buttonDel1);
-
+                
                 //делаем кнопку удаления столбцов
                 Button buttonDel2 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid2.Children.Add(buttonDel2);
-
+                
                 MainPlane.Children.Add(grid1);
                 MainPlane.Children.Add(grid2);
+
+                if (Logic.GetIdCardInColomns(column2.id) != null)
+                {
+                    grid2.Children.Add(DrawPlane.DraftCards(column2, this));
+                }
+                if (Logic.GetIdCardInColomns(column1.id) != null)
+                {
+                    grid1.Children.Add(DrawPlane.DraftCards(column1, this));
+                }
             }
             if (All >= 3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
             {
@@ -209,14 +223,17 @@ namespace TaskBoard
                 //делаем кнопку удаления столбцов
                 Button buttonDel1 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid1.Children.Add(buttonDel1);
+                
 
                 //делаем кнопку удаления столбцов
                 Button buttonDel2 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid2.Children.Add(buttonDel2);
+                
 
                 //делаем кнопку удаления столбцов
                 Button buttonDel3 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid3.Children.Add(buttonDel3);
+                
 
                 grid1.Children.Add(txt[Browsing]);
                 grid2.Children.Add(txt[Browsing + 1]);
@@ -240,75 +257,27 @@ namespace TaskBoard
                 MainPlane.Children.Add(grid1);
                 MainPlane.Children.Add(grid2);
                 MainPlane.Children.Add(grid3);
+                if (Logic.GetIdCardInColomns(column1.id) != null)
+                {
+                    grid1.Children.Add(DrawPlane.DraftCards(column1, this));
+                }
+                if (Logic.GetIdCardInColomns(column2.id) != null)
+                {
+                    grid2.Children.Add(DrawPlane.DraftCards(column2, this));
+                }
+                if (Logic.GetIdCardInColomns(column3.id) != null)
+                {
+                    grid3.Children.Add(DrawPlane.DraftCards(column3, this));
+                }
             }
 
         }
 
 
 
-        //Отчистка столбцов, не удаление
-        public void ClearColumn()
-        {
+        
 
-            foreach (UIElement element in MainPlane.Children)
-            {
-                if (element is Grid)
-                {
-                    if (((Grid)element).Name.ToString().Contains("Column"))
-                    {
-                        MainPlane.Children.Remove((Grid)element);
-                        break;
-                    }
-                }
-            }
-            foreach (UIElement element in MainPlane.Children)
-            {
-                if (element is Grid)
-                {
-                    if (((Grid)element).Name.ToString().Contains("Column"))
-                    {
-                        MainPlane.Children.Remove((Grid)element);
-                        break;
-                    }
-                }
-            }
-            foreach (UIElement element in MainPlane.Children)
-            {
-                if (element is Grid)
-                {
-                    if (((Grid)element).Name.ToString().Contains("Column"))
-                    {
-                        MainPlane.Children.Remove((Grid)element);
-                        break;
-                    }
-                }
-            }
-        }
-
-        public void DeleteColumn(Grid grid)
-        {
-            if (!CheckPressBut())
-            {
-                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-            foreach (UIElement element in grid.Children)
-            {
-                if (element is Grid)
-                {
-                    if (((Grid)element).Name.ToString().Contains("Columns"))
-                    {
-                        MainPlane.Children.Remove((Grid)element);
-                        break;
-                    }
-                }
-            }
-        }
-
-        public void DraftCards()
-        {
-            //Отрисовка всех карточек в столбце
-        }
+        
 
         private void RightButton(object sender, RoutedEventArgs e)
         {
@@ -389,17 +358,8 @@ namespace TaskBoard
             }
             DeleteList();
             DeleteMenuLocalOfGlobal();
-            foreach (UIElement element in MainPlane.Children)
-            {
-                if (element is Grid)
-                {
-                    if (((Grid)element).Name.ToString().Contains("Card" + card.id))
-                    {
-                        MainPlane.Children.Remove((Grid)element);
-                        break;
-                    }
-                }
-            }
+
+            DraftBoard();
         }
 
         //Удаление менюшки информации в карточке
@@ -410,6 +370,66 @@ namespace TaskBoard
                 if (element is Grid)
                 {
                     if (((Grid)element).Name.ToString().Contains("InfoCard"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
+        }
+
+        //Отчистка столбцов, не удаление
+        public void ClearColumn()
+        {
+
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("Column"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("Column"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("Column"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
+        }
+
+        //Удаление столбца
+        public void DeleteColumn(Grid grid)
+        {
+            if (!CheckPressBut())
+            {
+                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            foreach (UIElement element in grid.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("Columns"))
                     {
                         MainPlane.Children.Remove((Grid)element);
                         break;
