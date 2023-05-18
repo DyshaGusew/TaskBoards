@@ -325,11 +325,9 @@ public class DrawPlane
                     DataBase.Card.DeleteByID(iCard);
                 }
             }
-
             window.ClearColumn();
             window.DraftBoard();
         }
-
         return buttonDel1;
     }
 

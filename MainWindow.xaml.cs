@@ -161,7 +161,7 @@ namespace TaskBoard
                 grid1.Children.Add(buttonDel1);
                 
                 //делаем кнопку удаления столбцов
-                Button buttonDel2 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
+                Button buttonDel2 = DrawPlane.DelBatton(this, grid2.Name.Substring(6));
                 grid2.Children.Add(buttonDel2);
 
                 if (Logic.GetIdCardInColomns(column2.id) != null)
@@ -236,12 +236,12 @@ namespace TaskBoard
                 
 
                 //делаем кнопку удаления столбцов
-                Button buttonDel2 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
+                Button buttonDel2 = DrawPlane.DelBatton(this, grid2.Name.Substring(6));
                 grid2.Children.Add(buttonDel2);
                 
 
                 //делаем кнопку удаления столбцов
-                Button buttonDel3 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
+                Button buttonDel3 = DrawPlane.DelBatton(this, grid3.Name.Substring(6));
                 grid3.Children.Add(buttonDel3);
                 
 
