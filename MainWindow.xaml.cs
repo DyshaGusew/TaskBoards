@@ -42,6 +42,7 @@ namespace TaskBoard
             InitializeComponent();
             ClearColumn();
             DraftBoard();
+            MainPlane.Children.Add(DrawPlane.Card(DataBase.Card.GetObjOfId(4), this));
         }
 
 
@@ -84,7 +85,7 @@ namespace TaskBoard
                 //Создание грида
                 Column column = DataBase.Column.GetObjOfId(columnsId[0]);
                 Grid grid1 = DrawPlane.GridColumn();
-                grid1.Name = "ColumnCenter";
+                grid1.Name = "Column"+columnsId[0].ToString();
                 grid1.Margin = new Thickness(0, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
                 grid1.HorizontalAlignment = HorizontalAlignment.Center;
                 grid1.VerticalAlignment = VerticalAlignment.Top;
@@ -119,7 +120,7 @@ namespace TaskBoard
 
 
                 //делаем кнопку удаления столбцов
-                Button buttonDel = DrawPlane.DelBatton(this);
+                Button buttonDel = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid1.Children.Add(buttonDel);
             }
             if (All == 2)
@@ -129,8 +130,8 @@ namespace TaskBoard
 
                 Grid grid1 = DrawPlane.GridColumn();
                 Grid grid2 = DrawPlane.GridColumn();
-                grid1.Name = "ColumnTwoLeft";
-                grid2.Name = "ColumnTwoRight";
+                grid1.Name = "Column" + columnsId[0].ToString();
+                grid2.Name = "Column" + columnsId[1].ToString(); 
 
                 grid1.Margin = new Thickness(250, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
                 grid1.HorizontalAlignment = HorizontalAlignment.Left;
@@ -158,11 +159,11 @@ namespace TaskBoard
                 grid2.Children.Add(txt[1]);
 
                 //делаем кнопку удаления столбцов
-                Button buttonDel1 = DrawPlane.DelBatton(this);
+                Button buttonDel1 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid1.Children.Add(buttonDel1);
 
                 //делаем кнопку удаления столбцов
-                Button buttonDel2 = DrawPlane.DelBatton(this);
+                Button buttonDel2 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid2.Children.Add(buttonDel2);
 
                 MainPlane.Children.Add(grid1);
@@ -193,9 +194,9 @@ namespace TaskBoard
                 grid3.VerticalAlignment = VerticalAlignment.Top;
 
 
-                grid1.Name = "ColumnThreeLeft";
-                grid2.Name = "ColumnThreeCenter";
-                grid3.Name = "ColumnThreeRight";
+                grid1.Name = "Column" + columnsId[0].ToString(); 
+                grid2.Name = "Column" + columnsId[1].ToString(); 
+                grid3.Name = "Column" + columnsId[2].ToString(); 
 
                 All = 3;
                 Border[] borders = new Border[All];
@@ -215,15 +216,15 @@ namespace TaskBoard
                 txt[2].Text = column3.name;
 
                 //делаем кнопку удаления столбцов
-                Button buttonDel1 = DrawPlane.DelBatton(this);
+                Button buttonDel1 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid1.Children.Add(buttonDel1);
 
                 //делаем кнопку удаления столбцов
-                Button buttonDel2 = DrawPlane.DelBatton(this);
+                Button buttonDel2 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid2.Children.Add(buttonDel2);
 
                 //делаем кнопку удаления столбцов
-                Button buttonDel3 = DrawPlane.DelBatton(this);
+                Button buttonDel3 = DrawPlane.DelBatton(this, grid1.Name.Substring(6));
                 grid3.Children.Add(buttonDel3);
 
                 grid1.Children.Add(txt[Browsing]);
@@ -257,10 +258,28 @@ namespace TaskBoard
         //Отчистка столбцов, не удаление
         public void ClearColumn()
         {
-            if (!CheckPressBut())
+
+            foreach (UIElement element in MainPlane.Children)
             {
-                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("Column"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("Column"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
             }
             foreach (UIElement element in MainPlane.Children)
             {

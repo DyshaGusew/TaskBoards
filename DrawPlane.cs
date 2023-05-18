@@ -292,7 +292,7 @@ public class DrawPlane
         button.FontWeight = FontWeights.ExtraBold;
         return button;
     }
-    public static Button DelBatton(Window window)
+    public static Button DelBatton(MainWindow window, string colId)
     {
         Button buttonDel1 = DrawPlane.ButtonRightLeft();
         //uttonDel.Content = "-";
@@ -307,7 +307,14 @@ public class DrawPlane
 
         void ButtonDel1_Click(object sender, RoutedEventArgs e)
         {
-            
+            if (!window.CheckPressBut())
+            {
+                MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            DataBase.Column.DeleteByID(Convert.ToInt32(colId));
+            window.ClearColumn();
+            window.DraftBoard();
         }
 
         return buttonDel1;
