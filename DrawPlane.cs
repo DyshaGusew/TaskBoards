@@ -47,63 +47,75 @@ public class DrawPlane
 
         return btn;
     }
-    private static TextBlock TextBlock()
+    private static TextBox TextBox()
     {
-        TextBlock textBlock = new TextBlock();
-        textBlock.FontSize = 40;
+        TextBox textBlock = new TextBox();
+        textBlock.FontSize = 36;
+        textBlock.Height = 50;
         textBlock.FontWeight = FontWeights.Bold;
         textBlock.FontStyle = FontStyles.Normal;
-
+        textBlock.BorderBrush = Brushes.Gray;
         textBlock.Text = "Типа тут название";
         //textBlock.Foreground = Brushes.Black;
         textBlock.HorizontalAlignment = HorizontalAlignment.Center;
         textBlock.VerticalAlignment = VerticalAlignment.Top;
-        textBlock.Margin = new Thickness(0, 100, 0, 0);
+        textBlock.Margin = new Thickness(0, 50, 0, 0);
+        textBlock.TextChanged += TextBlock_TextChanged;
+
+        void TextBlock_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
+
         return textBlock;
     }
-    public static TextBlock[] DrawTextBlock(int id)
+
+   
+
+    public static TextBox[] DrawTextBox(int id)
     {
         int[] count = new int[id];
         if (count.Length == 1)
         {
-            TextBlock[] btn = new TextBlock[1];
-            btn[0] = TextBlock();
-            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            TextBox[] btn = new TextBox[1];
+            btn[0] = TextBox();
+            btn[0].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
-            btn[0].VerticalAlignment = VerticalAlignment.Top;
+            btn[0].Background = Brushes.Gray;
             return btn;
         }
         if (count.Length == 2)
         {
-            TextBlock[] btn = new TextBlock[2];
-            btn[0] = TextBlock();
-            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            TextBox[] btn = new TextBox[2];
+            btn[0] = TextBox();
+            btn[0].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
-            btn[0].VerticalAlignment = VerticalAlignment.Top;
+            btn[0].Background = Brushes.Gray;
 
-            btn[1] = TextBlock();
-            btn[1].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1] = TextBox();
+            btn[1].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[1].HorizontalAlignment = HorizontalAlignment.Center;
-            btn[1].VerticalAlignment = VerticalAlignment.Top;
+            btn[1].Background = Brushes.Gray;
             return btn;
         }
         else
         {
-            TextBlock[] btn = new TextBlock[3];
-            btn[0] = TextBlock();
-            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            TextBox[] btn = new TextBox[3];
+            btn[0] = TextBox();
+            btn[0].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
-            btn[0].VerticalAlignment = VerticalAlignment.Top;
+            btn[0].Background = Brushes.Gray;
 
-            btn[1] = TextBlock();
-            btn[1].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[1] = TextBox();
+            btn[1].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[1].HorizontalAlignment = HorizontalAlignment.Center;
-            btn[1].VerticalAlignment = VerticalAlignment.Top;
+            btn[1].Background = Brushes.Gray;
 
-            btn[2] = TextBlock();
-            btn[2].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[2] = TextBox();
+            btn[2].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[2].HorizontalAlignment = HorizontalAlignment.Center;
-            btn[2].VerticalAlignment = VerticalAlignment.Top;
+            
+            btn[2].Background = Brushes.Gray;
             return btn;
         }
     }
@@ -280,7 +292,7 @@ public class DrawPlane
         button.FontWeight = FontWeights.ExtraBold;
         return button;
     }
-    public static Button DelBatton()
+    public static Button DelBatton(Window window)
     {
         Button buttonDel1 = DrawPlane.ButtonRightLeft();
         //uttonDel.Content = "-";
@@ -291,8 +303,17 @@ public class DrawPlane
         buttonDel1.Background = new SolidColorBrush(Colors.Black);
         buttonDel1.Margin = new Thickness(0, 23, 40, 0);
         buttonDel1.FontSize = 15;
+        buttonDel1.Click += ButtonDel1_Click;
+
+        void ButtonDel1_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
         return buttonDel1;
     }
+
+
 
 
 
@@ -652,8 +673,6 @@ public class DrawPlane
         mainGrid.Children.Add(mainText);
         return mainGrid;
     }
-
-
 
     //Карточки для работы с описанием карточки
     public static Button ButtonMenuCardAppInfo(Card card, MainWindow window)

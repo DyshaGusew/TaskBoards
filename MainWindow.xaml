@@ -23,8 +23,9 @@
                 </Button>
             </ComboBox>
         </Grid>
+        <TextBlock x:Name="TextPerson" HorizontalAlignment="Left" Margin="10,65,0,0" TextWrapping="Wrap" Text="Пользователь: " VerticalAlignment="Top" Width="317" Height="25" FontSize ="20" Foreground="#FF28353A"/>
 
-        
+
 
     </Grid>
 
