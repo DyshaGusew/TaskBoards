@@ -440,29 +440,29 @@ public class DrawPlane
 
         Border btn = new Border();
         LogColorCard(card.color, btn);
-        btn.BorderBrush = Brushes.Black;
+        //btn.BorderBrush = Brushes.Black;
         btn.CornerRadius = new CornerRadius(15);
         btn.Width = widthCard;
         btn.Height = heightCard;
-        btn.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        btn.BorderThickness = new Thickness(0); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
         btn.HorizontalAlignment = HorizontalAlignment.Center;
         btn.VerticalAlignment = VerticalAlignment.Top;
 
 
         Grid gridName = new Grid();
         gridName.VerticalAlignment = VerticalAlignment.Top;
-        gridName.Margin = new Thickness(0,1,0,0);
+        gridName.Margin = new Thickness(0,0,0,0);
         gridName.HorizontalAlignment = HorizontalAlignment.Center;
         gridName.Width = widthCard;
         gridName.Height = 50;
 
         Border btnName = new Border();
         btnName.BorderBrush = Brushes.Black;
-        btnName.CornerRadius = new CornerRadius(15);
-        LogColorCard(card.color, btnName);
+        btnName.CornerRadius = new CornerRadius(15, 15, 0, 0);
+        LogColorCardHeader(card.color, btnName);
         btnName.Width = widthCard;
         btnName.Height = 50;
-        btnName.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        btnName.BorderThickness = new Thickness(0); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
 
         TextBox nameCard = new TextBox();
         nameCard.TextChanged += NameCard_TextChanged;
@@ -471,8 +471,8 @@ public class DrawPlane
         nameCard.Width = widthCard-35;
         nameCard.VerticalAlignment = VerticalAlignment.Center;
         nameCard.FontSize = 28;
-        nameCard.BorderBrush = btn.Background;
-        nameCard.Background = btn.Background;
+        nameCard.BorderBrush = Brushes.Transparent;
+        nameCard.Background = Brushes.Transparent;
         nameCard.HorizontalContentAlignment = HorizontalAlignment.Center;
         nameCard.VerticalContentAlignment = VerticalAlignment.Center;
 
@@ -507,7 +507,7 @@ public class DrawPlane
         buttonOpenInfo.VerticalAlignment = VerticalAlignment.Bottom;
         buttonOpenInfo.Margin = new Thickness(10, 0, 0, 10);
         LogColorButtonCard(card.color, buttonOpenInfo);
-        buttonOpenInfo.BorderBrush = Brushes.Black;
+        buttonOpenInfo.BorderBrush = Brushes.Transparent;
         buttonOpenInfo.BorderThickness = new Thickness(3);
         buttonOpenInfo.FontSize = 20;
 
@@ -524,7 +524,7 @@ public class DrawPlane
         buttonDeleteCard.Margin = new Thickness(0, 0, 10, 10);
         buttonDeleteCard.Content = "Удалить карточку";
         LogColorButtonCard(card.color, buttonDeleteCard);
-        buttonDeleteCard.BorderBrush = Brushes.Black;
+        buttonDeleteCard.BorderBrush = Brushes.Transparent;
         buttonDeleteCard.BorderThickness = new Thickness(3);
         buttonDeleteCard.FontSize = 20;
 
@@ -568,21 +568,47 @@ public class DrawPlane
         switch (textColor)
         {
             case "green":
-                bord.Background = Brushes.LimeGreen;
+                bord.Background = new SolidColorBrush(Color.FromRgb(181, 245, 166));
                 break;
             case "red":
-                bord.Background = Brushes.Red;
+                bord.Background = new SolidColorBrush(Color.FromRgb(245, 166, 166));
                 break;
             case "blue":
-                bord.Background = new SolidColorBrush(Color.FromRgb(30, 144, 255));
+                bord.Background = new SolidColorBrush(Color.FromRgb(138, 196, 255));
                 break;
             case "aqua":
-                bord.Background = Brushes.Aqua;
+                bord.Background = new SolidColorBrush(Color.FromRgb(166, 245, 240));
+                break; 
+            case "yellow":
+                bord.Background = new SolidColorBrush(Color.FromRgb(245, 240, 166));
+                break;
+            default: bord.Background = new SolidColorBrush(Color.FromRgb(247, 247, 247)); return;
+
+        }
+
+    }
+
+    //Настройка цвета заголовка карточки
+    public static void LogColorCardHeader(string textColor, Border bord)
+    {
+        switch (textColor)
+        {
+            case "green":
+                bord.Background = new SolidColorBrush(Color.FromRgb(145, 227, 127));
+                break;
+            case "red":
+                bord.Background = new SolidColorBrush(Color.FromRgb(227, 127, 127));
+                break;
+            case "blue":
+                bord.Background = new SolidColorBrush(Color.FromRgb(115, 185, 255));
+                break;
+            case "aqua":
+                bord.Background = new SolidColorBrush(Color.FromRgb(127, 227, 219));
                 break;
             case "yellow":
-                bord.Background = Brushes.Yellow;
+                bord.Background = new SolidColorBrush(Color.FromRgb(227, 224, 127));
                 break;
-            default: bord.Background = Brushes.White; return;
+            default: bord.Background = new SolidColorBrush(Color.FromRgb(222, 222, 222)); return;
 
         }
 
@@ -594,21 +620,21 @@ public class DrawPlane
         switch (textColor)
         {
             case "green":
-                but.Background = new SolidColorBrush(Color.FromRgb(0, 128, 0));
+                but.Background = new SolidColorBrush(Color.FromRgb(145, 227, 127));
                 break;
             case "red":
-                but.Background = new SolidColorBrush(Color.FromRgb(139, 0, 0));
+                but.Background = new SolidColorBrush(Color.FromRgb(227, 127, 127));
                 break;
             case "blue":
-                but.Background = new SolidColorBrush(Color.FromRgb(65, 105, 255));            
+                but.Background = new SolidColorBrush(Color.FromRgb(115, 185, 255));            
                     break;
             case "aqua":
-                but.Background = new SolidColorBrush(Color.FromRgb(30, 144, 255));
+                but.Background = new SolidColorBrush(Color.FromRgb(127, 227, 219));
                 break;
             case "yellow":
-                but.Background = new SolidColorBrush(Color.FromRgb(184, 134, 11)); 
+                but.Background = new SolidColorBrush(Color.FromRgb(227, 224, 127)); 
                 break;
-            default: but.Background = Brushes.Gray;  return;
+            default: but.Background = new SolidColorBrush(Color.FromRgb(222, 222, 222)); return;
 
         }
 
