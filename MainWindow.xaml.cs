@@ -69,13 +69,25 @@ namespace TaskBoard
             int All = columnsId.Count;
 
             Button buttonL = DrawPlane.ButtonRightLeft();
-            buttonL.Content = "<";
+            buttonL.Content = "«";
+            buttonL.FontSize = 35;
+            buttonL.Height = 1004;
+            buttonL.VerticalAlignment = VerticalAlignment.Top;
+            buttonL.Margin = new Thickness(0, 60, 0, 0);
+            buttonL.Background = Brushes.Transparent;
+            buttonL.BorderThickness = new Thickness(0);
             buttonL.Click += LeftButton;
             MainPlane.Children.Add(buttonL);
 
             Button buttonR = DrawPlane.ButtonRightLeft();
-            buttonR.Content = ">";
+            buttonR.Content = "»";
+            buttonR.FontSize = 35;
+            buttonR.Height = 1004;
             buttonR.HorizontalAlignment = HorizontalAlignment.Right;
+            buttonR.VerticalAlignment = VerticalAlignment.Top;
+            buttonR.Margin = new Thickness(0, 60, 0, 0);
+            buttonR.Background = Brushes.Transparent;
+            buttonR.BorderThickness = new Thickness(0);
             buttonR.Click += RightButton;
             MainPlane.Children.Add(buttonR);
 
