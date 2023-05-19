@@ -114,30 +114,17 @@ namespace TaskBoard
                     grid1.Children.Add(DrawPlane.DraftCards(column, this));
                 }
 
-                MainPlane.Children.Add(grid1);
-
-
-
-                
+                MainPlane.Children.Add(grid1);           
             }
             if (All == 2)
             {
                 Column column1 = DataBase.Column.GetObjOfId(columnsId[0]);
                 Column column2 = DataBase.Column.GetObjOfId(columnsId[1]);
 
-                Grid grid1 = DrawPlane.GridColumn();
-                Grid grid2 = DrawPlane.GridColumn();
+                Grid grid1 = DrawPlane.GridColumn2Left();
+                Grid grid2 = DrawPlane.GridColumn2Right();
                 grid1.Name = "Column" + columnsId[0].ToString();
                 grid2.Name = "Column" + columnsId[1].ToString(); 
-
-                grid1.Margin = new Thickness(250, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-                grid1.HorizontalAlignment = HorizontalAlignment.Left;
-                grid1.VerticalAlignment = VerticalAlignment.Top;
-
-                grid2.Margin = new Thickness(0, 100, 250, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-                grid2.HorizontalAlignment = HorizontalAlignment.Right;
-                grid2.VerticalAlignment = VerticalAlignment.Top;
-
 
                 Border[] borders = new Border[All];
                 borders = DrawPlane.DrawBorder(All);
@@ -175,10 +162,7 @@ namespace TaskBoard
                 }
                 grid1.Children.Add(DrawPlane.AppCardButton(this, grid1.Name.Substring(6)));
                 grid2.Children.Add(DrawPlane.AppCardButton(this, grid2.Name.Substring(6)));
-                MainPlane.Children.Add(grid1);
-                MainPlane.Children.Add(grid2);
-
-                
+                MainWindowAddGrid(grid1, grid2);
             }
             if (All >= 3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
             {
@@ -191,22 +175,9 @@ namespace TaskBoard
                 Column column3 = DataBase.Column.GetObjOfId(columnsId[Browsing+2]);
                 //grid.Background = Brushes.Black;
 
-                Grid grid1 = DrawPlane.GridColumn();
-
-                grid1.Margin = new Thickness(60, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-                grid1.HorizontalAlignment = HorizontalAlignment.Left;
-                grid1.VerticalAlignment = VerticalAlignment.Top;
-
-                Grid grid2 = DrawPlane.GridColumn();
-
-                grid2.Margin = new Thickness(0, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-                grid2.HorizontalAlignment = HorizontalAlignment.Center;
-                grid2.VerticalAlignment = VerticalAlignment.Top;
-
-                Grid grid3 = DrawPlane.GridColumn();
-                grid3.Margin = new Thickness(0, 100, 60, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
-                grid3.HorizontalAlignment = HorizontalAlignment.Right;
-                grid3.VerticalAlignment = VerticalAlignment.Top;
+                Grid grid1 = DrawPlane.GridColumn3Left();
+                Grid grid2 = DrawPlane.GridColumn3Center();
+                Grid grid3 = DrawPlane.GridColumn3Right();
 
 
                 grid1.Name = "Column" + columnsId[Browsing].ToString(); 
@@ -216,14 +187,10 @@ namespace TaskBoard
                 All = 3;
                 Border[] borders = new Border[All];
                 borders = DrawPlane.DrawBorder(All);
-                grid1.Children.Add(borders[All - 1]);
-                grid2.Children.Add(borders[All - 2]);
-                grid3.Children.Add(borders[All - 3]);
+                AddGrid3Border(grid1, grid2, grid3, borders, All);
                 //Вывод рамочки
                 borders = DrawPlane.DrawBorderBlox(All);
-                grid1.Children.Add(borders[All - 1]);
-                grid2.Children.Add(borders[All - 2]);
-                grid3.Children.Add(borders[All - 3]);
+                AddGrid3Border(grid1, grid2, grid3, borders, All);
 
                 //отрисовываем текст
                 TextBox[] txt = DrawPlane.DrawTextBox(All);
@@ -248,11 +215,8 @@ namespace TaskBoard
                 //делаем кнопку удаления столбцов
                 Button buttonDel3 = DrawPlane.DelBatton(this, grid3.Name.Substring(6));
                 grid3.Children.Add(buttonDel3);
-                
 
-                grid1.Children.Add(txt[0]);
-                grid2.Children.Add(txt[1]);
-                grid3.Children.Add(txt[2]);
+                AddGridsText(grid1, grid2, grid3, txt[0], txt[1], txt[2]);
 
                 grid1.Children.Add(DrawPlane.AppCardButton(this, grid1.Name.Substring(6)));
                 grid2.Children.Add(DrawPlane.AppCardButton(this, grid2.Name.Substring(6)));
@@ -272,11 +236,31 @@ namespace TaskBoard
                 }
 
                 //grid.Background = Brushes.Black;
-                MainPlane.Children.Add(grid1);
-                MainPlane.Children.Add(grid2);
-                MainPlane.Children.Add(grid3);
+                MainWindowAddGrid(grid1, grid2, grid3);
             }
 
+        }
+        //Добавление в гридs
+        private void AddGrid3Border(Grid grid1, Grid grid2, Grid grid3, Border[] borders, int All)
+        {
+            grid1.Children.Add(borders[All - 1]);
+            grid2.Children.Add(borders[All - 2]);
+            grid3.Children.Add(borders[All - 3]);
+        }
+        private void MainWindowAddGrid(Grid grid1, Grid grid2, Grid grid3 = null)
+        {
+            MainPlane.Children.Add(grid1);
+            MainPlane.Children.Add(grid2);
+            if (grid3 != null)
+            {
+                MainPlane.Children.Add(grid3);
+            }
+        }
+        private void AddGridsText(Grid grid1, Grid grid2, Grid grid3, TextBox txt1, TextBox txt2, TextBox txt3)
+        {
+            grid1.Children.Add(txt1);
+            grid2.Children.Add(txt2);
+            grid3.Children.Add(txt3);
         }
 
         private void RightButton(object sender, RoutedEventArgs e)

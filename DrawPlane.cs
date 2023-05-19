@@ -279,6 +279,66 @@ public class DrawPlane
         grid.Height = 740;
         return grid;
     }
+    //Шаблоны гридов
+    //Шаблоны для двух гридов
+    public static Grid GridColumn2Left()
+    {
+        Grid grid = new Grid();
+        grid.Name = "Column";
+        grid.Width = 480;
+        grid.Height = 740;
+        grid.Margin = new Thickness(250, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+        grid.HorizontalAlignment = HorizontalAlignment.Left;
+        grid.VerticalAlignment = VerticalAlignment.Top;
+        return grid;
+    }
+
+    public static Grid GridColumn2Right()
+    {
+        Grid grid = new Grid();
+        grid.Name = "Column";
+        grid.Width = 480;
+        grid.Height = 740;
+        grid.Margin = new Thickness(0, 100, 250, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+        grid.HorizontalAlignment = HorizontalAlignment.Right;
+        grid.VerticalAlignment = VerticalAlignment.Top;
+        return grid;
+    }
+    //Шаблоны для трех гридов
+    public static Grid GridColumn3Left()
+    {
+        Grid grid = new Grid();
+        grid.Name = "Column";
+        grid.Width = 480;
+        grid.Height = 740;
+        grid.Margin = new Thickness(60, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+        grid.HorizontalAlignment = HorizontalAlignment.Left;
+        grid.VerticalAlignment = VerticalAlignment.Top;
+        return grid;
+    }
+    public static Grid GridColumn3Center()
+    {
+        Grid grid = new Grid();
+        grid.Name = "Column";
+        grid.Width = 480;
+        grid.Height = 740;
+        grid.Margin = new Thickness(0, 100, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+        grid.HorizontalAlignment = HorizontalAlignment.Center;
+        grid.VerticalAlignment = VerticalAlignment.Top;
+        return grid;
+    }
+    public static Grid GridColumn3Right()
+    {
+        Grid grid = new Grid();
+        grid.Name = "Column";
+        grid.Width = 480;
+        grid.Height = 740;
+        grid.Margin = new Thickness(0, 100, 60, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+        grid.HorizontalAlignment = HorizontalAlignment.Right;
+        grid.VerticalAlignment = VerticalAlignment.Top;
+        return grid;
+    }
+
 
     public static Button ButtonRightLeft()
     {
