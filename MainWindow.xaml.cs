@@ -182,6 +182,10 @@ namespace TaskBoard
             }
             if (All >= 3) /*(Logic.GetIdColInBoard(IDboard).Count == 3)*/
             {
+                if (columnsId.Count <= (Browsing + 2))
+                {
+                    Browsing = columnsId.Count-3;
+                }
                 Column column1 = DataBase.Column.GetObjOfId(columnsId[Browsing]);
                 Column column2 = DataBase.Column.GetObjOfId(columnsId[Browsing+1]);
                 Column column3 = DataBase.Column.GetObjOfId(columnsId[Browsing+2]);
