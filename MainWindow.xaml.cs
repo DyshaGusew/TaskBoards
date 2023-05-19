@@ -40,6 +40,11 @@ namespace TaskBoard
             
 
             InitializeComponent();
+
+            BoardText.Text = Logic.GetCurrentBoard().name.ToString();
+            TextPerson.Text = "Пользователь: ";
+            TextPerson.Text += Logic.GetCurrentPerson().login;
+
             ClearColumn();
             DraftBoard();
            
@@ -51,15 +56,11 @@ namespace TaskBoard
         //Отрисовка доски
         public void DraftBoard()
         {
-            BoardText.Text = Logic.GetCurrentBoard().name.ToString();
-            TextPerson.Text = "Пользователь: ";
-            TextPerson.Text += Logic.GetCurrentPerson().login;
             //Удаление старых столбцов должно быть тут
-
             int IDboard = Logic.GetCurrentBoard().id;
             string[] str = Logic.GetNameColumns(IDboard);
             ClearColumn();
-            DraftColumns(new Logic().GetIdColumsInBoard(IDboard), str);    
+            DraftColumns(new Logic().GetIdColumsInBoard(IDboard), str, Enumeration.value);    
         }
 
         //отрисовывает определенное количество столбцов
@@ -384,40 +385,23 @@ namespace TaskBoard
         //Отчистка столбцов, не удаление
         public void ClearColumn()
         {
-
+            List<Grid> list = new List<Grid>();
             foreach (UIElement element in MainPlane.Children)
             {
                 if (element is Grid)
                 {
                     if (((Grid)element).Name.ToString().Contains("Column"))
                     {
-                        MainPlane.Children.Remove((Grid)element);
-                        break;
+                        list.Add((Grid)element);
+                        
                     }
                 }
             }
-            foreach (UIElement element in MainPlane.Children)
+            foreach(Grid grid in list)
             {
-                if (element is Grid)
-                {
-                    if (((Grid)element).Name.ToString().Contains("Column"))
-                    {
-                        MainPlane.Children.Remove((Grid)element);
-                        break;
-                    }
-                }
+                MainPlane.Children.Remove(grid);
             }
-            foreach (UIElement element in MainPlane.Children)
-            {
-                if (element is Grid)
-                {
-                    if (((Grid)element).Name.ToString().Contains("Column"))
-                    {
-                        MainPlane.Children.Remove((Grid)element);
-                        break;
-                    }
-                }
-            }
+            
         }
 
         //Удаление столбца

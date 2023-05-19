@@ -390,7 +390,7 @@ public class DrawPlane
 
 
 
-
+    //Отрисовка карточек
     //Отрисовка всех карточек в столбце
     public static Grid DraftCards(Column column, MainWindow window)
     {
@@ -424,12 +424,13 @@ public class DrawPlane
 
 
         int step = 0;
+    
         foreach (int idCard in Logic.GetIdCardInColomns(column.id))
         {
-            gridScrollBut.Children.Add(Card(DataBase.Card.GetObjOfId(idCard), step, window));
-            step += 120;
-            
+            gridScrollBut.Children.Add(DraftCard(DataBase.Card.GetObjOfId(idCard), step, window));
+            step += 120;     
         }
+
         scrollViewer.Content = gridScrollBut;
         gridMain.Children.Add(scrollViewer);
         return gridMain;
@@ -437,7 +438,7 @@ public class DrawPlane
     }
 
     //Одиночная карточка 
-    public static Grid Card(Card card, int step, MainWindow window)
+    public static Grid DraftCard(Card card, int step, MainWindow window)
     {
         Grid grid = new Grid();
         grid.Name = "Card" + card.id;
@@ -546,8 +547,7 @@ public class DrawPlane
                 MessageBox.Show("Вы не можете редактировать эту доску", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            window.DeleteList();
-            window.DeleteMenuLocalOfGlobal();
+
             DataBase.Card.DeleteByID(card.id);
             window.DraftBoard();
         }
@@ -573,6 +573,8 @@ public class DrawPlane
         }
     }
 
+
+    //Настройка цветов карточки
     //Настройка цвета карточки
     public static void LogColorCard(string textColor, Border bord)
     {
@@ -651,8 +653,34 @@ public class DrawPlane
 
     }
 
+    //Настройка чвета выпадающего списка
+    public static void LogColorButtonList(string textColor, Grid gridList)
+    {
+        switch (textColor)
+        {
+            case "green":
+                gridList.Background = new SolidColorBrush(Color.FromRgb(145, 227, 127));
+                break;
+            case "red":
+                gridList.Background = new SolidColorBrush(Color.FromRgb(227, 127, 127));
+                break;
+            case "blue":
+                gridList.Background = new SolidColorBrush(Color.FromRgb(115, 185, 255));
+                break;
+            case "aqua":
+                gridList.Background = new SolidColorBrush(Color.FromRgb(127, 227, 219));
+                break;
+            case "yellow":
+                gridList.Background = new SolidColorBrush(Color.FromRgb(227, 224, 127));
+                break;
+            default: gridList.Background = new SolidColorBrush(Color.FromRgb(222, 222, 222)); return;
+
+        }
+
+    }
 
 
+    //Работа с меню карточки
     //Объект отображения описания карточки
     public static Grid MenuCardInfo(Card card, MainWindow window)
     {
@@ -689,7 +717,7 @@ public class DrawPlane
 
 
         UpGrid.Children.Add(borderUpGrid);
-        UpGrid.Children.Add(ButtonMenuCardAppInfo(card, window));
+        UpGrid.Children.Add(ButtonMenuCardColor(card, window));
         UpGrid.Children.Add(ButtonMenuCardDeleteInfo(card, window));
         UpGrid.Children.Add(ButtonMenuCardAppCheckList(card, window));
         UpGrid.Children.Add(ButtonMenuCardClose(card, window));
@@ -737,31 +765,172 @@ public class DrawPlane
         return mainGrid;
     }
 
-    //Кнопки для работы с описанием карточки
-    public static Button ButtonMenuCardAppInfo(Card card, MainWindow window)
+    //Кнопки для работы с цветом карточки
+    public static Grid ButtonMenuCardColor(Card card, MainWindow window)
     {
-        Button button = new Button();
-        button.Width = 160;
-        button.Height = 60;
-        LogColorButtonCard(card.color, button);
-        button.BorderBrush = Brushes.Black;
-        button.Content = "Поменять цвет";
-        button.FontSize = 16;
-        button.BorderThickness = new Thickness(2);
+        Grid mainGrid = new Grid();
+        mainGrid.VerticalAlignment = VerticalAlignment.Center;
+        mainGrid.HorizontalAlignment = HorizontalAlignment.Left;
+        mainGrid.Margin = new Thickness(30, 0, 0, 0);
+        mainGrid.Height = 60;
+        mainGrid.Width = 160;
+        LogColorButtonList(card.color, mainGrid);
 
-        button.Margin = new Thickness(30, 0, 0, 0);
-        button.HorizontalAlignment = HorizontalAlignment.Left;
-        button.VerticalAlignment = VerticalAlignment.Center;
+        Border border = new Border();
+        border.Width = 160;
+        border.Height = 60;
+        border.BorderThickness = new Thickness(2);
+        border.BorderBrush = Brushes.Black;
 
 
-        button.Click += Click2;
+        ComboBox buttons = new ComboBox();
+        buttons.Width = 30;
+        buttons.Height = 60;
+        
+        buttons.FontSize = 20;
+        buttons.BorderThickness = new Thickness(2);
+        buttons.HorizontalAlignment = HorizontalAlignment.Right;
+        buttons.VerticalAlignment = VerticalAlignment.Center;
 
-        void Click2(object sender, RoutedEventArgs e)
+        TextBlock textBlock = new TextBlock();
+        textBlock.FontSize = 16;
+        textBlock.Text = "Поменять цвет";
+        textBlock.HorizontalAlignment = HorizontalAlignment.Left;
+        textBlock.VerticalAlignment = VerticalAlignment.Center;
+        textBlock.Margin = new Thickness(10, 0, 0, 0);
+
+
+        Button colorBut1 = new Button();
+        colorBut1.Height = 40;
+        colorBut1.Width = 120;
+        colorBut1.Margin = new Thickness(0, 15, 0, 0);
+        colorBut1.VerticalAlignment = VerticalAlignment.Top;
+        colorBut1.Content = "Белый";
+        colorBut1.Background = new SolidColorBrush(Color.FromRgb(222, 222, 222));
+        colorBut1.Click += ColorBut1_Click;
+        void ColorBut1_Click(object sender, RoutedEventArgs e)
         {
+            Card card1 = card;
+            card1.color = "white";
+            DataBase.Card.ReplaceObject(card.id, card1);
+            window.DraftBoard();
+            window.DeleteInfoCard();
+            window.MainPlane.Children.Add(MenuCardInfo(card, window));
+        }
+
+        Button colorBut2 = new Button();
+        colorBut2.Height = 40;
+        colorBut2.Width = 120;
+        colorBut2.Margin = new Thickness(0, 70, 0, 0);
+        colorBut2.VerticalAlignment = VerticalAlignment.Top;
+        colorBut2.Content = "Зеленый";
+        colorBut2.Background = new SolidColorBrush(Color.FromRgb(145, 227, 127));
+        colorBut2.Click += ColorBut2_Click;
+        void ColorBut2_Click(object sender, RoutedEventArgs e)
+        {
+            Card card1 = card;
+            card1.color = "green";
+            DataBase.Card.ReplaceObject(card.id, card1);
+            window.DraftBoard();
+            window.DeleteInfoCard();
+            window.MainPlane.Children.Add(MenuCardInfo(card, window));
+        }
+
+        Button colorBut3 = new Button();
+        colorBut3.Height = 40;
+        colorBut3.Width = 120;
+        colorBut3.Margin = new Thickness(0, 125, 0, 0);
+        colorBut3.VerticalAlignment = VerticalAlignment.Top;
+        colorBut3.Content = "Красный";
+        colorBut3.Background = new SolidColorBrush(Color.FromRgb(227, 127, 127));
+        colorBut3.Click += ColorBut3_Click;
+        void ColorBut3_Click(object sender, RoutedEventArgs e)
+        {
+            Card card1 = card;
+            card1.color = "red";
+            DataBase.Card.ReplaceObject(card.id, card1);
+            window.DraftBoard();
+            window.DeleteInfoCard();
+            window.MainPlane.Children.Add(MenuCardInfo(card, window));
+        }
+
+        Button colorBut4 = new Button();
+        colorBut4.Height = 40;
+        colorBut4.Width = 120;
+        colorBut4.Margin = new Thickness(0, 180, 0, 0);
+        colorBut4.VerticalAlignment = VerticalAlignment.Top;
+        colorBut4.Content = "Синий";
+        colorBut4.Background = new SolidColorBrush(Color.FromRgb(115, 185, 255));
+        colorBut4.Click += ColorBut4_Click;
+        void ColorBut4_Click(object sender, RoutedEventArgs e)
+        {
+            Card card1 = card;
+            card1.color = "blue";
+            DataBase.Card.ReplaceObject(card.id, card1);
+            window.DraftBoard();
+            window.DeleteInfoCard();
+            window.MainPlane.Children.Add(MenuCardInfo(card, window));
+        }
+
+        Button colorBut5 = new Button();
+        colorBut5.Height = 40;
+        colorBut5.Width = 120;
+        colorBut5.Margin = new Thickness(0, 235, 0, 0);
+        colorBut5.VerticalAlignment = VerticalAlignment.Top;
+        colorBut5.Content = "Голубой";
+        colorBut5.Background = new SolidColorBrush(Color.FromRgb(127, 227, 219));
+        colorBut5.Click += ColorBut5_Click;
+        void ColorBut5_Click(object sender, RoutedEventArgs e)
+        {
+            Card card1 = card;
+            card1.color = "aqua";
+            DataBase.Card.ReplaceObject(card.id, card1);
+            window.DraftBoard();
+            window.DeleteInfoCard();
+            window.MainPlane.Children.Add(MenuCardInfo(card, window));
+        }
+
+
+        Button colorBut6 = new Button();
+        colorBut6.Height = 40;
+        colorBut6.Width = 120;
+        colorBut6.Margin = new Thickness(0, 290, 0, 0);
+        colorBut6.VerticalAlignment = VerticalAlignment.Top;
+        colorBut6.Content = "Желтый";
+        colorBut6.Background = new SolidColorBrush(Color.FromRgb(227, 224, 127));
+        colorBut6.Click += ColorBut6_Click;
+        void ColorBut6_Click(object sender, RoutedEventArgs e)
+        {
+            Card card1 = card;
+            card1.color = "yellow";
+            DataBase.Card.ReplaceObject(card.id, card1);
+            window.DraftBoard();
+            window.DeleteInfoCard();
+            window.MainPlane.Children.Add(MenuCardInfo(card, window));
 
         }
 
-        return button;
+        Grid grid = new Grid();
+        grid.Height = 370;
+        grid.Children.Add(colorBut1);
+        grid.Children.Add(colorBut2);
+        grid.Children.Add(colorBut3);
+        grid.Children.Add(colorBut4);
+        grid.Children.Add(colorBut5);
+        grid.Children.Add(colorBut6);
+
+        ComboBoxItem comboBoxItem = new ComboBoxItem();
+        comboBoxItem.Height = 360;
+        comboBoxItem.Content = grid;
+        buttons.Items.Add(comboBoxItem);
+
+
+
+
+        mainGrid.Children.Add(buttons);
+        mainGrid.Children.Add(textBlock);
+        mainGrid.Children.Add(border);
+        return mainGrid;
     }
 
     public static Button ButtonMenuCardAppCheckList(Card card, MainWindow window)
@@ -783,12 +952,14 @@ public class DrawPlane
 
         void Click3(object sender, RoutedEventArgs e)
         {
-
+            //Объект для списка досок
+            
         }
 
         return button;
     }
 
+    //Удаление содержания карточки
     public static Button ButtonMenuCardDeleteInfo(Card card, MainWindow window)
     {
         Button button = new Button();
@@ -814,7 +985,7 @@ public class DrawPlane
         return button;
     }
 
-    //Закрытие информации
+    //Закрытие информации карточки
     public static Button ButtonMenuCardClose(Card card, MainWindow window)
     {
         Button btn = new Button();
@@ -1066,6 +1237,7 @@ public class DrawPlane
 
         return btn;
     }
+
 
 
 
