@@ -720,6 +720,7 @@ public class DrawPlane
         UpGrid.Children.Add(ButtonMenuCardColor(card, window));
         UpGrid.Children.Add(ButtonMenuCardDeleteInfo(card, window));
         UpGrid.Children.Add(ButtonMenuCardAppCheckList(card, window));
+        UpGrid.Children.Add(ButtonMenuCardTransform(card, window));
         UpGrid.Children.Add(ButtonMenuCardClose(card, window));
 
         mainGrid.Children.Add(UpGrid);
@@ -773,37 +774,38 @@ public class DrawPlane
         mainGrid.HorizontalAlignment = HorizontalAlignment.Left;
         mainGrid.Margin = new Thickness(30, 0, 0, 0);
         mainGrid.Height = 60;
-        mainGrid.Width = 160;
+        mainGrid.Width = 110;
         LogColorButtonList(card.color, mainGrid);
 
         Border border = new Border();
-        border.Width = 160;
+        border.Width = 110;
         border.Height = 60;
         border.BorderThickness = new Thickness(2);
         border.BorderBrush = Brushes.Black;
 
 
         ComboBox buttons = new ComboBox();
-        buttons.Width = 30;
+        buttons.Width = 20;
         buttons.Height = 60;
         
         buttons.FontSize = 20;
-        buttons.BorderThickness = new Thickness(2);
+
         buttons.HorizontalAlignment = HorizontalAlignment.Right;
         buttons.VerticalAlignment = VerticalAlignment.Center;
 
         TextBlock textBlock = new TextBlock();
         textBlock.FontSize = 16;
-        textBlock.Text = "Поменять цвет";
-        textBlock.HorizontalAlignment = HorizontalAlignment.Left;
+        textBlock.Text = "Поменять \n   цвет";
+        textBlock.HorizontalAlignment = HorizontalAlignment.Center;
         textBlock.VerticalAlignment = VerticalAlignment.Center;
-        textBlock.Margin = new Thickness(10, 0, 0, 0);
+        textBlock.Margin = new Thickness(-12, 0, 0, 0);
+
 
 
         Button colorBut1 = new Button();
-        colorBut1.Height = 40;
+        colorBut1.Height = 30;
         colorBut1.Width = 120;
-        colorBut1.Margin = new Thickness(0, 15, 0, 0);
+        colorBut1.Margin = new Thickness(0, 10, 0, 0);
         colorBut1.VerticalAlignment = VerticalAlignment.Top;
         colorBut1.Content = "Белый";
         colorBut1.Background = new SolidColorBrush(Color.FromRgb(222, 222, 222));
@@ -819,9 +821,9 @@ public class DrawPlane
         }
 
         Button colorBut2 = new Button();
-        colorBut2.Height = 40;
+        colorBut2.Height = 30;
         colorBut2.Width = 120;
-        colorBut2.Margin = new Thickness(0, 70, 0, 0);
+        colorBut2.Margin = new Thickness(0, 50, 0, 0);
         colorBut2.VerticalAlignment = VerticalAlignment.Top;
         colorBut2.Content = "Зеленый";
         colorBut2.Background = new SolidColorBrush(Color.FromRgb(145, 227, 127));
@@ -831,15 +833,15 @@ public class DrawPlane
             Card card1 = card;
             card1.color = "green";
             DataBase.Card.ReplaceObject(card.id, card1);
-            window.DraftBoard();
+          //  window.DraftBoard();
             window.DeleteInfoCard();
             window.MainPlane.Children.Add(MenuCardInfo(card, window));
         }
 
         Button colorBut3 = new Button();
-        colorBut3.Height = 40;
+        colorBut3.Height = 30;
         colorBut3.Width = 120;
-        colorBut3.Margin = new Thickness(0, 125, 0, 0);
+        colorBut3.Margin = new Thickness(0, 90, 0, 0);
         colorBut3.VerticalAlignment = VerticalAlignment.Top;
         colorBut3.Content = "Красный";
         colorBut3.Background = new SolidColorBrush(Color.FromRgb(227, 127, 127));
@@ -849,15 +851,15 @@ public class DrawPlane
             Card card1 = card;
             card1.color = "red";
             DataBase.Card.ReplaceObject(card.id, card1);
-            window.DraftBoard();
+         //   window.DraftBoard();
             window.DeleteInfoCard();
             window.MainPlane.Children.Add(MenuCardInfo(card, window));
         }
 
         Button colorBut4 = new Button();
-        colorBut4.Height = 40;
+        colorBut4.Height = 30;
         colorBut4.Width = 120;
-        colorBut4.Margin = new Thickness(0, 180, 0, 0);
+        colorBut4.Margin = new Thickness(0, 130, 0, 0);
         colorBut4.VerticalAlignment = VerticalAlignment.Top;
         colorBut4.Content = "Синий";
         colorBut4.Background = new SolidColorBrush(Color.FromRgb(115, 185, 255));
@@ -867,15 +869,15 @@ public class DrawPlane
             Card card1 = card;
             card1.color = "blue";
             DataBase.Card.ReplaceObject(card.id, card1);
-            window.DraftBoard();
+           // window.DraftBoard();
             window.DeleteInfoCard();
             window.MainPlane.Children.Add(MenuCardInfo(card, window));
         }
 
         Button colorBut5 = new Button();
-        colorBut5.Height = 40;
+        colorBut5.Height = 30;
         colorBut5.Width = 120;
-        colorBut5.Margin = new Thickness(0, 235, 0, 0);
+        colorBut5.Margin = new Thickness(0, 170, 0, 0);
         colorBut5.VerticalAlignment = VerticalAlignment.Top;
         colorBut5.Content = "Голубой";
         colorBut5.Background = new SolidColorBrush(Color.FromRgb(127, 227, 219));
@@ -885,16 +887,16 @@ public class DrawPlane
             Card card1 = card;
             card1.color = "aqua";
             DataBase.Card.ReplaceObject(card.id, card1);
-            window.DraftBoard();
+           // window.DraftBoard();
             window.DeleteInfoCard();
             window.MainPlane.Children.Add(MenuCardInfo(card, window));
         }
 
 
         Button colorBut6 = new Button();
-        colorBut6.Height = 40;
+        colorBut6.Height = 30;
         colorBut6.Width = 120;
-        colorBut6.Margin = new Thickness(0, 290, 0, 0);
+        colorBut6.Margin = new Thickness(0, 210, 0, 10);
         colorBut6.VerticalAlignment = VerticalAlignment.Top;
         colorBut6.Content = "Желтый";
         colorBut6.Background = new SolidColorBrush(Color.FromRgb(227, 224, 127));
@@ -904,14 +906,13 @@ public class DrawPlane
             Card card1 = card;
             card1.color = "yellow";
             DataBase.Card.ReplaceObject(card.id, card1);
-            window.DraftBoard();
+           // window.DraftBoard();
             window.DeleteInfoCard();
             window.MainPlane.Children.Add(MenuCardInfo(card, window));
-
         }
 
         Grid grid = new Grid();
-        grid.Height = 370;
+        mainGrid.Children.Add(textBlock);
         grid.Children.Add(colorBut1);
         grid.Children.Add(colorBut2);
         grid.Children.Add(colorBut3);
@@ -920,7 +921,6 @@ public class DrawPlane
         grid.Children.Add(colorBut6);
 
         ComboBoxItem comboBoxItem = new ComboBoxItem();
-        comboBoxItem.Height = 360;
         comboBoxItem.Content = grid;
         buttons.Items.Add(comboBoxItem);
 
@@ -928,24 +928,26 @@ public class DrawPlane
 
 
         mainGrid.Children.Add(buttons);
-        mainGrid.Children.Add(textBlock);
+        
         mainGrid.Children.Add(border);
         return mainGrid;
     }
 
+    //Добавление чеклиста
     public static Button ButtonMenuCardAppCheckList(Card card, MainWindow window)
     {
         Button button = new Button();
-        button.Width = 160;
+        button.Width = 110;
         button.Height = 60;
         LogColorButtonCard(card.color, button);
         button.BorderBrush = Brushes.Black;
-        button.Content = "Добавить чеклист";
+        button.Content = "Добавить\n чеклист";
         button.FontSize = 16;
         button.BorderThickness = new Thickness(2);
+        button.HorizontalContentAlignment = HorizontalAlignment.Center;
 
-        button.HorizontalAlignment = HorizontalAlignment.Center;
-        button.Margin = new Thickness(0, 0, 50, 0);
+        button.HorizontalAlignment = HorizontalAlignment.Left;
+        button.Margin = new Thickness(165, 0, 0, 0);
         button.VerticalAlignment = VerticalAlignment.Center;
 
         button.Click += Click3;
@@ -959,27 +961,59 @@ public class DrawPlane
         return button;
     }
 
-    //Удаление содержания карточки
-    public static Button ButtonMenuCardDeleteInfo(Card card, MainWindow window)
+    //Перемещение карточки
+    public static Button ButtonMenuCardTransform(Card card, MainWindow window)
     {
         Button button = new Button();
-        button.Width = 160;
+        button.Width = 110;
         button.Height = 60;
         LogColorButtonCard(card.color, button);
         button.BorderBrush = Brushes.Black;
-        button.Content = "Удалить содержание";
+        button.Content = "Переместить";
         button.FontSize = 16;
         button.BorderThickness = new Thickness(2);
+        button.HorizontalContentAlignment = HorizontalAlignment.Center;
 
-        button.HorizontalAlignment = HorizontalAlignment.Right;
+        button.HorizontalAlignment = HorizontalAlignment.Left;
+        button.Margin = new Thickness(300, 0, 0, 0);
         button.VerticalAlignment = VerticalAlignment.Center;
-        button.Margin = new Thickness(0, 0, 80, 0);
 
         button.Click += Click3;
 
         void Click3(object sender, RoutedEventArgs e)
         {
+            //Объект для списка досок
 
+        }
+
+        return button;
+    }
+
+    //Удаление содержания карточки
+    public static Button ButtonMenuCardDeleteInfo(Card card, MainWindow window)
+    {
+        Button button = new Button();
+        button.Width = 105;
+        button.Height = 60;
+        LogColorButtonCard(card.color, button);
+        button.BorderBrush = Brushes.Black;
+        button.Content = "    Удалить \n содержание";
+        button.HorizontalContentAlignment = HorizontalAlignment.Center;
+        button.FontSize = 16;
+        button.BorderThickness = new Thickness(2);
+
+        button.HorizontalAlignment = HorizontalAlignment.Right;
+        button.VerticalAlignment = VerticalAlignment.Center;
+        button.Margin = new Thickness(0, 0, 110, 0);
+        button.HorizontalContentAlignment = HorizontalAlignment.Center;
+
+        button.Click += Click3;
+
+        void Click3(object sender, RoutedEventArgs e)
+        {
+            DataBase.Card.ReplaceObject(card.id, new Card(card.id, card.idColumnsRef, card.name, card.color, card.typeDeskrip, ""));
+            window.DeleteInfoCard();
+            window.MainPlane.Children.Add(MenuCardInfo(DataBase.Card.GetObjOfId(card.id), window));
         }
 
         return button;
@@ -1008,6 +1042,7 @@ public class DrawPlane
         //Функция клика для этих кнопок
         void Click1(object sender, RoutedEventArgs e)
         {
+            window.DraftBoard();
             window.DeleteInfoCard();
         }
 
@@ -1080,7 +1115,7 @@ public class DrawPlane
     {
         Button btn = new Button();
 
-        btn.Background = Brushes.Aquamarine;
+        btn.Background = new SolidColorBrush(Color.FromRgb(194, 225, 255));
         btn.BorderBrush = Brushes.Black;
         btn.Width = 250;
         btn.Height = 50;
@@ -1191,7 +1226,7 @@ public class DrawPlane
     {
         Button btn = new Button();
 
-        btn.Background = Brushes.Aquamarine;
+        btn.Background = new SolidColorBrush(Color.FromRgb(194, 225, 255));
         btn.BorderBrush = Brushes.Black;
         btn.Width = 250;
         btn.Height = 50;
@@ -1274,7 +1309,7 @@ public class DrawPlane
         bord2.Height = 50;
         bord2.Width = 350;
         bord2.Margin = new Thickness(0, 20, 0, 0);
-        bord2.Background = Brushes.Aquamarine;
+        bord2.Background = new SolidColorBrush(Color.FromRgb(100, 140, 255));
 
         grid.Children.Add(bord);
         grid.Children.Add(bord2);
@@ -1290,7 +1325,7 @@ public class DrawPlane
         Button button = new Button();
         button.Width = 200;
         button.Height = 100;
-        button.Background = Brushes.Aquamarine;
+        button.Background = new SolidColorBrush(Color.FromRgb(194, 225, 255));
         button.BorderBrush = Brushes.Black;
         button.Content = "Общественная";
         button.FontSize = 24;
@@ -1328,7 +1363,7 @@ public class DrawPlane
         Button button = new Button();
         button.Width = 200;
         button.Height = 100;
-        button.Background = Brushes.Aquamarine;
+        button.Background = new SolidColorBrush(Color.FromRgb(194, 225, 255));
         button.BorderBrush = Brushes.Black;
         button.Content = "Частная";
         button.FontSize = 24;
