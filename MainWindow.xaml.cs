@@ -692,7 +692,13 @@ namespace TaskBoard
             DataBase.Column.AppObject(column);
 
             DeleteMenuLocalOfGlobal();
-            DraftBoard();
+
+            int IDboard = Logic.GetCurrentBoard().id;
+            string[] str = Logic.GetNameColumns(IDboard);
+            ClearColumn();
+            DraftColumns(new Logic().GetIdColumsInBoard(IDboard), str, Enumeration.value);
+
+            //DraftBoard();
         }
 
         //Кнопка перехода к выбору пользователя
