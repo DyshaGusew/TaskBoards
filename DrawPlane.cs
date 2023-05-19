@@ -8,10 +8,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Shapes;
 using TaskBoard;
 using static DataBase;
 
-public class DrawPlane 
+public class DrawPlane
 {
     // ((MainWindow)System.Windows.Application.Current.MainWindow).DeleteList(); //Самая важнач строчка кода, позволяет обращаться к основному окну
     private static Border Border()
@@ -65,13 +66,13 @@ public class DrawPlane
 
         void TextBlock_TextChanged(object sender, TextChangedEventArgs e)
         {
-            
+
         }
 
         return textBlock;
     }
 
-   
+
 
     public static TextBox[] DrawTextBox(int id)
     {
@@ -115,7 +116,7 @@ public class DrawPlane
             btn[2] = TextBox();
             btn[2].Margin = new Thickness(0, 5, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[2].HorizontalAlignment = HorizontalAlignment.Center;
-            
+
             btn[2].Background = Brushes.Transparent;
             return btn;
         }
@@ -124,7 +125,7 @@ public class DrawPlane
     {
         //int[] counter = Logic.GetIdColumsInBoard(15);
         //int a = counter.Length;
-        int[]count = new int[id];
+        int[] count = new int[id];
         if (count.Length == 1)
         {
             Border[] btn = new Border[1];
@@ -200,7 +201,7 @@ public class DrawPlane
         {
             Border[] btn = new Border[3];
             btn[0] = BorderMini();
-            btn[0].Margin = new Thickness(0,0 ,0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
 
@@ -227,7 +228,7 @@ public class DrawPlane
         {
             Border[] btn = new Border[1];
             btn[0] = BorderMini();
-            btn[0].Margin = new Thickness(0,0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
+            btn[0].Margin = new Thickness(0, 0, 0, 0); // расположение элемента в контейнере задается с помощью свойства Margin и объекта Thickness
             btn[0].HorizontalAlignment = HorizontalAlignment.Center;
             btn[0].VerticalAlignment = VerticalAlignment.Top;
             return btn;
@@ -467,7 +468,7 @@ public class DrawPlane
         //Сетка для отображения скрол бара и кнопок
         Grid gridScrollBut = new Grid();
         gridScrollBut.Width = 445;
-       // gridScrollBut.Height = 690;
+        // gridScrollBut.Height = 690;
         gridScrollBut.HorizontalAlignment = HorizontalAlignment.Center;
         gridScrollBut.VerticalAlignment = VerticalAlignment.Top;
         gridScrollBut.Height = Logic.GetIdCardInColomns(column.id).Count * 100 + (Logic.GetIdCardInColomns(column.id).Count - 1) * 20 + 40;
@@ -480,15 +481,15 @@ public class DrawPlane
         scrollViewer.Height = 560;
         scrollViewer.VerticalAlignment = VerticalAlignment.Top;
         scrollViewer.HorizontalAlignment = HorizontalAlignment.Center;
-        scrollViewer.Margin = new Thickness(0,10,0,0);
+        scrollViewer.Margin = new Thickness(0, 10, 0, 0);
 
 
         int step = 0;
-    
+
         foreach (int idCard in Logic.GetIdCardInColomns(column.id))
         {
             gridScrollBut.Children.Add(DraftCard(DataBase.Card.GetObjOfId(idCard), step, window));
-            step += 120;     
+            step += 120;
         }
 
         scrollViewer.Content = gridScrollBut;
@@ -502,13 +503,13 @@ public class DrawPlane
     {
         Grid grid = new Grid();
         grid.Name = "Card" + card.id;
-        int widthCard = 400; 
-        int heightCard = 100; 
+        int widthCard = 400;
+        int heightCard = 100;
         grid.Width = widthCard;
         grid.Height = heightCard;
         grid.HorizontalAlignment = HorizontalAlignment.Center;
         grid.VerticalAlignment = VerticalAlignment.Top;
-        grid.Margin = new Thickness(0,step,0,0);
+        grid.Margin = new Thickness(0, step, 0, 0);
 
         Border btn = new Border();
         LogColorCard(card.color, btn);
@@ -523,7 +524,7 @@ public class DrawPlane
 
         Grid gridName = new Grid();
         gridName.VerticalAlignment = VerticalAlignment.Top;
-        gridName.Margin = new Thickness(0,0,0,0);
+        gridName.Margin = new Thickness(0, 0, 0, 0);
         gridName.HorizontalAlignment = HorizontalAlignment.Center;
         gridName.Width = widthCard;
         gridName.Height = 50;
@@ -540,7 +541,7 @@ public class DrawPlane
         nameCard.TextChanged += NameCard_TextChanged;
         nameCard.Text = card.name;
         nameCard.Height = 40;
-        nameCard.Width = widthCard-35;
+        nameCard.Width = widthCard - 35;
         nameCard.VerticalAlignment = VerticalAlignment.Center;
         nameCard.FontSize = 28;
         nameCard.BorderBrush = Brushes.Transparent;
@@ -571,7 +572,7 @@ public class DrawPlane
 
     //Кнопки карточки
     public static Button ButtonCard(int num, Card card, MainWindow window)
-    { 
+    {
         Button buttonOpenInfo = new Button();
         buttonOpenInfo.Click += ButtonOpenInfo_Click;
         buttonOpenInfo.Width = 192;
@@ -583,7 +584,7 @@ public class DrawPlane
         buttonOpenInfo.BorderThickness = new Thickness(3);
         buttonOpenInfo.FontSize = 20;
 
-        if(card.text == "null")
+        if (card.text == "null")
             buttonOpenInfo.Content = "Добавить описание";
         else
             buttonOpenInfo.Content = "Открыть описание";
@@ -623,7 +624,7 @@ public class DrawPlane
             window.MainPlane.Children.Add(MenuCardInfo(card, window));
         }
 
-        if(num == 1)
+        if (num == 1)
         {
             return buttonOpenInfo;
         }
@@ -651,7 +652,7 @@ public class DrawPlane
                 break;
             case "aqua":
                 bord.Background = new SolidColorBrush(Color.FromRgb(166, 245, 240));
-                break; 
+                break;
             case "yellow":
                 bord.Background = new SolidColorBrush(Color.FromRgb(245, 240, 166));
                 break;
@@ -699,13 +700,13 @@ public class DrawPlane
                 but.Background = new SolidColorBrush(Color.FromRgb(227, 127, 127));
                 break;
             case "blue":
-                but.Background = new SolidColorBrush(Color.FromRgb(115, 185, 255));            
-                    break;
+                but.Background = new SolidColorBrush(Color.FromRgb(115, 185, 255));
+                break;
             case "aqua":
                 but.Background = new SolidColorBrush(Color.FromRgb(127, 227, 219));
                 break;
             case "yellow":
-                but.Background = new SolidColorBrush(Color.FromRgb(227, 224, 127)); 
+                but.Background = new SolidColorBrush(Color.FromRgb(227, 224, 127));
                 break;
             default: but.Background = new SolidColorBrush(Color.FromRgb(222, 222, 222)); return;
 
@@ -750,7 +751,7 @@ public class DrawPlane
         mainGrid.Height = 500;
         mainGrid.VerticalAlignment = VerticalAlignment.Center;
         mainGrid.HorizontalAlignment = HorizontalAlignment.Center;
-        
+
         Border borderMainGrid = new Border();
         borderMainGrid.BorderBrush = Brushes.Black;
         borderMainGrid.CornerRadius = new CornerRadius(12);
@@ -775,6 +776,30 @@ public class DrawPlane
         borderUpGrid.CornerRadius = new CornerRadius(12);
         LogColorCard(card.color, borderUpGrid);
 
+        Button button = new Button();
+        button.Width = 50;
+        button.Height = 50;
+        LogColorButtonCard(card.color, button);
+        button.BorderBrush = Brushes.Black;
+        button.Content = "+";
+        button.FontSize = 30;
+        button.BorderThickness = new Thickness(2);
+        button.HorizontalContentAlignment = HorizontalAlignment.Center;
+
+        button.HorizontalAlignment = HorizontalAlignment.Right;
+        button.Margin = new Thickness(0, 45, 30, 0);
+        button.VerticalAlignment = VerticalAlignment.Top;
+
+        button.Click += Click3;
+
+        void Click3(object sender, RoutedEventArgs e)
+        {
+            Card card1 = card;
+            card1.text += ",~";
+            DataBase.Card.ReplaceObject(card.id, card1);
+            window.DeleteCheckList();
+            window.MainPlane.Children.Add(CheckList(card, window));
+        }
 
         UpGrid.Children.Add(borderUpGrid);
         UpGrid.Children.Add(ButtonMenuCardColor(card, window));
@@ -798,7 +823,7 @@ public class DrawPlane
         mainText.MaxHeight = 300;
         mainText.HorizontalAlignment = HorizontalAlignment.Center;
         mainText.VerticalAlignment = VerticalAlignment.Top;
-        mainText.Margin = new Thickness(0,130,0, 0);
+        mainText.Margin = new Thickness(0, 130, 0, 0);
         mainText.BorderBrush = Brushes.Black;
         mainText.BorderThickness = new Thickness(1);
         mainText.TextChanged += MainText_TextChanged;
@@ -810,7 +835,7 @@ public class DrawPlane
         {
             if (e.Key == Key.Enter)
             {
-                mainText.Select(mainText.Text.Length-1, 0); 
+                mainText.Select(mainText.Text.Length - 1, 0);
             }
         }
         void MainText_TextChanged(object sender, TextChangedEventArgs e)
@@ -819,10 +844,18 @@ public class DrawPlane
             Card card1 = card;
             card1.text = mainText.Text.Replace('\n', '*');
             card1.text = card1.text.Replace('\r', '`');
-            DataBase.Card.ReplaceObject(card.id, card1 );
+            DataBase.Card.ReplaceObject(card.id, card1);
+        }
+        if(card.typeDeskrip == 1)
+        {
+            mainGrid.Children.Add(mainText);
+        }
+        if (card.typeDeskrip == 2)
+        {
+            mainGrid.Children.Add(CheckList(card, window));
+            mainGrid.Children.Add(button);
         }
 
-        mainGrid.Children.Add(mainText);
         return mainGrid;
     }
 
@@ -847,7 +880,7 @@ public class DrawPlane
         ComboBox buttons = new ComboBox();
         buttons.Width = 20;
         buttons.Height = 60;
-        
+
         buttons.FontSize = 20;
 
         buttons.HorizontalAlignment = HorizontalAlignment.Right;
@@ -893,7 +926,7 @@ public class DrawPlane
             Card card1 = card;
             card1.color = "green";
             DataBase.Card.ReplaceObject(card.id, card1);
-          //  window.DraftBoard();
+            //  window.DraftBoard();
             window.DeleteInfoCard();
             window.MainPlane.Children.Add(MenuCardInfo(card, window));
         }
@@ -911,7 +944,7 @@ public class DrawPlane
             Card card1 = card;
             card1.color = "red";
             DataBase.Card.ReplaceObject(card.id, card1);
-         //   window.DraftBoard();
+            //   window.DraftBoard();
             window.DeleteInfoCard();
             window.MainPlane.Children.Add(MenuCardInfo(card, window));
         }
@@ -929,7 +962,7 @@ public class DrawPlane
             Card card1 = card;
             card1.color = "blue";
             DataBase.Card.ReplaceObject(card.id, card1);
-           // window.DraftBoard();
+            // window.DraftBoard();
             window.DeleteInfoCard();
             window.MainPlane.Children.Add(MenuCardInfo(card, window));
         }
@@ -939,7 +972,7 @@ public class DrawPlane
         colorBut5.Width = 120;
         colorBut5.Margin = new Thickness(0, 170, 0, 0);
         colorBut5.VerticalAlignment = VerticalAlignment.Top;
-        colorBut5.Content = "Голубой";
+        colorBut5.Content = "Бирюзовый";
         colorBut5.Background = new SolidColorBrush(Color.FromRgb(127, 227, 219));
         colorBut5.Click += ColorBut5_Click;
         void ColorBut5_Click(object sender, RoutedEventArgs e)
@@ -947,7 +980,7 @@ public class DrawPlane
             Card card1 = card;
             card1.color = "aqua";
             DataBase.Card.ReplaceObject(card.id, card1);
-           // window.DraftBoard();
+            // window.DraftBoard();
             window.DeleteInfoCard();
             window.MainPlane.Children.Add(MenuCardInfo(card, window));
         }
@@ -966,7 +999,7 @@ public class DrawPlane
             Card card1 = card;
             card1.color = "yellow";
             DataBase.Card.ReplaceObject(card.id, card1);
-           // window.DraftBoard();
+            // window.DraftBoard();
             window.DeleteInfoCard();
             window.MainPlane.Children.Add(MenuCardInfo(card, window));
         }
@@ -988,7 +1021,7 @@ public class DrawPlane
 
 
         mainGrid.Children.Add(buttons);
-        
+
         mainGrid.Children.Add(border);
         return mainGrid;
     }
@@ -1014,8 +1047,17 @@ public class DrawPlane
 
         void Click3(object sender, RoutedEventArgs e)
         {
-            //Объект для списка досок
-            
+            if(card.typeDeskrip == 1)
+            {
+                Card card1 = card;
+                card1.text = "";
+                card1.typeDeskrip = 2;
+                card1.text = "~";
+                DataBase.Card.ReplaceObject(card.id, card1);
+
+                window.DeleteInfoCard();
+                window.MainPlane.Children.Add(MenuCardInfo(card1, window));
+            }
         }
 
         return button;
@@ -1071,7 +1113,15 @@ public class DrawPlane
 
         void Click3(object sender, RoutedEventArgs e)
         {
-            DataBase.Card.ReplaceObject(card.id, new Card(card.id, card.idColumnsRef, card.name, card.color, card.typeDeskrip, ""));
+            if(card.typeDeskrip == 2)
+            {
+                DataBase.Card.ReplaceObject(card.id, new Card(card.id, card.idColumnsRef, card.name, card.color, card.typeDeskrip, "~"));
+            }
+            else
+            {
+                DataBase.Card.ReplaceObject(card.id, new Card(card.id, card.idColumnsRef, card.name, card.color, card.typeDeskrip, ""));
+            }
+            
             window.DeleteInfoCard();
             window.MainPlane.Children.Add(MenuCardInfo(DataBase.Card.GetObjOfId(card.id), window));
         }
@@ -1086,7 +1136,7 @@ public class DrawPlane
         btn.Width = 60;
         btn.Height = 35;
         btn.Background = Brushes.IndianRed;
-        if(card.color == "red")
+        if (card.color == "red")
         {
             btn.Background = Brushes.Gray;
         }
@@ -1097,7 +1147,7 @@ public class DrawPlane
         btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
         btn.HorizontalAlignment = HorizontalAlignment.Right;
         btn.VerticalAlignment = VerticalAlignment.Top;
-        
+
 
         //Функция клика для этих кнопок
         void Click1(object sender, RoutedEventArgs e)
@@ -1108,6 +1158,238 @@ public class DrawPlane
 
         return btn;
     }
+
+
+
+    //Чек лист
+    public static Grid CheckList(Card card, MainWindow window)
+    {
+        string[] parms = card.text.Split(new char[] { ',' });
+        Grid gridMain = new Grid();
+        gridMain.Name = "CheckList";
+
+        gridMain.Background = Brushes.White;
+        gridMain.Width = 335;
+        gridMain.Height = 350;
+        gridMain.HorizontalAlignment = HorizontalAlignment.Center;
+        gridMain.VerticalAlignment = VerticalAlignment.Center;
+        gridMain.Margin = new Thickness(0, 100, 0, 0);
+
+        //Сетка для отображения скрол бара и кнопок
+        Grid gridScrollBut = new Grid();
+        gridScrollBut.Margin = new Thickness(0, 0, 0, 0);
+        gridScrollBut.Width = 300;
+        gridScrollBut.HorizontalAlignment = HorizontalAlignment.Center;
+        gridScrollBut.VerticalAlignment = VerticalAlignment.Top;
+        gridScrollBut.Height = parms.Length * 50 + (parms.Length - 1) * 20 + 40;
+
+        //Сам скрол объект куда позже помещается сетка выше 
+        ScrollViewer scrollViewer = new ScrollViewer();
+        scrollViewer.Width = 320;
+        scrollViewer.VerticalAlignment = VerticalAlignment.Top;
+        scrollViewer.HorizontalAlignment = HorizontalAlignment.Center;
+        // scrollViewer.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 20;
+        scrollViewer.Margin = new Thickness(0, 5, 0, 10);
+
+        //Обводка, помещаемая в главный блок
+        Border border = new Border();
+        border.BorderBrush = Brushes.Black;
+        border.Height = 350;
+        border.VerticalAlignment = VerticalAlignment.Center;
+        border.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+
+        //Добавление кнопок в грид для скролл бара
+        int step = 0;
+        foreach (string pars in parms)
+        {
+            gridScrollBut.Children.Add(CheckListLine(card, pars, step, window));
+            step += 70;
+        }
+
+        //Помещаю грид в скрол вью
+        scrollViewer.Content = gridScrollBut;
+
+        //Добавляю в главный элемент границы, скролл сетку с кнопками и кнопку закрытия
+        gridMain.Children.Add(border);
+        gridMain.Children.Add(scrollViewer);
+        return gridMain;
+    }
+    //Линия чкк листа
+    public static Grid CheckListLine(Card card, string lineText, int step, MainWindow window)
+    {
+        Grid grid = new Grid();
+        grid.Background = new SolidColorBrush(Color.FromRgb(194, 225, 255));
+        grid.Width = 250;
+        grid.Height = 50;
+        grid.Margin = new Thickness(0, step+20, 0, 0); //Расположение каждый раз разное
+        grid.HorizontalAlignment = HorizontalAlignment.Center;
+        grid.VerticalAlignment = VerticalAlignment.Top;
+
+        TextBox textBox = new TextBox();
+        textBox.Text = lineText.Substring(1, lineText.Length-1);
+        textBox.HorizontalAlignment = HorizontalAlignment.Center;
+        textBox.VerticalAlignment = VerticalAlignment.Center;
+        textBox.FontSize = 18;
+        textBox.VerticalScrollBarVisibility = ScrollBarVisibility.Visible;
+        textBox.TextWrapping = TextWrapping.Wrap;
+        textBox.Width = 120;
+        textBox.Height = 30;
+        textBox.TextChanged += TextBox_TextChanged;
+
+        void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            TextBox text = (TextBox)sender;
+            string[] parms = card.text.Split(new char[] { ',' });
+            string name = "";
+
+            for (int i = 0; i < parms.Length; i++)
+            {
+                if (parms[i] == lineText)
+                {
+                    name += lineText[0] + text.Text + ",";
+                    lineText = lineText[0] + text.Text;
+                }
+                else
+                {
+                    name += parms[i] + ",";
+                }
+            }
+            name = name.Substring(0, name.Length - 1);
+            Card card1 = card;
+            card1.text = name;
+            DataBase.Card.ReplaceObject(card.id, card1);
+            
+        }
+
+        grid.Children.Add(ButtonCheck(card, lineText, window));
+        grid.Children.Add(DelCheckBut(card,  lineText, window));
+        grid.Children.Add(textBox);
+        return grid;
+    }
+    //Создание отметок для чек листа
+    public static Button ButtonCheck(Card card, string lineText, MainWindow window)
+    {
+        Button btn = new Button();
+
+        btn.Background = new SolidColorBrush(Color.FromRgb(194, 225, 255));
+        btn.BorderBrush = Brushes.Black;
+        btn.Width = 25;
+        btn.Height = 25;
+        btn.Margin = new Thickness(20, 0, 0, 0); //Расположение каждый раз разное
+        //btn.FontSize = 30;
+        if (lineText[0] == '*')
+        {
+            btn.Content = "✓";
+        }
+        if (lineText[0] == '~')
+        {
+            btn.Content = "";
+        }
+
+
+        btn.HorizontalAlignment = HorizontalAlignment.Left;
+        btn.VerticalAlignment = VerticalAlignment.Center;
+
+        btn.Click += Click1;
+        btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+
+        //Функция клика для этих кнопок
+        void Click1(object sender, RoutedEventArgs e)
+        {
+            if(lineText[0] == '~')
+            {
+                string[] parms = card.text.Split(new char[] { ',' });
+                Card card1 = card;
+                string text = "";
+
+                foreach (string par in parms)
+                {
+                    if (par == lineText)
+                    {
+                        text += "*" + par.Substring(1, par.Length-1) + ",";
+                    }
+                    else
+                    {
+                        text += par + ",";
+                    }
+                }
+                text = text.Substring(0, text.Length-1);
+                card1.text = text;
+                DataBase.Card.ReplaceObject(card.id, card1);
+                window.DeleteCheckList();
+                window.MainPlane.Children.Add(CheckList(card, window));
+            }
+            else
+            {
+                string[] parms = card.text.Split(new char[] { ',' });
+                Card card1 = card;
+                string text = "";
+
+                foreach (string par in parms)
+                {
+                    if (par == lineText)
+                    {
+                        text += "~" + par.Substring(1, par.Length - 1) + ",";
+                    }
+                    else
+                    {
+                        text += par + ",";
+                    }
+                }
+                text = text.Substring(0, text.Length - 1);
+                card1.text = text;
+                DataBase.Card.ReplaceObject(card.id, card1);
+                window.DeleteCheckList();
+                window.MainPlane.Children.Add(CheckList(card, window));
+            }
+            
+        }
+
+        return btn;
+    }
+    //Создание удаления для чек листа
+    public static Button DelCheckBut(Card card, string lineText, MainWindow window)
+    {
+        Button btn = new Button();
+
+        btn.Background = new SolidColorBrush(Color.FromRgb(194, 225, 255));
+        btn.BorderBrush = Brushes.Black;
+        btn.Width = 25;
+        btn.Height = 25;
+
+        btn.Margin = new Thickness(0, 0, 20, 0); //Расположение каждый раз разное
+        btn.Content = "×";
+        //btn.FontSize = 20;
+        btn.HorizontalAlignment = HorizontalAlignment.Right;
+        btn.VerticalAlignment = VerticalAlignment.Center;
+        btn.VerticalContentAlignment = VerticalAlignment.Top;
+        btn.Click += Click1;
+        btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+
+        
+        //Функция клика для этих кнопок
+        void Click1(object sender, RoutedEventArgs e)
+        {
+            string[] parms = card.text.Split(new char[] { ',' });
+            Card card1 = card;
+            string text = parms[0];
+            
+            foreach(string par in parms.Skip(1))
+            {
+                if(par != lineText)
+                {
+                    text += "," + par;
+                }
+            }
+            card1.text = text;
+            DataBase.Card.ReplaceObject(card.id, card1);
+            window.DeleteCheckList();
+            window.MainPlane.Children.Add(CheckList(card, window));
+        }
+
+        return btn;
+    }
+
 
 
     //Объект для списка столбцов

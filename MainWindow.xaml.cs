@@ -381,6 +381,22 @@ namespace TaskBoard
             }
         }
 
+        //Удаление менюшки информации в карточке
+        public void DeleteCheckList()
+        {
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("CheckList"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
+        }
+
         //Отчистка столбцов, не удаление
         public void ClearColumn()
         {
