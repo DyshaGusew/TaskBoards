@@ -280,6 +280,14 @@ namespace TaskBoard
             int IDboard = Logic.GetCurrentBoard().id;
             string[] str = Logic.GetNameColumns(IDboard);
             int a = new Logic().GetIdColumsInBoard(IDboard).Count();
+            if (Enumeration.value > (str.Length - 3))
+            {
+                Enumeration.Change(str.Length - 3);
+            }
+            if (Enumeration.value == (str.Length - 3))
+            {
+                Enumeration.Change(Enumeration.value);
+            }
             if (Enumeration.value < (str.Length-3))
             {
                 Enumeration.Change(Enumeration.value + 1);
