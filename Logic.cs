@@ -158,6 +158,21 @@ public class Logic
         return boardsTrue;
     }
 
+    //Получение подходящих столбцов
+    public static List<Column> GetColumnsTrue()
+    {
+        List<Column> columnsTrue = new List<Column>();
+
+        foreach (Column column in DataBase.Column.GetListСolumns())
+        {
+            if (column.idBoardRef == GetCurrentBoard().id)
+            {
+                columnsTrue.Add(column);
+            }
+        }
+        return columnsTrue;
+    }
+
 
 
     //Определение только частных досок пользователя

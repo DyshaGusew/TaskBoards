@@ -982,7 +982,7 @@ public class DrawPlane
 
         void Click3(object sender, RoutedEventArgs e)
         {
-            //Объект для списка досок
+            window.MainPlane.Children.Add(ButtonsColumn(window, card));
 
         }
 
@@ -1050,7 +1050,119 @@ public class DrawPlane
     }
 
 
+    //Объект для списка столбцов
+    public static Grid ButtonsColumn(MainWindow window, Card card)
+    {
+        //Основной блок, куда все помещаю
+        Grid gridMain = new Grid();
+        gridMain.Name = "ColumnList";
 
+        gridMain.Background = Brushes.White;
+        gridMain.Width = 335;
+        gridMain.Height = Logic.GetColumnsTrue().Count * 50 + (Logic.GetColumnsTrue().Count - 1) * 20 + 100;
+        gridMain.MaxHeight = 5 * 50 + (Logic.GetColumnsTrue().Count - 1) * 20 + 100;
+        gridMain.HorizontalAlignment = HorizontalAlignment.Center;
+        gridMain.VerticalAlignment = VerticalAlignment.Top;
+        gridMain.Margin = new Thickness(0, 150, 0, 0);
+
+        //Сетка для отображения скрол бара и кнопок
+        Grid gridScrollBut = new Grid();
+        gridScrollBut.Margin = new Thickness(0, 0, 0, 0);
+        gridScrollBut.Width = 300;
+        gridScrollBut.HorizontalAlignment = HorizontalAlignment.Center;
+        gridScrollBut.VerticalAlignment = VerticalAlignment.Top;
+        gridScrollBut.Height = Logic.GetColumnsTrue().Count * 50 + (Logic.GetColumnsTrue().Count - 1) * 20 + 40;
+
+        //Сам скрол объект куда позже помещается сетка выше 
+        ScrollViewer scrollViewer = new ScrollViewer();
+        scrollViewer.Width = 320;
+        scrollViewer.VerticalAlignment = VerticalAlignment.Top;
+        scrollViewer.HorizontalAlignment = HorizontalAlignment.Center;
+        // scrollViewer.Height = Logic.GetBoardsTrue().Count * 50 + (Logic.GetBoardsTrue().Count - 1) * 20 + 20;
+        scrollViewer.Margin = new Thickness(0, 50, 0, 10);
+
+        //Обводка, помещаемая в главный блок
+        Border border = new Border();
+        border.BorderBrush = Brushes.Black;
+        border.Height = Logic.GetColumnsTrue().Count * 50 + (Logic.GetColumnsTrue().Count - 1) * 20 + 100;
+        border.MaxHeight = 5 * 50 + (Logic.GetColumnsTrue().Count - 1) * 20 + 100;
+        border.VerticalAlignment = VerticalAlignment.Top;
+        border.BorderThickness = new Thickness(4); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+
+        //Добавление кнопок в грид для скролл бара
+        List<Column> columns = Logic.GetColumnsTrue().ToList();
+        int step = 0;
+        for (int i = columns.Count - 1; i >= 0; i--)
+        {
+            gridScrollBut.Children.Add(ButtonColumn(step, columns[i], card, window));
+            step += 70;
+        }
+
+        //Помещаю грид в скрол вью
+        scrollViewer.Content = gridScrollBut;
+
+        //Добавляю в главный элемент границы, скролл сетку с кнопками и кнопку закрытия
+        gridMain.Children.Add(border);
+        gridMain.Children.Add(scrollViewer);
+        gridMain.Children.Add(ColumnListClose(window));
+        return gridMain;
+    }
+    //Создание кнопок для списка досок
+    public static Button ButtonColumn(int step, Column column, Card card, MainWindow window)
+    {
+        Button btn = new Button();
+
+        btn.Background = new SolidColorBrush(Color.FromRgb(194, 225, 255));
+        btn.BorderBrush = Brushes.Black;
+        btn.Width = 250;
+        btn.Height = 50;
+        btn.Name = "Mini" + column.name.Replace(" ", "");
+        btn.Content = column.name;
+        btn.Margin = new Thickness(0, step, 0, 0); //Расположение каждый раз разное
+
+        btn.HorizontalAlignment = HorizontalAlignment.Center;
+        btn.VerticalAlignment = VerticalAlignment.Top;
+
+        btn.Click += Click1;
+        btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+
+        //Функция клика для этих кнопок
+        void Click1(object sender, RoutedEventArgs e)
+        {
+            Card card1 = DataBase.Card.GetObjOfId(card.id);
+            card1.idColumnsRef = column.id;
+            DataBase.Card.ReplaceObject(card.id, card1);
+            window.DeleteList();
+            window.ClearColumn();
+            window.DraftBoard();
+            window.DeleteInfoCard();
+            window.MainPlane.Children.Add(MenuCardInfo(DataBase.Card.GetObjOfId(card.id), window));
+        }
+
+        return btn;
+    }
+    //Кнопка закрытия для списка досок
+    public static Button ColumnListClose(MainWindow window)
+    {
+        Button btn = new Button();
+        btn.Width = 80;
+        btn.Height = 40;
+        btn.Background = Brushes.IndianRed;
+        btn.BorderBrush = Brushes.Black;
+        btn.Content = "Закрыть";
+        btn.Click += Click1;
+        btn.BorderThickness = new Thickness(2); // толщина границы: 2 пикселя сверху, 4 пикселя справа, 6 пикселей снизу, 8 пикселей слева
+        btn.HorizontalAlignment = HorizontalAlignment.Right;
+        btn.VerticalAlignment = VerticalAlignment.Top;
+
+        //Функция клика для этих кнопок
+        void Click1(object sender, RoutedEventArgs e)
+        {
+            window.DeleteList();
+        }
+
+        return btn;
+    }
 
 
     //Объект для списка досок

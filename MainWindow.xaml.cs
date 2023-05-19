@@ -346,6 +346,17 @@ namespace TaskBoard
                     }
                 }
             }
+            foreach (UIElement element in MainPlane.Children)
+            {
+                if (element is Grid)
+                {
+                    if (((Grid)element).Name.ToString().Contains("ColumnList"))
+                    {
+                        MainPlane.Children.Remove((Grid)element);
+                        break;
+                    }
+                }
+            }
         }
 
         //Удаление меню с выбором вида доски
