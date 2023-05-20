@@ -56,6 +56,7 @@ namespace TaskBoard
         //Отрисовка доски
         public void DraftBoard()
         {
+            BoardText.Text = Logic.GetCurrentBoard().name;
             //Удаление старых столбцов должно быть тут
             int IDboard = Logic.GetCurrentBoard().id;
             string[] str = Logic.GetNameColumns(IDboard);

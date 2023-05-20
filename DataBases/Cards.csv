@@ -1,40 +1,16 @@
-6;32;dsgdgfs;blue;50;sdfsdfsdf`*srfsdd`*s`*dfs`*dfs`*dfs`*dfs`*dfsdf`*sdfs`*dfs`*df`*sdf`*sd`*sdf`*sdfs`*dfs`*ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddf
-7;32;dsgdgfs;agua;50;sdfsdfsdf`*srfsdd`*s`*dfs`*dfs`*dfs`*dfs`*dfsdf`*sdfs`*dfs`*df`*sdf`*sd`*sdf`*sdfs`*dfs`*ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddf
-8;33;карт 1;green;50;sdfsdfsdf`*dddddddddddddddddddf`*ijhlkhjkl`*ljhlhjhjkl
-9;34;карт 3;green;50;sdfsdfsdf`*srfsdd`*s`*dfs`*dfs`*dfs`*dfs`*dfsdf`*sdfs`*dfs`*df`*sdf`*sd`*sdf`*sdfs`*dfs`*ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddf
-16;28;Карточка номер 5;white;1;null
-18;28;Карточка номер 7;white;1;null
-20;28;Карточка номер 9;white;1;null
-14;28;Карточка номер 3;white;1;null
-10;36;Карточка номер 1;white;1;null
-11;36;Карточка номер 2;white;1;null
-21;38;Карточка номер 1;white;1;null
-22;38;Карточка номер 2;white;1;null
-27;38;Карточка номер 3;white;1;null
-24;40;Карточка номер 1;white;1;null
-25;40;Карточка номер 2;white;1;null
-26;40;Карточка номер 3;white;1;null
-29;45;карьера;white;1;
-28;45;отошения ;green;1; я люблю андрея гусева <3
-33;45;Карточка номер 3;white;1;
-34;45;Карточка номер 4;white;1;
-35;45;Карточка номер 5;white;1;
-36;45;Карточка номер 6;white;1;
-30;48;Карточка номер 1;white;1;
-31;48;Карточка номер 2;white;1;
-32;49;Карточка номер 1;white;1;
-5;32;dsgdgfs;yellow;50;sdfsdfsdf`*srfsdd`*
-4;32;dsgdgfs;green;50;sdfsdfsdf`*srfsdd`*s`*dfs`*dfs`*dfs`*dfs`*dfsdf`*sdfs`*dfs`*df`*sdf`*sd`*sdf`*sdfs`*dfs`*ddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddf
-3;32;sdfsgdfg;red;50;dsfsdfdddddddddddddddddddddd
-2;32;sdfsdfdfgdfgdfg;white;50;dsfsdfdddddddddddddddddddddd
-46;29;Карточка номер 4;white;2;
-45;29;Карточка номер 3;white;2;
-39;29;Карточка номер 1;blue;2;
-42;29;null;red;2;
-48;60;Карточка номер 2;white;2;
-49;60;Карточка номер 3;white;2;
-50;60;Карточка номер 4;white;2;
-40;60;Васюта;aqua;2;
-51;61;Карточка номер 5;blue;2;*dgsdfgxcfffdfgzddfdfvx
-52;61;Карточка номер 2;white;2;~sdsgds
-53;61;Карточка номер 3;green;2;*dsf
+7;3;Лермонтов;white;1;
+8;3;Маяковский;white;1;
+10;3;Есенин;white;1;
+9;3;Блок;green;1;
+5;3;Бродский;white;1;1) Стих 
+6;3;Пушкин;white;1;1) Первый стих Пушкина`*Его текст`*2) Второй стих пушкина`*Текст
+11;4;Хочу посмотреть/смотрел;blue;2;*Один дома,*Титаник,~Остров проклятых,*Дивергент,*Смурфики,~Валли
+12;5;Где-то слышал;white;2;~Баста Выпускной
+13;5;Нойз МС;red;1;1) Выпускай
+3;2;Основное описание;yellow;1;1. Пользователь должен иметь возможность выбирать цвет фона окна приложения из выпадающего списка ComboBox.`*2. Пользователь должен иметь возможность добавлять новые элементы в список ListBox, используя TextBox и кнопку "Добавить".`*3. Пользователь должен иметь возможность переключаться между несколькими вкладками TabControl и просматривать различную информацию на каждой вкладке.
+4;2;Доп инфа;white;1;Можно сделать многопользовательское
+1;1;Задачи для eee;green;1;1) Расписать логику`*2) Спроектировать проект`*3) Найти похожие проекты`*4) Сделать каркас программы`*Так же попрошу тебя делать все аккуратно, не забывай тестировать код
+2;1;Задачи для 1;aqua;1;1) работа над основной логикой, раздача заданий, изучение актуальной информации
+14;7;По дому;aqua;2;~Посуда,~Пропылесосит,~
+16;7;Другое;yellow;1;
+15;7;Работа;red;2;~Проект,*Спросить про проект

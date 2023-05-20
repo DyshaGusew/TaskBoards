@@ -1153,6 +1153,7 @@ public class DrawPlane
         void Click1(object sender, RoutedEventArgs e)
         {
             window.DraftBoard();
+            window.DeleteCheckList();
             window.DeleteInfoCard();
         }
 
